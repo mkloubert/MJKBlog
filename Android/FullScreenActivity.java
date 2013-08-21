@@ -1,3 +1,5 @@
+// s. http://blog.marcel-kloubert.de
+
 public class FullScreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
