@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XmlObjectSerializer.cs" />
+    <Compile Include="StoredProcedures\MeineTestSP.cs" />
     <Compile Include="WCF\HTTP\BinaryMessage.cs" />
     <Compile Include="WCF\HTTP\IWcfHttpServer.cs" />
     <Compile Include="WCF\HTTP\RawContentTypeMapper.cs" />
