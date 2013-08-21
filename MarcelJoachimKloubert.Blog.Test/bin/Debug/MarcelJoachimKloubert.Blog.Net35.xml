@@ -1,0 +1,882 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MarcelJoachimKloubert.Blog.Net35</name>
+    </assembly>
+    <members>
+        <member name="T:SyncDisposableBase">
+            <summary>
+            Basis-Objekt für ein erweitertes <see cref="T:System.IDisposable"/>-Objekte.
+            </summary>
+        </member>
+        <member name="F:SyncDisposableBase._SYNC_ROOT">
+            <summary>
+            Eindeutiges Objekt für Thread-sichere Operationen.
+            </summary>
+        </member>
+        <member name="M:SyncDisposableBase.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der <see cref="T:SyncDisposableBase"/> Klasse.
+            </summary>
+        </member>
+        <member name="M:SyncDisposableBase.Finalize">
+            <summary>
+            Gibt diese Instanz samt ihrer Resourcen wieder frei.
+            </summary>
+        </member>
+        <member name="M:SyncDisposableBase.Dispose">
+            <summary>
+            
+            </summary>
+            <see cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:SyncDisposableBase.OnDispose(SyncDisposableBase.DisposeContext)">
+            <summary>
+            Die Logik für die <see cref="M:SyncDisposableBase.Dispose"/>-Methode
+            sowie des Destruktors.
+            </summary>
+            <param name="context">Der Kontext.</param>
+        </member>
+        <member name="M:SyncDisposableBase.RaiseEventHandler(System.EventHandler)">
+            <summary>
+            Führt einen <see cref="T:System.EventHandler"/> aus.
+            </summary>
+            <param name="handler">Das Delegate, das ausgeführt werden soll.</param>
+            <returns>
+            <paramref name="handler"/> wurde ausgeführt oder nicht, da dieser
+            seine <see langword="null"/> Referenz ist.
+            </returns>
+        </member>
+        <member name="M:SyncDisposableBase.ThrowIfDisposed">
+            <summary>
+            Wirft eine <see cref="T:System.ObjectDisposedException"/>, wenn diese
+            Instanz bereits verworfen wurde.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            <see cref="P:SyncDisposableBase.IsDisposed"/> ist
+            <see langword="true"/> und somit bereits verworfen.
+            </exception>
+        </member>
+        <member name="P:SyncDisposableBase.IsDisposed">
+            <summary>
+            Gibt zurück, ob dieses Objekt bereits verworfen
+            / disposed wurde oder nicht.
+            </summary>
+        </member>
+        <member name="E:SyncDisposableBase.Disposed">
+            <summary>
+            Wird ausgeführt nachdem das Objekt verworfen wurde.
+            </summary>
+        </member>
+        <member name="E:SyncDisposableBase.Disposing">
+            <summary>
+            Wird ausgeführt bevor das Objekt verworfen wird.
+            </summary>
+        </member>
+        <member name="T:SyncDisposableBase.DisposeContext">
+            <summary>
+            Liste mit 'Dispose'-Kontexten
+            </summary>
+        </member>
+        <member name="F:SyncDisposableBase.DisposeContext.Finalizer">
+            <summary>
+            Destruktor
+            </summary>
+        </member>
+        <member name="F:SyncDisposableBase.DisposeContext.DisposeMethod">
+            <summary>
+            <see cref="M:System.IDisposable.Dispose"/>-Methode
+            </summary>
+        </member>
+        <member name="T:BinaryMessage">
+            <summary>
+            Eine binäre <see cref="T:System.ServiceModel.Channels.Message"/>.
+            </summary>
+        </member>
+        <member name="M:BinaryMessage.#ctor(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Initialisiert eine neue Instanz der <see cref="T:BinaryMessage"/> Klasse.
+            </summary>
+            <param name="data">
+            Die Daten für die <see cref="P:BinaryMessage.Data"/> Eigenschaft.
+            </param>
+        </member>
+        <member name="M:BinaryMessage.OnWriteBodyContents(System.Xml.XmlDictionaryWriter)">
+            <summary>
+            
+            </summary>
+            <see cref="M:System.ServiceModel.Channels.Message.OnWriteBodyContents(System.Xml.XmlDictionaryWriter)"/>
+        </member>
+        <member name="P:BinaryMessage.Data">
+            <summary>
+            Gets the zugrundliegenden Daten zurück.
+            </summary>
+        </member>
+        <member name="P:BinaryMessage.Headers">
+            <summary>
+            
+            </summary>
+            <see cref="P:System.ServiceModel.Channels.Message.Headers"/>
+        </member>
+        <member name="P:BinaryMessage.Properties">
+            <summary>
+            
+            </summary>
+            <see cref="P:System.ServiceModel.Channels.Message.Properties"/>
+        </member>
+        <member name="P:BinaryMessage.Version">
+            <summary>
+            
+            </summary>
+            <see cref="P:System.ServiceModel.Channels.Message.Version"/>
+        </member>
+        <member name="T:IWcfHttpServer">
+            <summary>
+            Beschreibt einen Service contract für einen HTTP Service.
+            </summary>
+        </member>
+        <member name="M:IWcfHttpServer.Request(System.ServiceModel.Channels.Message)">
+            <summary>
+            Bearbeitet eine Anfrage.
+            </summary>
+            <param name="message">Die Anfrage.</param>
+            <returns>Die Anwort.</returns>
+        </member>
+        <member name="T:RawContentTypeMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RawContentTypeMapper.GetMessageFormatForContentType(System.String)">
+            <summary>
+            
+            </summary>
+            <see cref="M:System.ServiceModel.Channels.WebContentTypeMapper.GetMessageFormatForContentType(System.String)"/>
+        </member>
+        <member name="T:WcfHttpServer">
+            <summary>
+            Implementation von <see cref="T:IWcfHttpServer"/>
+            </summary>
+        </member>
+        <member name="M:WcfHttpServer.CreateWebMessageBindingEncoder">
+            <summary>
+            Erstellt ein vorkonfiguriertes
+            <see cref="T:System.ServiceModel.Channels.WebMessageEncodingBindingElement"/>.
+            </summary>
+            <returns>Das vorkonfigurierte Objekt.</returns>
+        </member>
+        <member name="M:WcfHttpServer.Request(System.ServiceModel.Channels.Message)">
+            <summary>
+            
+            </summary>
+            <see cref="M:IWcfHttpServer.Request(System.ServiceModel.Channels.Message)"/>
+        </member>
+        <member name="T:__CollectionExtensionMethods">
+            <summary>
+            Extension Methoden für Sequenzen und Listen.
+            </summary>
+        </member>
+        <member name="M:__CollectionExtensionMethods.AddRange``2(``0,System.Collections.Generic.IEnumerable{``1})">
+            <summary>
+            Fügt eine Liste von Elementen einer
+            <see cref="T:System.Collections.Generic.ICollection`1"/> hinzu.
+            </summary>
+            <typeparam name="C">Typ der Collection.</typeparam>
+            <typeparam name="T">Typ der Elemente.</typeparam>
+            <param name="coll">Die Collection.</param>
+            <param name="seq">
+            Die Sequenz mit Elementen, die hinzugefügt werden sollen.
+            </param>
+            <returns><paramref name="coll"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="coll"/> und/oder <paramref name="seq"/>
+            ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__CollectionExtensionMethods.AddRange``2(``0,``1[])">
+            <summary>
+            Fügt eine Liste von Elementen einer
+            <see cref="T:System.Collections.Generic.ICollection`1"/> hinzu.
+            </summary>
+            <typeparam name="C">Typ der Collection.</typeparam>
+            <typeparam name="T">Typ der Elemente.</typeparam>
+            <param name="coll">Die Collection.</param>
+            <param name="items">
+            Die Sequenz mit Elementen, die hinzugefügt werden sollen.
+            </param>
+            <returns><paramref name="coll"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="coll"/> und/oder <paramref name="items"/>
+            ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__CollectionExtensionMethods.AsArray``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Castet eine Sequenz in ein Array.
+            </summary>
+            <typeparam name="T">Typ der Elemente.</typeparam>
+            <param name="seq">Die Sequenz, die gecastet werden soll.</param>
+            <returns>
+            <paramref name="seq" /> als Array oder <see langword="null" />, wenn
+            <paramref name="seq" /> ebenfalls <see langword="null" /> ist.
+            </returns>
+            <remarks>
+            Sofern <paramref name="seq" /> bereits ein Array ist, wird es
+            lediglich gecastet, d.h. das Original-Objekt in <paramref name="seq" />
+            wird zurückgegeben.
+            </remarks>
+        </member>
+        <member name="M:__CollectionExtensionMethods.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Führt eine <see cref="T:System.Action`1"/> für
+            jedes Element einer Sequenz aus.
+            </summary>
+            <typeparam name="T">Typ der Elemente.</typeparam>
+            <param name="seq">The Sequenz mit Elementen.</param>
+            <param name="action">
+            The Logik, die für jedes Element ausgeführt wird.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="seq"/> und/oder <paramref name="action"/>
+            ist eine <see langword="null"/> Referenz.
+            </exception>
+            <remarks>
+            Das Ausführen wird unterbrochen, wenn mindestens eine
+            <see cref="T:System.Exception"/> geworfen wird.
+            </remarks>
+        </member>
+        <member name="M:__CollectionExtensionMethods.ForEach``2(System.Collections.Generic.IEnumerable{``0},System.Action{``0,``1},``1)">
+            <summary>
+            Führt eine <see cref="T:System.Action`2"/> für
+            jedes Element einer Sequenz aus mit einem zusätzlichen Statusobjekt.
+            </summary>
+            <typeparam name="T">typ der Elemente.</typeparam>
+            <typeparam name="S">
+            Typ des Objektes für das 2. Argument für <paramref name="action"/>.
+            </typeparam>
+            <param name="seq">The Sequenz mit Elementen.</param>
+            <param name="action">
+            The Logik, die für jedes Element ausgeführt wird.
+            </param>
+            <param name="actionState">
+            Das 2. Argument (Statusobjekt) für <paramref name="action"/>.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="seq"/> und/oder <paramref name="action"/>
+            ist eine <see langword="null"/> Referenz.
+            </exception>
+            <remarks>
+            Das Ausführen wird unterbrochen, wenn mindestens eine
+            <see cref="T:System.Exception"/> geworfen wird.
+            </remarks>
+        </member>
+        <member name="T:__CompressionExtensionMethods">
+            <summary>
+            Extension Methoden für Komprimierungsoperationen.
+            </summary>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip(System.IO.Stream)">
+            <summary>
+            Dekomprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip
+            mit dem Standardpuffer.
+            </summary>
+            <param name="inputStream">Der komprimierte Stream.</param>
+            <returns>Die dekomprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Dekomprimiert Binärdaten mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <param name="data">Die komprimierten Daten.</param>
+            <returns>Die dekomprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="data"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip(System.IO.Stream,System.Nullable{System.Int32})">
+            <summary>
+            Dekomprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip.
+            </summary>
+            <param name="inputStream">Der komprimierte Stream.</param>
+            <param name="bufferSize">
+            Die Puffergrösse, in Bytes (Standard: 81920).
+            </param>
+            <returns>Die dekomprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="bufferSize"/> ist kleiner als 1.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip(System.Collections.Generic.IEnumerable{System.Byte},System.IO.Stream)">
+            <summary>
+            Dekomprimiert Binärdaten mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <param name="data">Die komprimierten Daten.</param>
+            <param name="outputStream">
+            Der Stream in dem die dekomprimierten Daten geschrieben werden sollen.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="data"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip``1(``0,System.IO.Stream)">
+            <summary>
+            Dekomprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="inputStream">Der komprimierte Stream.</param>
+            <param name="outputStream">
+            Der Stream in dem die dekomprimierten Daten geschrieben werden sollen.
+            </param>
+            <returns><paramref name="inputStream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden und/oder
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GUnzip``1(``0,System.IO.Stream,System.Nullable{System.Int32})">
+            <summary>
+            Dekomprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="inputStream">Der komprimierte Stream.</param>
+            <param name="outputStream">
+            Der Stream in dem die dekomprimierten Daten geschrieben werden sollen.
+            </param>
+            <param name="bufferSize">
+            Die Puffergrösse, in Bytes (Standard: 81920).
+            </param>
+            <returns><paramref name="inputStream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="bufferSize"/> ist kleiner als 1.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden und/oder
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip(System.IO.Stream)">
+            <summary>
+            Komprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip
+            mit dem Standardpuffer.
+            </summary>
+            <param name="inputStream">Der unkomprimierte Stream.</param>
+            <returns>Die komprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Komprimiert Binärdaten mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <param name="data">Die komprimierten Daten.</param>
+            <returns>Die komprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="data"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip(System.IO.Stream,System.Nullable{System.Int32})">
+            <summary>
+            Komprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip.
+            </summary>
+            <param name="inputStream">Der unkomprimierte Stream.</param>
+            <param name="bufferSize">
+            Die Puffergrösse, in Bytes (Standard: 81920).
+            </param>
+            <returns>Die komprimierten Daten.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="bufferSize"/> ist kleiner als 1.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip(System.Collections.Generic.IEnumerable{System.Byte},System.IO.Stream)">
+            <summary>
+            Komprimiert Binärdaten mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <param name="data">Die unkomprimierten Daten.</param>
+            <param name="outputStream">
+            Der Stream in dem die komprimierten Daten geschrieben werden sollen.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="data"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip``1(``0,System.IO.Stream)">
+            <summary>
+            Komprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip
+            mit der Standardpuffergrösse.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="inputStream">Der unkomprimierte Stream.</param>
+            <param name="outputStream">
+            Der Stream in dem die komprimierten Daten geschrieben werden sollen.
+            </param>
+            <returns><paramref name="inputStream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden und/oder
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="M:__CompressionExtensionMethods.GZip``1(``0,System.IO.Stream,System.Nullable{System.Int32})">
+            <summary>
+            Komprimiert einen <see cref="T:System.IO.Stream"/> mittels GZip.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="inputStream">Der unkomprimierte Stream.</param>
+            <param name="outputStream">
+            Der Stream in dem die komprimierten Daten geschrieben werden sollen.
+            </param>
+            <param name="bufferSize">
+            Die Puffergrösse, in Bytes (Standard: 81920).
+            </param>
+            <returns><paramref name="inputStream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="inputStream"/> und/oder <paramref name="outputStream"/>
+            sind eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="bufferSize"/> ist kleiner als 1.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="inputStream"/> kann nicht gelesen werden und/oder
+            <paramref name="outputStream"/> kann nicht beschrieben werden.
+            </exception>
+        </member>
+        <member name="T:__IOExtensionMethods">
+            <summary>
+            Extension Methoden für Eingabe-/Ausgabeoperationen.
+            </summary>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen
+            ohne Rechte auf die Ordner anzuwenden..
+            Bevor und nachdem die Struktur erstellt wurde, wird jeweils die
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufgerufen.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen.
+            Bevor und nachdem die Struktur erstellt wurde, wird jeweils die
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufgerufen.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <param name="sec">Die optionalen Rechte, die auf alle Verzechnisse angewendet werden sollen.</param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo,System.Boolean)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen
+            ohne Rechte auf die Ordner anzuwenden.
+            Nachdem die Struktur erstellt wurde, wird die <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode
+            von <paramref name="dir"/> aufgerufen.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <param name="refreshBefore">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            bevor das Verzeichnis erstellt wird.
+            </param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity,System.Boolean)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen.
+            Nachdem die Struktur erstellt wurde, wird die <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode
+            von <paramref name="dir"/> aufgerufen.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <param name="sec">Die optionalen Rechte, die auf alle Verzechnisse angewendet werden sollen.</param>
+            <param name="refreshBefore">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            bevor das Verzeichnis erstellt wird.
+            </param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo,System.Boolean,System.Boolean)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen
+            ohne Rechte auf die Ordner anzuwenden.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <param name="refreshBefore">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            bevor das Verzeichnis erstellt wird.
+            </param>
+            <param name="refreshAfter">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            nachdem das Verzeichnis erstellt wurde.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__IOExtensionMethods.CreateDeep(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity,System.Boolean,System.Boolean)">
+            <summary>
+            Erstellt eine komplette Verzeichnisstruktur samt übergeordneten Verzeichnissen.
+            </summary>
+            <param name="dir">Das Verzeichnis, das erstellt werden soll.</param>
+            <param name="sec">Die optionalen Rechte, die auf alle Verzechnisse angewendet werden sollen.</param>
+            <param name="refreshBefore">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            bevor das Verzeichnis erstellt wird.
+            </param>
+            <param name="refreshAfter">
+            <see cref="M:System.IO.FileSystemInfo.Refresh"/> Methode von <paramref name="dir"/> aufrufen
+            nachdem das Verzeichnis erstellt wurde.
+            Die Methode wird ebenfalls aufgerufen, wenn das Verzeichnis von <paramref name="dir"/>
+            bereits existiert.
+            </param>
+            <returns><paramref name="dir"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="dir"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="T:__SecurityExtensionMethods">
+            <summary>
+            Extension Methoden für Sicherheitsoperationen.
+            </summary>
+        </member>
+        <member name="M:__SecurityExtensionMethods.Shredder``1(``0)">
+            <summary>
+            Shreddert einen <see cref="T:System.IO.Stream"/> nach DoD 5220-22.M mit
+            3 Durchläufen und einer Blockgrösse von 8192 Bytes.
+            Es wird versucht den Wert der Eigenschaft
+            <see cref="P:System.IO.Stream.Position"/> von <paramref name="stream"/>
+            nach Beendigung des Vorgangs wiederherzustellen.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="stream">Der Stream.</param>
+            <returns><paramref name="stream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="stream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="stream"/> ist nicht beschreibbar und/oder
+            sein Cursor kann nicht gesetzt werden.
+            </exception>
+        </member>
+        <member name="M:__SecurityExtensionMethods.Shredder``1(``0,System.Int32)">
+            <summary>
+            Shreddert einen <see cref="T:System.IO.Stream"/> nach DoD 5220-22.M mit
+            einer Blockgrösse von 8192 Bytes.
+            Es wird versucht den Wert der Eigenschaft
+            <see cref="P:System.IO.Stream.Position"/> von <paramref name="stream"/>
+            nach Beendigung des Vorgangs wiederherzustellen.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="stream">Der Stream.</param>
+            <param name="count">Anzahl der Durchläufe.</param>
+            <returns><paramref name="stream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="stream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="stream"/> ist nicht beschreibbar und/oder
+            sein Cursor kann nicht gesetzt werden.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="count"/> ist ungültig.
+            </exception>
+        </member>
+        <member name="M:__SecurityExtensionMethods.Shredder``1(``0,System.Int32,System.Int32)">
+            <summary>
+            Shreddert einen <see cref="T:System.IO.Stream"/> nach DoD 5220-22.M.
+            Es wird versucht den Wert der Eigenschaft
+            <see cref="P:System.IO.Stream.Position"/> von <paramref name="stream"/>
+            nach Beendigung des Vorgangs wiederherzustellen.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="stream">Der Stream.</param>
+            <param name="count">Anzahl der Durchläufe.</param>
+            <param name="blockSize">Grösse eines Blocks, in Bytes.</param>
+            <returns><paramref name="stream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="stream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="stream"/> ist nicht beschreibbar und/oder
+            sein Cursor kann nicht gesetzt werden.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="count"/> und/oder <paramref name="blockSize"/>
+            sind ungültig.
+            </exception>
+        </member>
+        <member name="M:__SecurityExtensionMethods.Shredder``1(``0,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Shreddert einen <see cref="T:System.IO.Stream"/> nach DoD 5220-22.M.
+            </summary>
+            <typeparam name="S">Typ des Streams.</typeparam>
+            <param name="stream">Der Stream.</param>
+            <param name="count">Anzahl der Durchläufe.</param>
+            <param name="blockSize">Grösse eines Blocks, in Bytes.</param>
+            <param name="restorePos">
+            Den Wert der Eigenschaft <see cref="P:System.IO.Stream.Position"/> von
+            <paramref name="stream"/> nach Beendigung des Vorgangs
+            versuchen wiederherzustellen. Hierbei spielt es keine Rolle, ob der
+            Vorgang erfolgreich war oder nicht.
+            </param>
+            <returns><paramref name="stream"/> selbst.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="stream"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.IO.IOException">
+            <paramref name="stream"/> ist nicht beschreibbar und/oder
+            sein Cursor kann nicht gesetzt werden.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="count"/> und/oder <paramref name="blockSize"/>
+            sind ungültig.
+            </exception>
+        </member>
+        <member name="T:__StringExtensionMethods">
+            <summary>
+            Extension Methoden für Zeichenketten.
+            </summary>
+        </member>
+        <member name="M:__StringExtensionMethods.CalcSimilarity(System.Collections.Generic.IEnumerable{System.Char},System.Collections.Generic.IEnumerable{System.Char})">
+            <summary>
+            Berecht die Ähnlichkeit zweier Zeichenketten nach dem
+            Levenshtein-Distanz Algorithmus.
+            </summary>
+            <param name="left">Die erste Zeichenkette.</param>
+            <param name="right">Die zweite Zeichenkette.</param>
+            <returns>Die Ähnlichkeit zwischen 0 (0%) und 1 (100%).</returns>
+        </member>
+        <member name="M:__StringExtensionMethods.CalcSimilarity(System.Collections.Generic.IEnumerable{System.Char},System.Collections.Generic.IEnumerable{System.Char},System.Boolean)">
+            <summary>
+            Berecht die Ähnlichkeit zweier Zeichenketten nach dem
+            Levenshtein-Distanz Algorithmus.
+            </summary>
+            <param name="left">Die erste Zeichenkette.</param>
+            <param name="right">Die zweite Zeichenkette.</param>
+            <param name="ignoreCase">Groß- und Kleinschreibung ignorieren oder nicht.</param>
+            <returns>Die Ähnlichkeit zwischen 0 (0%) und 1 (100%).</returns>
+        </member>
+        <member name="M:__StringExtensionMethods.CalcSimilarity(System.Collections.Generic.IEnumerable{System.Char},System.Collections.Generic.IEnumerable{System.Char},System.Boolean,System.Boolean)">
+            <summary>
+            Berecht die Ähnlichkeit zweier Zeichenketten nach dem
+            Levenshtein-Distanz Algorithmus.
+            </summary>
+            <param name="charsLeft">Die erste Zeichenkette.</param>
+            <param name="charsRight">Die zweite Zeichenkette.</param>
+            <param name="ignoreCase">Groß- und Kleinschreibung ignorieren oder nicht.</param>
+            <param name="trim">Leerzeichen am Anfang und Ende entfernen oder nicht.</param>
+            <returns>Die Ähnlichkeit zwischen 0 (0%) und 1 (100%).</returns>
+        </member>
+        <member name="M:__StringExtensionMethods.ToUnsecureString(System.Security.SecureString)">
+            <summary>
+            Wandelt ein sicheres <see cref="T:System.Security.SecureString"/>-Objekt zurück
+            in einen lesbaren <see cref="T:System.String"/> zurück.
+            </summary>
+            <param name="str">Der sichere String.</param>
+            <returns>
+            Die lesbare, unsichere String-Repräsentation oder
+            <see langword="null"/>, wenn <paramref name="str"/> ebenfalls
+            eine <see langword="null"/> Referenz ist.
+            </returns>
+        </member>
+        <member name="T:__ValueAndObjectExtensionMethods">
+            <summary>
+            Extension Methoden für Werte und Objekte.
+            </summary>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.AsString(System.Object)">
+            <summary>
+            Gibt die Zeichenketten-Repräsentation eines Objektes zurück, wobei
+            <see cref="T:System.DBNull"/>-Objekte automatisch wie eine 
+            <see langword="null"/> Referenz behandelt werden.
+            </summary>
+            <param name="obj">
+            Das Objekt dessen Zeichenketten-Repräsentation
+            zurückgegeben werden soll.
+            </param>
+            <remarks>
+            Ist <paramref name="obj"/> bereits ein <see cref="T:System.String"/> wird der Wert
+            lediglich gecastet.
+            </remarks>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.AsString(System.Object,System.Boolean)">
+            <summary>
+            Gibt die Zeichenketten-Repräsentation eines Objektes zurück.
+            </summary>
+            <param name="obj">
+            Das Objekt dessen Zeichenketten-Repräsentation
+            zurückgegeben werden soll.
+            </param>
+            <param name="handleDBNullAsNull">
+            <see cref="T:System.DBNull"/>-Objekte als <see langword="null"/> Referenz
+            behandeln oder nicht.
+            </param>
+            <remarks>
+            Ist <paramref name="obj"/> bereits ein <see cref="T:System.String"/> wird der Wert
+            lediglich gecastet.
+            </remarks>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.IsNullOrWhiteSpace(System.Collections.Generic.IEnumerable{System.Char})">
+            <summary>
+            Prüft, ob ein String eine <see langword="null" /> Referenz ist
+            oder nur aus Leerzeichen (WhiteSpaces) besteht.
+            </summary>
+            <param name="chars">Die zu prüfende Sequenz.</param>
+            <returns>
+            Ist eine <see langword="null" /> Referenz bzw. besteht nur
+            aus Leerzeichen (WhiteSpaces) oder nicht.
+            </returns>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.ThrowIfParamIsNull``1(System.Nullable{``0},System.Linq.Expressions.Expression{System.Func{System.Nullable{``0}}})">
+            <summary>
+            Prüft, ob der Wert eines Parameters eine <see langword="null"/> Referenz ist
+            und wirft in diesem Fall eine <see cref="T:System.ArgumentNullException"/>.
+            </summary>
+            <typeparam name="T">Typ des zu prüfenden Wertes.</typeparam>
+            <param name="value">Der zu prüfende Wert.</param>
+            <param name="paramExpr">Der Name des Parameters als LINQ-Ausdruck.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="paramExpr"/> ist kein Ausdruck, der ein Feld bzw. einen
+            Parameter repräsentiert.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="value"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.NullReferenceException">
+            <paramref name="paramExpr"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.ThrowIfParamIsNull``1(``0,System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Prüft, ob der Wert eines Parameters eine <see langword="null"/> Referenz ist
+            und wirft in diesem Fall eine <see cref="T:System.ArgumentNullException"/>.
+            </summary>
+            <typeparam name="T">Typ der zu prüfenden Objektes.</typeparam>
+            <param name="obj">Das zu prüfende Objekt.</param>
+            <param name="paramExpr">Der Name des Parameters als LINQ-Ausdruck.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="paramExpr"/> ist kein Ausdruck, der ein Feld bzw. einen
+            Parameter repräsentiert.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="obj"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.NullReferenceException">
+            <paramref name="paramExpr"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <remarks>
+            <see cref="T:System.DBNull"/> Objekte werden als <see langword="null"/> Referenzn
+            behandelt.
+            </remarks>
+        </member>
+        <member name="M:__ValueAndObjectExtensionMethods.ThrowIfParamIsNull``1(``0,System.Linq.Expressions.Expression{System.Func{``0}},System.Boolean)">
+            <summary>
+            Prüft, ob der Wert eines Parameters eine <see langword="null"/> Referenz ist
+            und wirft in diesem Fall eine <see cref="T:System.ArgumentNullException"/>.
+            </summary>
+            <typeparam name="T">Typ der zu prüfenden Objektes.</typeparam>
+            <param name="obj">Das zu prüfende Objekt.</param>
+            <param name="paramExpr">Der Name des Parameters als LINQ-Ausdruck.</param>
+            <param name="handleDbNullAsNull">
+            Behandel <see cref="T:System.DBNull"/> Objekte als <see langword="null"/> Referenz
+            oder nicht.
+            </param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="paramExpr"/> ist kein Ausdruck, der ein Feld bzw. einen
+            Parameter repräsentiert.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="obj"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+            <exception cref="T:System.NullReferenceException">
+            <paramref name="paramExpr"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+        <member name="T:__WPFExtensionMethods">
+            <summary>
+            Extension Methoden für WPF.
+            </summary>
+        </member>
+        <member name="M:__WPFExtensionMethods.TakeScreenshot(System.Windows.FrameworkElement)">
+            <summary>
+            Gibt den aktuellen Inhalt eines WPF-Framework-Elements als Bitmap zurück.
+            </summary>
+            <param name="element">Das zugrundeliegende Element.</param>
+            <returns>
+            Der Inhalt des Elements als Bitmap oder <see langword="null"/>, wenn
+            <paramref name="element"/> keine Breite und/oder keine Höhe hat.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="element"/> ist eine <see langword="null"/> Referenz.
+            </exception>
+        </member>
+    </members>
+</doc>
