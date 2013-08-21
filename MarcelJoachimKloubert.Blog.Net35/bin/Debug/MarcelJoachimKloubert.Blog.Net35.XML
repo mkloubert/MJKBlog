@@ -88,6 +88,222 @@
             <see cref="M:System.IDisposable.Dispose"/>-Methode
             </summary>
         </member>
+        <member name="T:XmlObjectSerializer">
+            <summary>
+            Eine Hilfsklasse, die Objekte von und nach XML serialisiert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_BOOLEAN">
+            <summary>
+            Interner Name eines <see cref="T:System.Boolean"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_DECIMAL">
+            <summary>
+            Interner Name eines <see cref="T:System.Decimal"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_DOUBLE">
+            <summary>
+            Interner Name eines <see cref="T:System.Double"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_ENUM">
+            <summary>
+            Interner Name eines <see cref="T:System.Enum"/>s.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_FLOAT">
+            <summary>
+            Interner Name eines <see cref="T:System.Single"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_INT16">
+            <summary>
+            Interner Name eines <see cref="T:System.Int16"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_INT32">
+            <summary>
+            Interner Name eines <see cref="T:System.Int32"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_INT64">
+            <summary>
+            Interner Name eines <see cref="T:System.Int64"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_LIST">
+            <summary>
+            Interner Name einer <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_NULL">
+            <summary>
+            Interner Name einer <see langword="null" /> Referenz.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_OBJECT">
+            <summary>
+            Interner Name eines beliebigen <see cref="T:System.Xml.Serialization.IXmlSerializable"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_STRING">
+            <summary>
+            Interner Name eines <see cref="T:System.String"/>s.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_UINT16">
+            <summary>
+            Interner Name eines <see cref="T:System.UInt16"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_UINT32">
+            <summary>
+            Interner Name eines <see cref="T:System.UInt32"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_UINT64">
+            <summary>
+            Interner Name eines <see cref="T:System.UInt64"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.TYPE_VERSION">
+            <summary>
+            Interner Name einer <see cref="T:System.Version"/>.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ATTRIB_CLRTYPE">
+            <summary>
+            Name des Attributs, das den CLR Datentyp eines Wertes speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ATTRIB_NAME">
+            <summary>
+            Name des Attributs, das den Namen eines Wertes speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ATTRIB_TYPE">
+            <summary>
+            Name des Attributs, das den Datentyp eines Wertes speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ELEMENT_LISTITEM">
+            <summary>
+            Name des Elements, das den Eintrag einer Liste speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ELEMENT_ROOT">
+            <summary>
+            Name des Stamm-Elements, das alle Werte speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_ELEMENT_VALUE">
+            <summary>
+            Name des Elements, das den Wert speichert.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_VALUE_BOOLEAN_FALSE">
+            <summary>
+            Speichert den XML-Wert für ein boolisches <see langword="false" />.
+            </summary>
+        </member>
+        <member name="F:XmlObjectSerializer.XML_VALUE_BOOLEAN_TRUE">
+            <summary>
+            Speichert den XML-Wert für ein boolisches <see langword="true" />.
+            </summary>
+        </member>
+        <member name="M:XmlObjectSerializer.FromXml(System.Collections.Generic.IEnumerable{System.Char},System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Erzeugt ein Wörterbuch aus XML-Daten.
+            </summary>
+            <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+            <param name="keyComparer">
+            Der optionale, eigene <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>, der die Schlüssel des
+            zurückgegeben Wörterbuchs vergleicht.
+            </param>
+            <returns>Das Wörterbuch mit den Werten.</returns>
+            <remarks>
+            Ist <paramref name="keyComparer"/> eine <see langword="null"/> Referenz, wird ein
+            Standard <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> Objekt genutzt, das die Schlüssel nicht
+            nach Groß- und Kleinschreibung vergleicht.
+            </remarks>
+        </member>
+        <member name="M:XmlObjectSerializer.FromXml(System.Xml.XmlNode,System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Erzeugt ein Wörterbuch aus XML-Daten.
+            </summary>
+            <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+            <param name="keyComparer">
+            Der optionale, eigene <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>, der die Schlüssel des
+            zurückgegeben Wörterbuchs vergleicht.
+            </param>
+            <returns>Das Wörterbuch mit den Werten.</returns>
+            <remarks>
+            Ist <paramref name="keyComparer"/> eine <see langword="null"/> Referenz, wird ein
+            Standard <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> Objekt genutzt, das die Schlüssel nicht
+            nach Groß- und Kleinschreibung vergleicht.
+            </remarks>
+        </member>
+        <member name="M:XmlObjectSerializer.FromXml(System.Xml.Linq.XNode,System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Erzeugt ein Wörterbuch aus XML-Daten.
+            </summary>
+            <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+            <param name="keyComparer">
+            Der optionale, eigene <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>, der die Schlüssel des
+            zurückgegeben Wörterbuchs vergleicht.
+            </param>
+            <returns>Das Wörterbuch mit den Werten.</returns>
+            <remarks>
+            Ist <paramref name="keyComparer"/> eine <see langword="null"/> Referenz, wird ein
+            Standard <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> Objekt genutzt, das die Schlüssel nicht
+            nach Groß- und Kleinschreibung vergleicht.
+            </remarks>
+        </member>
+        <member name="M:XmlObjectSerializer.KeyValuePairToXml(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <summary>
+            Erzeugt XML-Daten aus einem Schlüssel/Wert-Paar.
+            </summary>
+            <param name="pair">Das Schlüssel/Wert-Paar.</param>
+            <returns>Die XML-Daten.</returns>
+            <exception cref="T:System.NotSupportedException">
+            Der Datentyp des Wertes kann nicht serialisiert werden.
+            </exception>
+        </member>
+        <member name="M:XmlObjectSerializer.ToXml(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.Collections.Generic.IEnumerable{System.Char},System.Object}})">
+            <summary>
+            Erzeugt XML-Daten aus einer Liste von Werten.
+            </summary>
+            <param name="values">Die Werte.</param>
+            <returns>Die XML-Daten.</returns>
+        </member>
+        <member name="M:XmlObjectSerializer.ToXml(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+            <summary>
+            Erzeugt XML-Daten aus einer Liste von Werten.
+            </summary>
+            <param name="values">Die Werte.</param>
+            <returns>Die XML-Daten.</returns>
+        </member>
+        <member name="M:XmlObjectSerializer.XmlToKeyValuePair(System.Xml.Linq.XNode)">
+            <summary>
+            Erzeugt ein Schlüssel/Wert-Paar aus XML-Daten.
+            </summary>
+            <param name="xml">Dei XML-Daten.</param>
+            <returns>
+            Das Schlüssel/Wert-Paar oder <see langword="null"/>, wenn nicht genug Daten in
+            <paramref name="xml"/> vorhanden sind bzw. dieses ebenfalls <see langword="null"/>
+            ist.
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+            Die XML-Daten konnten nicht deserialisiert werden.
+            </exception>
+        </member>
+        <member name="P:XmlObjectSerializer.NumberCultureFormat">
+            <summary>
+            Gibt das Format zurück, das zum Serialisieren von Zahlen genutzt werden soll.
+            </summary>
+        </member>
         <member name="T:BinaryMessage">
             <summary>
             Eine binäre <see cref="T:System.ServiceModel.Channels.Message"/>.

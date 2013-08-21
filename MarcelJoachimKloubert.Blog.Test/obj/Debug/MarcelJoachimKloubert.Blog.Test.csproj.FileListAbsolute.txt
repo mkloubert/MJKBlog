@@ -16,3 +16,15 @@ M:\C#\MarcelJoachimKloubert.Blog.Test\MarcelJoachimKloubert.Blog.Test\obj\Debug\
 M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Test.exe.config
 M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\obj\Debug\MarcelJoachimKloubert.Blog.Test.exe
 M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\obj\Debug\MarcelJoachimKloubert.Blog.Test.pdb
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Test.exe
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Test.pdb
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net35.dll
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net40.dll
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net45.dll
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net35.pdb
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net35.xml
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net40.pdb
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net40.xml
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net45.pdb
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\bin\Debug\MarcelJoachimKloubert.Blog.Net45.xml
+M:\C#\MJKBlog\MarcelJoachimKloubert.Blog.Test\obj\Debug\MarcelJoachimKloubert.Blog.Test.csprojResolveAssemblyReference.cache
