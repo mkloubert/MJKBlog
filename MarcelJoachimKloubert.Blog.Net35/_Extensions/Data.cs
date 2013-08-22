@@ -14,9 +14,9 @@ using System.Data.SqlClient;
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (9)
+    #region Methods (11)
 
-    // Public Methods (9) 
+    // Public Methods (11) 
 
     /// <summary>
     /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
@@ -184,6 +184,59 @@ public static partial class __DataExtensionMethods
     public static object ToDbValue(this object value)
     {
         return value ?? DBNull.Value;
+    }
+
+    /// <summary>
+    /// Wandelt sämtliche Werte eines <see cref="IDataRecord" /> in ein
+    /// <see cref="Dictionary{TKey, TValue}" /> um.
+    /// </summary>
+    /// <param name="rec">Die Zeile mit den Daten.</param>
+    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="rec" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="rec" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static Dictionary<string, object> ToDictionary(this IDataRecord rec)
+    {
+        if (rec == null)
+        {
+            throw new ArgumentNullException("rec");
+        }
+
+        var result = new Dictionary<string, object>();
+
+        for (var i = 0; i < rec.FieldCount; i++)
+        {
+            result.Add(rec.GetName(i) ?? string.Empty,
+                       rec.IsDBNull(i) ? null : rec.GetValue(i));
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Liste von
+    /// <see cref="Dictionary{TKey, TValue}" />s um.
+    /// </summary>
+    /// <param name="reader">Der Reader, der die Daten / Zeilen bereitstellt.</param>
+    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="reader" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static List<Dictionary<string, object>> ToDictionaryList(this IDataReader reader)
+    {
+        if (reader == null)
+        {
+            throw new ArgumentNullException("reader");
+        }
+
+        var result = new List<Dictionary<string, object>>();
+
+        while (reader.Read())
+        {
+            result.Add(ToDictionary(reader));
+        }
+
+        return result;
     }
 
     #endregion Methods
