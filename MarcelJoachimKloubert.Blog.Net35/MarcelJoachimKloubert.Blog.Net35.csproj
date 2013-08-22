@@ -36,6 +36,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -50,10 +51,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisposableBase.cs" />
-    <Compile Include="DisposableBase.DisposeContext.cs">
-      <DependentUpon>DisposableBase.cs</DependentUpon>
+    <Compile Include="SyncDisposableBase.DisposeContext.cs">
+      <DependentUpon>SyncDisposableBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="SyncDisposableBase.cs" />
+    <Compile Include="Drawing\BarcodeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Xml\XmlObjectSerializer.cs" />
     <Compile Include="StoredProcedures\MeineTestSP.cs" />
@@ -78,6 +80,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="zxing.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_Libs\zxing\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
