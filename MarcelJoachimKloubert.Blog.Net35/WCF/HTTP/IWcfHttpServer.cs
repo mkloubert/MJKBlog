@@ -1,21 +1,27 @@
-﻿using System.ServiceModel;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 
-/// <summary>
-/// Beschreibt einen Service contract für einen HTTP Service.
-/// </summary>
-[ServiceContract]
-public interface IWcfHttpServer
+namespace MarcelJoachimKloubert.Blog.Net.HTTP
 {
-    #region Operations (1)
-
     /// <summary>
-    /// Bearbeitet eine Anfrage.
+    /// Beschreibt einen Service contract für einen HTTP Service.
     /// </summary>
-    /// <param name="message">Die Anfrage.</param>
-    /// <returns>Die Anwort.</returns>
-    [OperationContract(Action = "*", ReplyAction = "*")]
-    Message Request(Message message);
+    [ServiceContract]
+    public interface IWcfHttpServer
+    {
+        #region Operations (1)
 
-    #endregion Operations
+        /// <summary>
+        /// Bearbeitet eine Anfrage.
+        /// </summary>
+        /// <param name="message">Die Anfrage.</param>
+        /// <returns>Die Anwort.</returns>
+        [OperationContract(Action = "*", ReplyAction = "*")]
+        Message Request(Message message);
+
+        #endregion Operations
+    }
 }

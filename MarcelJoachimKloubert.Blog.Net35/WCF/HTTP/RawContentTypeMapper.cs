@@ -3,23 +3,26 @@
 
 using System.ServiceModel.Channels;
 
-/// <summary>
-/// 
-/// </summary>
-public sealed class RawContentTypeMapper : WebContentTypeMapper
+namespace MarcelJoachimKloubert.Blog.Net.HTTP
 {
-    #region Methods (1)
-
-    // Public Methods (1) 
-
     /// <summary>
     /// 
     /// </summary>
-    /// <see cref="WebContentTypeMapper.GetMessageFormatForContentType(string)" />
-    public override WebContentFormat GetMessageFormatForContentType(string contentType)
+    public sealed class RawContentTypeMapper : WebContentTypeMapper
     {
-        return WebContentFormat.Raw;
-    }
+        #region Methods (1)
 
-    #endregion Methods
+        // Public Methods (1) 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="WebContentTypeMapper.GetMessageFormatForContentType(string)" />
+        public override WebContentFormat GetMessageFormatForContentType(string contentType)
+        {
+            return WebContentFormat.Raw;
+        }
+
+        #endregion Methods
+    }
 }

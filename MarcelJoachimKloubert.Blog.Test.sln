@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.Net45", "MarcelJoachimKloubert.Blog.Net45\MarcelJoachimKloubert.Blog.Net45.csproj", "{12718570-1288-4910-BE60-79DED014AC64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.TestWpf", "MarcelJoachimKloubert.Blog.TestWpf\MarcelJoachimKloubert.Blog.TestWpf.csproj", "{D0E9AFD4-AE58-46E6-B1F4-A2A2E1C859FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.TestWinForms", "MarcelJoachimKloubert.Blog.TestWinForms\MarcelJoachimKloubert.Blog.TestWinForms.csproj", "{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{12718570-1288-4910-BE60-79DED014AC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12718570-1288-4910-BE60-79DED014AC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12718570-1288-4910-BE60-79DED014AC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E9AFD4-AE58-46E6-B1F4-A2A2E1C859FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E9AFD4-AE58-46E6-B1F4-A2A2E1C859FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E9AFD4-AE58-46E6-B1F4-A2A2E1C859FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E9AFD4-AE58-46E6-B1F4-A2A2E1C859FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

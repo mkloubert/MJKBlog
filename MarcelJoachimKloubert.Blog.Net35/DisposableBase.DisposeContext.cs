@@ -3,25 +3,28 @@
 
 using System;
 
-partial class SyncDisposableBase
+namespace MarcelJoachimKloubert.Blog
 {
-    #region Enums (1)
-
-    /// <summary>
-    /// Liste mit 'Dispose'-Kontexten
-    /// </summary>
-    public enum DisposeContext
+    partial class SyncDisposableBase
     {
-        /// <summary>
-        /// Destruktor
-        /// </summary>
-        Finalizer,
+        #region Enums (1)
 
         /// <summary>
-        /// <see cref="IDisposable.Dispose()" />-Methode
+        /// Liste mit 'Dispose'-Kontexten
         /// </summary>
-        DisposeMethod,
+        public enum DisposeContext
+        {
+            /// <summary>
+            /// Destruktor
+            /// </summary>
+            Finalizer,
+
+            /// <summary>
+            /// <see cref="IDisposable.Dispose()" />-Methode
+            /// </summary>
+            DisposeMethod,
+        }
+
+        #endregion Enums
     }
-
-    #endregion Enums
 }

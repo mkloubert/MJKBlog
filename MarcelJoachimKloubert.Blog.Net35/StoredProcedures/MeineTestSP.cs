@@ -5,12 +5,18 @@ using System;
 using System.Data;
 using Microsoft.SqlServer.Server;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class StoredProcedures
 {
     #region Methods (1)
 
     // Public Methods (1) 
 
+    /// <summary>
+    /// 
+    /// </summary>
     [global::Microsoft.SqlServer.Server.SqlProcedure]
     public static void MeineTestSP()
     {
