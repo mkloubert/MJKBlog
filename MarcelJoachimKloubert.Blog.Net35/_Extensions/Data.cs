@@ -8,15 +8,16 @@ using System.Data.Common;
 using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Linq;
 
 /// <summary>
 /// Extension Methoden für Datenbank-Operationen.
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (11)
+    #region Methods (12)
 
-    // Public Methods (11) 
+    // Public Methods (12) 
 
     /// <summary>
     /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
@@ -214,6 +215,28 @@ public static partial class __DataExtensionMethods
     }
 
     /// <summary>
+    /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Sequenz von
+    /// <see cref="Dictionary{TKey, TValue}" />s mit verzögerter Ausführung um.
+    /// </summary>
+    /// <param name="reader">Der Reader, der die Daten / Zeilen bereitstellt.</param>
+    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="reader" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<Dictionary<string, object>> ToDictionaryEnumerable(this IDataReader reader)
+    {
+        if (reader == null)
+        {
+            throw new ArgumentNullException("reader");
+        }
+
+        while (reader.Read())
+        {
+            yield return ToDictionary(reader);
+        }
+    }
+
+    /// <summary>
     /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Liste von
     /// <see cref="Dictionary{TKey, TValue}" />s um.
     /// </summary>
@@ -224,19 +247,7 @@ public static partial class __DataExtensionMethods
     /// </exception>
     public static List<Dictionary<string, object>> ToDictionaryList(this IDataReader reader)
     {
-        if (reader == null)
-        {
-            throw new ArgumentNullException("reader");
-        }
-
-        var result = new List<Dictionary<string, object>>();
-
-        while (reader.Read())
-        {
-            result.Add(ToDictionary(reader));
-        }
-
-        return result;
+        return ToDictionaryEnumerable(reader).ToList();
     }
 
     #endregion Methods
