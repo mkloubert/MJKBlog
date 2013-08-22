@@ -63,6 +63,7 @@
     <Compile Include="_Extensions\Collections.cs" />
     <Compile Include="_Extensions\Compression.cs" />
     <Compile Include="_Extensions\IO.cs" />
+    <Compile Include="_Extensions\Data.cs" />
     <Compile Include="_Extensions\Security.cs" />
     <Compile Include="_Extensions\Strings.cs" />
     <Compile Include="_Extensions\ValuesAndObjects.cs" />

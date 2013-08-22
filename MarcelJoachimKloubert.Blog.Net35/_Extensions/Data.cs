@@ -4,15 +4,130 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.Odbc;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 
 /// <summary>
 /// Extension Methoden für Datenbank-Operationen.
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (3)
+    #region Methods (9)
 
-    // Public Methods (3) 
+    // Public Methods (9) 
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="reader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<IDataRecord> AsEnumerable(this IDataReader reader)
+    {
+        return AsEnumerable<IDataRecord>(reader);
+    }
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="SqlDataReader" /> Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="sqlReader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="sqlReader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<SqlDataReader> AsEnumerable(this SqlDataReader sqlReader)
+    {
+        return AsEnumerable<SqlDataReader>(sqlReader);
+    }
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="DbDataReader" /> Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="dbReader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="dbReader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<DbDataRecord> AsEnumerable(this DbDataReader dbReader)
+    {
+        return AsEnumerable<DbDataRecord>(dbReader);
+    }
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="OdbcDataReader" /> Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="odbcReader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="odbcReader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<OdbcDataReader> AsEnumerable(this OdbcDataReader odbcReader)
+    {
+        return AsEnumerable<OdbcDataReader>(odbcReader);
+    }
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="OleDbDataReader" /> Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="oleReader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="oleReader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<OleDbDataReader> AsEnumerable(this OleDbDataReader oleReader)
+    {
+        return AsEnumerable<OleDbDataReader>(oleReader);
+    }
+
+    /// <summary>
+    /// Erzeugt eine Sequenz für ein <see cref="IDataReader" />-verwantes Objekt, um
+    /// dessen Resultat / Zeilen in einer foreach-Schleife verwenden zu können.
+    /// </summary>
+    /// <param name="reader">Der Reader, der die Daten bereitstellt.</param>
+    /// <returns>
+    /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
+    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<TRec> AsEnumerable<TRec>(this IDataReader reader)
+        where TRec : global::System.Data.IDataRecord
+    {
+        if (reader == null)
+        {
+            throw new ArgumentNullException("reader");
+        }
+
+        while (reader.Read())
+        {
+            yield return (TRec)reader;
+        }
+    }
 
     /// <summary>
     /// Gibt die typisierte Version eines Wertes aus einem
