@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MarcelJoachimKloubert.Blog.ComponentModel
+namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
 {
     /// <summary>
     /// Eine Thread-sichere <see cref="ObservableCollection{T}" />,
