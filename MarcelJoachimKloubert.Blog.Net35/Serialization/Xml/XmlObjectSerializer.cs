@@ -152,27 +152,65 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
 
         #endregion Properties
 
-        #region Methods (11)
+        #region Methods (13)
 
-        // Public Methods (6) 
+        // Public Methods (9) 
+
+        /// <summary>
+        /// Erzeugt ein Wörterbuch aus XML-Daten.
+        /// </summary>
+        /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+        /// <returns>Das Wörterbuch mit den Werten.</returns>
+        public static Dictionary<string, object> FromXml(IEnumerable<char> xml)
+        {
+            return FromXml(xml, new __IgnoreCaseEqualityComparer());
+        }
+
+        /// <summary>
+        /// Erzeugt ein Wörterbuch aus XML-Daten.
+        /// </summary>
+        /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+        /// <returns>Das Wörterbuch mit den Werten.</returns>
+        public static Dictionary<string, object> FromXml(XmlNode xml)
+        {
+            return FromXml(xml, new __IgnoreCaseEqualityComparer());
+        }
+
+        /// <summary>
+        /// Erzeugt ein Wörterbuch aus XML-Daten.
+        /// </summary>
+        /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
+        /// <returns>Das Wörterbuch mit den Werten.</returns>
+        public static Dictionary<string, object> FromXml(XNode xml)
+        {
+            return FromXml(xml, new __IgnoreCaseEqualityComparer());
+        }
 
         /// <summary>
         /// Erzeugt ein Wörterbuch aus XML-Daten.
         /// </summary>
         /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
         /// <param name="keyComparer">
-        /// Der optionale, eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
+        /// Der eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
         /// zurückgegeben Wörterbuchs vergleicht.
         /// </param>
         /// <returns>Das Wörterbuch mit den Werten.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
         /// <remarks>
         /// Ist <paramref name="keyComparer" /> eine <see langword="null" /> Referenz, wird ein
         /// Standard <see cref="IEqualityComparer{T}" /> Objekt genutzt, das die Schlüssel nicht
         /// nach Groß- und Kleinschreibung vergleicht.
         /// </remarks>
         public static Dictionary<string, object> FromXml(IEnumerable<char> xml,
-                                                         IEqualityComparer<string> keyComparer = null)
+                                                         IEqualityComparer<string> keyComparer)
         {
+            if (keyComparer == null)
+            {
+                throw new ArgumentNullException("keyComparer");
+            }
+
             if (xml != null)
             {
                 var strXml = AsString(xml).Trim();
@@ -183,7 +221,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                 }
             }
 
-            return new Dictionary<string, object>(GetEqualityComparer(keyComparer));
+            return new Dictionary<string, object>(keyComparer);
         }
 
         /// <summary>
@@ -191,17 +229,20 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// </summary>
         /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
         /// <param name="keyComparer">
-        /// Der optionale, eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
+        /// Der eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
         /// zurückgegeben Wörterbuchs vergleicht.
         /// </param>
         /// <returns>Das Wörterbuch mit den Werten.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
         /// <remarks>
         /// Ist <paramref name="keyComparer" /> eine <see langword="null" /> Referenz, wird ein
         /// Standard <see cref="IEqualityComparer{T}" /> Objekt genutzt, das die Schlüssel nicht
         /// nach Groß- und Kleinschreibung vergleicht.
         /// </remarks>
         public static Dictionary<string, object> FromXml(XmlNode xml,
-                                                         IEqualityComparer<string> keyComparer = null)
+                                                         IEqualityComparer<string> keyComparer)
         {
             return FromXml(xml != null ? xml.OuterXml : null,
                            keyComparer);
@@ -212,19 +253,27 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// </summary>
         /// <param name="xml">The XML-Daten aus denen das Wörterbuch erstellt werden soll.</param>
         /// <param name="keyComparer">
-        /// Der optionale, eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
+        /// Der eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
         /// zurückgegeben Wörterbuchs vergleicht.
         /// </param>
         /// <returns>Das Wörterbuch mit den Werten.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
         /// <remarks>
         /// Ist <paramref name="keyComparer" /> eine <see langword="null" /> Referenz, wird ein
         /// Standard <see cref="IEqualityComparer{T}" /> Objekt genutzt, das die Schlüssel nicht
         /// nach Groß- und Kleinschreibung vergleicht.
         /// </remarks>
         public static Dictionary<string, object> FromXml(XNode xml,
-                                                         IEqualityComparer<string> keyComparer = null)
+                                                         IEqualityComparer<string> keyComparer)
         {
-            var result = new Dictionary<string, object>(GetEqualityComparer(keyComparer));
+            if (keyComparer == null)
+            {
+                throw new ArgumentNullException("keyComparer");
+            }
+
+            var result = new Dictionary<string, object>(keyComparer);
 
             var xmlElement = ToXElement(xml);
 
@@ -515,7 +564,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
 
             return result;
         }
-        // Private Methods (5) 
+        // Private Methods (4) 
 
         private static string AsString(IEnumerable<char> chars)
         {
@@ -535,11 +584,6 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
             }
 
             return new string(chars.ToArray());
-        }
-
-        private static IEqualityComparer<string> GetEqualityComparer(IEqualityComparer<string> keyComparer)
-        {
-            return keyComparer ?? new __IgnoreCaseEqualityComparer();
         }
 
         private static string NormalizeXmlValue(string value)
@@ -597,7 +641,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// </exception>
         public static KeyValuePair<string, object>? XmlToKeyValuePair(XNode xml)
         {
-            return XmlToKeyValuePair(xml, null);
+            return XmlToKeyValuePair(xml, new __IgnoreCaseEqualityComparer());
         }
 
         /// <summary>
@@ -605,7 +649,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// </summary>
         /// <param name="xml">Dei XML-Daten.</param>
         /// <param name="keyComparer">
-        /// Der optionale, eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
+        /// Der eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
         /// zurückgegeben Wörterbuchs vergleicht.
         /// </param>
         /// <returns>
@@ -613,12 +657,20 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// <paramref name="xml" /> vorhanden sind bzw. dieses ebenfalls <see langword="null" />
         /// ist.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
         /// <exception cref="NotSupportedException">
         /// Die XML-Daten konnten nicht deserialisiert werden.
         /// </exception>
         public static KeyValuePair<string, object>? XmlToKeyValuePair(XNode xml,
                                                                       IEqualityComparer<string> keyComparer)
         {
+            if (keyComparer == null)
+            {
+                throw new ArgumentNullException("keyComparer");
+            }
+
             KeyValuePair<string, object>? result = null;
 
             var xmlElement = ToXElement(xml);
@@ -703,7 +755,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
 
                     case TYPE_DICT:
                         {
-                            var dict = new Dictionary<string, object>(GetEqualityComparer(keyComparer));
+                            var dict = new Dictionary<string, object>(keyComparer);
                             foreach (var item in xmlElement.Elements(XML_ELEMENT_LISTITEM))
                             {
                                 var pair = XmlToKeyValuePair(item,
