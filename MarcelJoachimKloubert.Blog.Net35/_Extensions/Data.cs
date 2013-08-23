@@ -8,16 +8,15 @@ using System.Data.Common;
 using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Linq;
 
 /// <summary>
 /// Extension Methoden für Datenbank-Operationen.
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (12)
+    #region Methods (11)
 
-    // Public Methods (12) 
+    // Public Methods (11) 
 
     /// <summary>
     /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
@@ -234,20 +233,6 @@ public static partial class __DataExtensionMethods
         {
             yield return ToDictionary(reader);
         }
-    }
-
-    /// <summary>
-    /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Liste von
-    /// <see cref="Dictionary{TKey, TValue}" />s um.
-    /// </summary>
-    /// <param name="reader">Der Reader, der die Daten / Zeilen bereitstellt.</param>
-    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="reader" />.</returns>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
-    /// </exception>
-    public static List<Dictionary<string, object>> ToDictionaryList(this IDataReader reader)
-    {
-        return ToDictionaryEnumerable(reader).ToList();
     }
 
     #endregion Methods
