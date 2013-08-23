@@ -32,7 +32,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// <summary>
         /// Interner Name eines <see cref="byte" />.
         /// </summary>
-        public const string TYPE_BYTE = "Byte";
+        public const string TYPE_BYTE = "byte";
         /// <summary>
         /// Interner Name eines <see cref="Decimal" />.
         /// </summary>
