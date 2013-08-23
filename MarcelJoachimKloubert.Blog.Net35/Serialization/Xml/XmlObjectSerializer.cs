@@ -19,16 +19,28 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
     /// </summary>
     public static partial class XmlObjectSerializer
     {
-        #region Fields (24)
+        #region Fields (29)
 
+        /// <summary>
+        /// Interner Name für Binarydaten.
+        /// </summary>
+        public const string TYPE_BINARY = "bin";
         /// <summary>
         /// Interner Name eines <see cref="Boolean" />.
         /// </summary>
         public const string TYPE_BOOLEAN = "bool";
         /// <summary>
+        /// Interner Name eines <see cref="byte" />.
+        /// </summary>
+        public const string TYPE_BYTE = "Byte";
+        /// <summary>
         /// Interner Name eines <see cref="Decimal" />.
         /// </summary>
         public const string TYPE_DECIMAL = "decimal";
+        /// <summary>
+        /// Interner Name einer <see cref="IDictionary{TKey, TValue}" />.
+        /// </summary>
+        public const string TYPE_DICT = "dict";
         /// <summary>
         /// Interner Name eines <see cref="Double" />.
         /// </summary>
@@ -66,6 +78,10 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// </summary>
         public const string TYPE_OBJECT = "object";
         /// <summary>
+        /// Interner Name eines <see cref="SByte" />.
+        /// </summary>
+        public const string TYPE_SBYTE = "sbyte";
+        /// <summary>
         /// Interner Name eines <see cref="String" />s.
         /// </summary>
         public const string TYPE_STRING = "string";
@@ -89,6 +105,10 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// Name des Attributs, das den CLR Datentyp eines Wertes speichert.
         /// </summary>
         public const string XML_ATTRIB_CLRTYPE = "clrType";
+        /// <summary>
+        /// Name des Attributs, das den Schlüsselnamen eines Wörterbucheintrags speichert.
+        /// </summary>
+        public const string XML_ATTRIB_DICT_ITEM_KEY = "key";
         /// <summary>
         /// Name des Attributs, das den Namen eines Wertes speichert.
         /// </summary>
@@ -132,7 +152,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
 
         #endregion Properties
 
-        #region Methods (10)
+        #region Methods (11)
 
         // Public Methods (6) 
 
@@ -212,7 +232,8 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
             {
                 foreach (var item in xmlElement.Elements(XML_ELEMENT_VALUE))
                 {
-                    var value = XmlToKeyValuePair(item);
+                    var value = XmlToKeyValuePair(item,
+                                                  keyComparer);
                     if (value.HasValue)
                     {
                         result.Add((value.Value.Key ?? string.Empty).Trim(),
@@ -257,6 +278,40 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                 {
                     xmlValue = AsString(value as IEnumerable<char>);
                     type = TYPE_STRING;
+                }
+                else if (value is IEnumerable<byte> ||
+                         value is Stream)
+                {
+                    var bin = value as byte[];
+                    if (bin == null)
+                    {
+                        var stream = value as Stream;
+                        if (stream != null)
+                        {
+                            using (var temp = new MemoryStream())
+                            {
+                                var buffer = new byte[81920];
+                                int bytesRead;
+                                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                                {
+                                    temp.Write(buffer, 0, bytesRead);
+                                }
+
+                                bin = temp.ToArray();
+                            }
+                        }
+                        else
+                        {
+                            bin = ((IEnumerable<byte>)value).ToArray();
+                        }
+                    }
+
+                    if (bin != null)
+                    {
+                        xmlValue = Convert.ToBase64String(bin);
+                    }
+
+                    type = TYPE_BINARY;
                 }
                 else if (value is short)
                 {
@@ -308,6 +363,16 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                     xmlValue = (bool)value ? XML_VALUE_BOOLEAN_TRUE : XML_VALUE_BOOLEAN_FALSE;
                     type = TYPE_BOOLEAN;
                 }
+                else if (value is byte)
+                {
+                    xmlValue = ((byte)value).ToString(NumberCultureFormat);
+                    type = TYPE_BYTE;
+                }
+                else if (value is sbyte)
+                {
+                    xmlValue = ((sbyte)value).ToString(NumberCultureFormat);
+                    type = TYPE_SBYTE;
+                }
                 else if (value is Version)
                 {
                     xmlValue = value.ToString();
@@ -343,17 +408,52 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                 }
                 else if (value is IEnumerable)
                 {
-                    foreach (var item in (IEnumerable)value)
+                    if ((value is IEnumerable<KeyValuePair<string, object>>) ||
+                        (value is IEnumerable<KeyValuePair<IEnumerable<char>, object>>))
                     {
-                        var xml = KeyValuePairToXml(new KeyValuePair<string, object>(string.Empty, value));
-                        if (xml != null)
+                        var dict = value as IEnumerable<KeyValuePair<string, object>>;
+                        if (dict == null)
                         {
-                            xml.Name = XML_ELEMENT_LISTITEM;
-                            result.Add(xml);
+                            dict = (value as IEnumerable<KeyValuePair<IEnumerable<char>, object>>)
+                                       .Select(i => new KeyValuePair<string, object>(AsString(i.Key),
+                                                                                     i.Value));
                         }
-                    }
 
-                    type = TYPE_LIST;
+                        foreach (var item in dict)
+                        {
+                            var xml = KeyValuePairToXml(new KeyValuePair<string, object>(item.Key, item.Value));
+                            if (xml != null)
+                            {
+                                xml.Name = XML_ELEMENT_LISTITEM;
+
+                                var key = item.Key;
+                                if (key != null)
+                                {
+                                    xml.SetAttributeValue(XML_ATTRIB_DICT_ITEM_KEY,
+                                                          key);
+                                }
+
+                                result.Add(xml);
+                            }
+                        }
+
+                        type = TYPE_DICT;
+                    }
+                    else
+                    {
+                        foreach (var item in (IEnumerable)value)
+                        {
+                            var xml = KeyValuePairToXml(new KeyValuePair<string, object>(string.Empty, item));
+                            if (xml != null)
+                            {
+                                xml.Name = XML_ELEMENT_LISTITEM;
+
+                                result.Add(xml);
+                            }
+                        }
+
+                        type = TYPE_LIST;
+                    }
                 }
                 else
                 {
@@ -415,7 +515,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
 
             return result;
         }
-        // Private Methods (4) 
+        // Private Methods (5) 
 
         private static string AsString(IEnumerable<char> chars)
         {
@@ -471,6 +571,16 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
             return result;
         }
 
+        private static Type TryFindClrType(string clrTypeName)
+        {
+            clrTypeName = (clrTypeName ?? string.Empty).Trim();
+
+            return AppDomain.CurrentDomain
+                            .GetAssemblies()
+                            .SelectMany(a => a.GetTypes())
+                            .SingleOrDefault(t => t.FullName == clrTypeName);
+        }
+
         #endregion Methods
 
         /// <summary>
@@ -486,6 +596,28 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
         /// Die XML-Daten konnten nicht deserialisiert werden.
         /// </exception>
         public static KeyValuePair<string, object>? XmlToKeyValuePair(XNode xml)
+        {
+            return XmlToKeyValuePair(xml, null);
+        }
+
+        /// <summary>
+        /// Erzeugt ein Schlüssel/Wert-Paar aus XML-Daten.
+        /// </summary>
+        /// <param name="xml">Dei XML-Daten.</param>
+        /// <param name="keyComparer">
+        /// Der optionale, eigene <see cref="IEqualityComparer{T}" />, der die Schlüssel des
+        /// zurückgegeben Wörterbuchs vergleicht.
+        /// </param>
+        /// <returns>
+        /// Das Schlüssel/Wert-Paar oder <see langword="null" />, wenn nicht genug Daten in
+        /// <paramref name="xml" /> vorhanden sind bzw. dieses ebenfalls <see langword="null" />
+        /// ist.
+        /// </returns>
+        /// <exception cref="NotSupportedException">
+        /// Die XML-Daten konnten nicht deserialisiert werden.
+        /// </exception>
+        public static KeyValuePair<string, object>? XmlToKeyValuePair(XNode xml,
+                                                                      IEqualityComparer<string> keyComparer)
         {
             KeyValuePair<string, object>? result = null;
 
@@ -519,6 +651,16 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                         value = xmlElement.Value;
                         break;
 
+                    case TYPE_BINARY:
+                        {
+                            var s = NormalizeXmlValue(xmlElement.Value);
+                            if (s != string.Empty)
+                            {
+                                value = Convert.FromBase64String(s);
+                            }
+                        }
+                        break;
+
                     case TYPE_BOOLEAN:
                         {
                             var s = NormalizeXmlValue(xmlElement.Value);
@@ -539,6 +681,16 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                         }
                         break;
 
+                    case TYPE_BYTE:
+                        {
+                            var s = NormalizeXmlValue(xmlElement.Value);
+                            if (s != string.Empty)
+                            {
+                                value = byte.Parse(s, NumberCultureFormat);
+                            }
+                        }
+                        break;
+
                     case TYPE_DECIMAL:
                         {
                             var s = NormalizeXmlValue(xmlElement.Value);
@@ -546,6 +698,32 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                             {
                                 value = decimal.Parse(s, NumberCultureFormat);
                             }
+                        }
+                        break;
+
+                    case TYPE_DICT:
+                        {
+                            var dict = new Dictionary<string, object>(GetEqualityComparer(keyComparer));
+                            foreach (var item in xmlElement.Elements(XML_ELEMENT_LISTITEM))
+                            {
+                                var pair = XmlToKeyValuePair(item,
+                                                             keyComparer);
+                                if (pair.HasValue)
+                                {
+                                    string key = null;
+
+                                    var keyAttrib = item.Attribute(XML_ATTRIB_DICT_ITEM_KEY);
+                                    if (keyAttrib != null)
+                                    {
+                                        key = keyAttrib.Value;
+                                    }
+
+                                    dict.Add(key ?? string.Empty,
+                                             pair.Value.Value);
+                                }
+                            }
+
+                            value = dict;
                         }
                         break;
 
@@ -567,12 +745,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                                 throw new FormatException("Der CLR-Datentype ist nicht definiert!");
                             }
 
-                            var clrTypeName = clrTypeAttrib.Value.Trim();
-
-                            var clrType = AppDomain.CurrentDomain
-                                                   .GetAssemblies()
-                                                   .SelectMany(a => a.GetTypes())
-                                                   .SingleOrDefault(t => t.FullName == clrTypeName);
+                            var clrType = TryFindClrType(clrTypeAttrib.Value.Trim());
                             if (clrType == null)
                             {
                                 throw new IndexOutOfRangeException(XML_ATTRIB_CLRTYPE);
@@ -631,7 +804,8 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                             var list = new List<object>();
                             foreach (var item in xmlElement.Elements(XML_ELEMENT_LISTITEM))
                             {
-                                var pair = XmlToKeyValuePair(item);
+                                var pair = XmlToKeyValuePair(item,
+                                                             keyComparer);
                                 if (pair.HasValue)
                                 {
                                     list.Add(pair.Value.Value);
@@ -657,12 +831,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                                 throw new FormatException("Der CLR-Datentype ist nicht definiert!");
                             }
 
-                            var clrTypeName = clrTypeAttrib.Value.Trim();
-
-                            var clrType = AppDomain.CurrentDomain
-                                                   .GetAssemblies()
-                                                   .SelectMany(a => a.GetTypes())
-                                                   .SingleOrDefault(t => t.FullName == clrTypeName);
+                            var clrType = TryFindClrType(clrTypeAttrib.Value.Trim());
                             if (clrType == null)
                             {
                                 throw new IndexOutOfRangeException(XML_ATTRIB_CLRTYPE);
@@ -683,6 +852,16 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                             }
 
                             value = xmlObj;
+                        }
+                        break;
+
+                    case TYPE_SBYTE:
+                        {
+                            var s = NormalizeXmlValue(xmlElement.Value);
+                            if (s != string.Empty)
+                            {
+                                value = sbyte.Parse(s, NumberCultureFormat);
+                            }
                         }
                         break;
 

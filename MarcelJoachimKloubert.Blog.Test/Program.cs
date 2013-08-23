@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
+using System.Security.Cryptography;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 
@@ -46,9 +47,10 @@ namespace MarcelJoachimKloubert.Blog.Test
         {
             try
             {
-                Test_Mef();
+                // Test_Mef();
+                // Test_AsyncEncryption();
                 // Test_Xslt();
-                // Test_XmlObjectSerializer();
+                Test_XmlObjectSerializer();
             }
             catch (Exception ex)
             {
@@ -68,8 +70,19 @@ namespace MarcelJoachimKloubert.Blog.Test
             mi1.Refresh();
         }
 
+        private static void Test_AsyncEncryption()
+        {
+            using (var rsa = new RSACryptoServiceProvider())    // generate new/random key pair
+            {
+                var export = rsa.ExportParameters(false);
+            }
+        }
+
         private static void Test_XmlObjectSerializer()
         {
+            var bin = new byte[16];
+            new Random().NextBytes(bin);
+
             var dict1 = new Dictionary<string, object>()
             {
                 { "a1", short.MinValue },
@@ -90,11 +103,24 @@ namespace MarcelJoachimKloubert.Blog.Test
                 { "f1", ulong.MinValue },
                 { "f2", ulong.MaxValue },
 
-                { "g", float.Parse("59.23979") },
+                { "g", float.Parse("59,23979") },
 
-                { "h", double.Parse("59.23979") },
+                { "h", double.Parse("59,23979") },
 
-                { "i", decimal.Parse("59.23979") },
+                { "i", decimal.Parse("59,23979") },
+
+                { "j", new List<object>()
+                {
+                    1,2,3,
+                }},
+
+                { "k", new Dictionary<string, object>()
+                {
+                    {"TM", 5979},
+                    {"MK", 23979},
+                }},
+
+                { "l", bin },
             };
 
             var xml = XmlObjectSerializer.ToXml(dict1);
