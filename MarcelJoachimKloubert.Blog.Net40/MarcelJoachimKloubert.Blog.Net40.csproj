@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MEF\MultiInstanceComposer.cs" />
+    <Compile Include="MEF\SingleInstanceComposer.cs" />
     <Compile Include="MEF\StrongNamedAssemblyPartCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

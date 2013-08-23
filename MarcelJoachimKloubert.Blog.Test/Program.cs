@@ -3,10 +3,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
+using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 
 namespace MarcelJoachimKloubert.Blog.Test
 {
+    interface IA
+    {
+
+    }
+    interface IB
+    {
+
+    }
+
+    [Export(typeof(IA))]
+    class A1 : IA
+    {
+
+    }
+    [Export(typeof(IA))]
+    class A2 : IA
+    {
+
+    }
+    [Export(typeof(IB))]
+    class B1 : IB
+    {
+
+    }
+
     internal static class Program
     {
         #region Methods (3)
@@ -17,7 +46,8 @@ namespace MarcelJoachimKloubert.Blog.Test
         {
             try
             {
-                Test_Xslt();
+                Test_Mef();
+                // Test_Xslt();
                 // Test_XmlObjectSerializer();
             }
             catch (Exception ex)
@@ -26,6 +56,16 @@ namespace MarcelJoachimKloubert.Blog.Test
             }
 
             Console.ReadLine();
+        }
+
+        private static void Test_Mef()
+        {
+            var asmCatalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+
+            var container = new CompositionContainer(asmCatalog, true);
+
+            var mi1 = new MultiInstanceComposer<IA>(container);
+            mi1.Refresh();
         }
 
         private static void Test_XmlObjectSerializer()
