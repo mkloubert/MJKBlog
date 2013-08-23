@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
+    <Compile Include="DelegateEqualityComparer.cs" />
     <Compile Include="SyncDisposableBase.DisposeContext.cs">
       <DependentUpon>SyncDisposableBase.cs</DependentUpon>
     </Compile>

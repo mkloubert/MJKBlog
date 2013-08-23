@@ -46,6 +46,9 @@ public static partial class __DrawingExtensionMethods
     /// <exception cref="ArgumentNullException">
     /// <paramref name="file" /> ist eine <see langword="null" /> Referenz.
     /// </exception>
+    /// <exception cref="FileNotFoundException">
+    /// <paramref name="file" /> verweist auf eine Datei, die anscheinend nicht existiert.
+    /// </exception>
     public static Bitmap LoadBitmap(this FileInfo file)
     {
         if (file == null)
