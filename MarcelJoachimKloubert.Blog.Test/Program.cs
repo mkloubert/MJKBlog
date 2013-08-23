@@ -121,6 +121,12 @@ namespace MarcelJoachimKloubert.Blog.Test
                 }},
 
                 { "l", bin },
+
+                { "m1", sbyte.MinValue },
+                { "m2", sbyte.MaxValue },
+                
+                { "n1", byte.MinValue },
+                { "n2", byte.MaxValue },
             };
 
             var xml = XmlObjectSerializer.ToXml(dict1);
