@@ -1,7 +1,6 @@
 ﻿// s. http://blog.marcel-kloubert.de
 
 
-
 using System;
 using System.Data;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MarcelJoachimKloubert.Blog.Drawing;
 
 namespace MarcelJoachimKloubert.Blog.TestWinForms
 {
@@ -21,8 +20,12 @@ namespace MarcelJoachimKloubert.Blog.TestWinForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.pictureBox1
-                .Image = BarcodeFactory.CreateQrCodeImage(@"http://blog.marcel-kloubert.de/");
+            using (var stream = this.GetType().Assembly.GetManifestResourceStream("MarcelJoachimKloubert.Blog.TestWinForms.Edward_Snowden-2.jpg"))
+            {
+                this.pictureBox1
+                    .Image = stream.LoadBitmap();
+            }
+
         }
 
         #endregion Methods
