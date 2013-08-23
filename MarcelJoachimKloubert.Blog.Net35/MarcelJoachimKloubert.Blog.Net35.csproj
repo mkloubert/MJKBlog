@@ -23,6 +23,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.Blog.Net35.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,6 +75,7 @@
     <Compile Include="_Extensions\Data.BuildObjects.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="_Extensions\Drawing.cs" />
     <Compile Include="_Extensions\IO.cs" />
     <Compile Include="_Extensions\Data.cs" />
     <Compile Include="_Extensions\Security.cs" />

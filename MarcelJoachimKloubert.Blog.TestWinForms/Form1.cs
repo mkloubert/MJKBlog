@@ -23,7 +23,8 @@ namespace MarcelJoachimKloubert.Blog.TestWinForms
             using (var stream = this.GetType().Assembly.GetManifestResourceStream("MarcelJoachimKloubert.Blog.TestWinForms.Edward_Snowden-2.jpg"))
             {
                 this.pictureBox1
-                    .Image = stream.LoadBitmap();
+                    .Image = stream.LoadBitmap()
+                                   .Grayscale();
             }
 
         }
