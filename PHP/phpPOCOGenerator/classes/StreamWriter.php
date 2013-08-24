@@ -24,11 +24,10 @@ final class StreamWriter {
 	/**
 	 * Closes the underlying stream.
 	 * 
-	 * @return StreamWriter That instance.
+	 * @return boolean Returns (true) on success or (false) on failure.
 	 */
 	public function close() {
-		fclose($this->_handle);
-		return $this;
+		return fclose($this->_handle);
 	}
 	
 	/**
