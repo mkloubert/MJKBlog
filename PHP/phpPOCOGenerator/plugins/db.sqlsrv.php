@@ -26,8 +26,6 @@ class DbAdapter_SQLSrv extends DbAdapterBase {
     	
     	$connectionInfo = array();
 
-    	// ("UID" => $uid, "PWD" => $pwd, "Database"=>"AdventureWorks")
-    	
     	if (isset($conf['user'])) {
     		$connectionInfo['UID'] = $conf['user'];
     	}
