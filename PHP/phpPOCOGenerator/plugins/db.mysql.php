@@ -25,7 +25,7 @@ class DbAdapter_MySQL extends DbAdapterBase {
     	}
     	
     	if (!isset($conf['port'])) {
-    		$conf['port'] = 3006;
+    		$conf['port'] = 3306;
     	}
     	
     	if (!isset($conf['db'])) {
