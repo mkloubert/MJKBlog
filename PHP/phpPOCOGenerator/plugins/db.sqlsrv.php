@@ -21,7 +21,7 @@ class DbAdapter_SQLSrv extends DbAdapterBase {
 	 */
     public function __construct(array $conf = array()) {
     	if (!isset($conf['host'])) {
-    		$conf['host'] = '127.0.0.1';
+    		$conf['host'] = 'localhost\SQLEXPRESS';
     	}
     	
     	$connectionInfo = array();
