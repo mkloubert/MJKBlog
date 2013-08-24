@@ -6,7 +6,13 @@
  * @author Marcel Joachim Kloubert <blog.marcel-kloubert.de>
  */
 class DbAdapter_MySQL extends DbAdapterBase {
+	/**
+	 * The current MySQLi connection.
+	 * 
+	 * @var mysqli
+	 */
 	private $_conn;
+	
 	
 	/**
 	 * Initializes a new instance of that class.
