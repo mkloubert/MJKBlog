@@ -167,6 +167,9 @@ namespace MarcelJoachimKloubert.Blog.Test
             }
 
             Console.WriteLine();
+            Console.WriteLine(xml);
+
+            Console.WriteLine();
             Console.WriteLine("OK");
         }
 
