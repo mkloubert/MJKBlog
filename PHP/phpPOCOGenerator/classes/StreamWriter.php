@@ -44,19 +44,6 @@ final class StreamWriter {
 	}
 	
 	/**
-	 * Writes a string to the underlying stream
-	 * and additionally adds a newline character.
-	 *
-	 * @param string $str The string / data to write.
-	 *
-	 * @return StreamWriter That instance.
-	 */
-	public function writeLine($str = '') {
-		return $this->write($str)
-		            ->write("\n");
-	}
-	
-	/**
 	 * Writes a format string to the underlying stream.
 	 *
 	 * @param string $format The format string.
@@ -71,6 +58,19 @@ final class StreamWriter {
 		$str = call_user_func_array('sprintf', $args);
 
 		return $this->write($str);
+	}
+
+	/**
+	 * Writes a string to the underlying stream
+	 * and additionally adds a newline character.
+	 *
+	 * @param string $str The string / data to write.
+	 *
+	 * @return StreamWriter That instance.
+	 */
+	public function writeLine($str = '') {
+		return $this->write($str)
+		            ->write("\n");
 	}
 	
 	/**
