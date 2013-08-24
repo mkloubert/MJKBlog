@@ -26,4 +26,18 @@ interface IEntityAttribute {
 	 * @return integer The zero-based index of that attribute.
 	 */
 	public function getOrdinal();
+	
+	/**
+	 * Gets the name of the underyling PHP data type.
+	 *
+	 * @return string The name of the underyling PHP data type.
+	 */
+	public function getPhpType();
+	
+	/**
+	 * Gets the name of the underyling data type.
+	 *
+	 * @return string The name of the underyling data type.
+	 */
+	public function getType();
 }

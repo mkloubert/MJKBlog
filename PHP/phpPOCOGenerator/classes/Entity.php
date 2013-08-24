@@ -9,6 +9,7 @@ final class Entity implements IEntity {
 	private $_dbAdapter;
 	private $_name;
 	
+
 	/**
 	 * Initializes a new instance of that class.
 	 * 
@@ -24,6 +25,7 @@ final class Entity implements IEntity {
 			$this->_name = $conf['name'];
 		}
 	}
+	
 	
 	/**
 	 * (non-PHPdoc)

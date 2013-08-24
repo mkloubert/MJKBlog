@@ -9,6 +9,9 @@ final class EntityAttribute implements IEntityAttribute {
 	private $_entity;
 	private $_name;
 	private $_ordinal;
+	private $_phpType;
+	private $_type;
+	
 	
 	/**
 	 * Initializes a new instance of that class.
@@ -28,7 +31,16 @@ final class EntityAttribute implements IEntityAttribute {
 		if (isset($conf['ordinal'])) {
 			$this->_ordinal = $conf['ordinal'];
 		}
+		
+		if (isset($conf['phpType'])) {
+			$this->_phpType = $conf['phpType'];
+		}
+		
+		if (isset($conf['type'])) {
+			$this->_type = $conf['type'];
+		}
 	}
+	
 	
 	/**
 	 * (non-PHPdoc)
@@ -52,5 +64,21 @@ final class EntityAttribute implements IEntityAttribute {
 	 */
 	public function getOrdinal() {
 		return $this->_ordinal;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see IEntityAttribute::getPhpType()
+	 */
+	public function getPhpType() {
+		return $this->_phpType;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see IEntityAttribute::getType()
+	 */
+	public function getType() {
+		return $this->_type;
 	}
 }

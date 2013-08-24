@@ -100,12 +100,23 @@ class DbAdapter_MySQL extends DbAdapterBase {
     	$ord = 0;
     	$res = $this->getConnection()->query(sprintf('DESCRIBE %s;',
     	                                             trim($entity->getName())));
-    	while ($row = $res->fetch_row()) {
+    	while ($row = $res->fetch_assoc()) {
+    		$type = trim(strtolower($row['Type']));
+    		
+    		$phpType = 'mixed';
+    		if ((0 === strpos($type, 'varchar')) ||
+    	        (0 === strpos($type, 'text'))) {
+    			
+    			$phpType = 'string';
+    		}
+    		
     		$newAttrib = new EntityAttribute(
     			$entity,
     			array(
-    			    'name'    => trim($row[0]),
+    			    'name'    => trim($row['Field']),
     				'ordinal' => $ord++,
+    				'phpType' => $phpType,
+    				'type'    => $type,
     			)
     		);
     		
