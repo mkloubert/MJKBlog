@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A MySQLi based database adapter.
+ * A SQL Server (sqlsrv) based database adapter.
  *
  * @author Marcel Joachim Kloubert <blog.marcel-kloubert.de>
  */
