@@ -109,6 +109,9 @@ class DbAdapter_MySQL extends DbAdapterBase {
     			
     			$phpType = 'string';
     		}
+    		else if (0 === strpos($type, 'bit')) {
+    			$phpType = 'boolean';
+    		}
     		
     		$newAttrib = new EntityAttribute(
     			$entity,
