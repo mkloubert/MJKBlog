@@ -40,12 +40,17 @@ class DbAdapter_MySQL extends DbAdapterBase {
     		$conf['password'] = null;
     	}
     	
+    	if (!isset($conf['socket'])) {
+    		$conf['socket'] = null;
+    	}
+    	
     	parent::__construct($conf);
     	
     	$this->_conn = new mysqli($conf['host'],
     			                  $conf['user'], $conf['password'],
     			                  $conf['db'],
-    			                  $conf['port']);
+    			                  $conf['port'],
+                                  $conf['socket']);
     }
     
     /**
