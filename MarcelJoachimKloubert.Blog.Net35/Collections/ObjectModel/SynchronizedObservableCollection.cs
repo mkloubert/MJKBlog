@@ -85,7 +85,8 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
         #region Properties (1)
 
         /// <summary>
-        /// Gets the object for thread safe operations.
+        /// Gibt das Objekt zurück, das für Thread-sichere Operationen
+        /// verwendet werden soll.
         /// </summary>
         public object SyncRoot
         {
