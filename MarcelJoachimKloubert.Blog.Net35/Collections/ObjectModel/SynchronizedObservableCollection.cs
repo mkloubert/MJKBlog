@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
     /// <typeparam name="T">Typ der Elemente.</typeparam>
     public class SynchronizedObservableCollection<T> : ObservableCollection<T>
     {
-        #region Constructors (4)
+        #region Constructors (6)
 
         /// <summary>
         /// Initialisiert eine neue Instanz der
@@ -34,6 +34,42 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
             }
 
             this.SyncRoot = syncRoot;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der
+        /// Klasse <see cref="SynchronizedObservableCollection{T}"/>.
+        /// </summary>
+        /// <param name="syncRoot">Das Objekt für Thread-sichere Operationen.</param>
+        /// <param name="list">Die Elemente, die von Anfang an Teil dieser List sein sollen.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="syncRoot" /> und/oder <paramref name="list" />
+        /// ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        public SynchronizedObservableCollection(object syncRoot, List<T> list)
+            : base(list)
+        {
+            if (syncRoot == null)
+            {
+                throw new ArgumentNullException("syncRoot");
+            }
+
+            this.SyncRoot = syncRoot;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der
+        /// Klasse <see cref="SynchronizedObservableCollection{T}"/>.
+        /// </summary>
+        /// <param name="list">Die Elemente, die von Anfang an Teil dieser List sein sollen.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="list" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        public SynchronizedObservableCollection(List<T> list)
+            : this(new object(),
+                   list)
+        {
+
         }
 
         /// <summary>
