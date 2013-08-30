@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
         /// ist eine <see langword="null" /> Referenz.
         /// </exception>
         public SynchronizedObservableCollection(object syncRoot, IEnumerable<T> collection)
-            : base(collection: collection)
+            : base(collection)
         {
             if (syncRoot == null)
             {
@@ -64,8 +64,8 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
         /// <paramref name="collection" /> ist eine <see langword="null" /> Referenz.
         /// </exception>
         public SynchronizedObservableCollection(IEnumerable<T> collection)
-            : this(syncRoot: new object(),
-                   collection: collection)
+            : this(new object(),
+                   collection)
         {
 
         }
@@ -75,7 +75,7 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
         /// Klasse <see cref="SynchronizedObservableCollection{T}"/>.
         /// </summary>
         public SynchronizedObservableCollection()
-            : this(syncRoot: new object())
+            : this(new object())
         {
 
         }

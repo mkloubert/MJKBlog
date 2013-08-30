@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
+using RemObjects.Script;
 
 namespace MarcelJoachimKloubert.Blog.Test
 {
@@ -27,9 +28,18 @@ namespace MarcelJoachimKloubert.Blog.Test
 
     }
     [Export(typeof(IA))]
-    class A2 : IA
+    class A : IA
     {
+        #region Methods (1)
 
+        // Public Methods (1) 
+
+        public void test()
+        {
+            Console.WriteLine("A:test()");
+        }
+
+        #endregion Methods
     }
     [Export(typeof(IB))]
     class B1 : IB
@@ -43,6 +53,44 @@ namespace MarcelJoachimKloubert.Blog.Test
 
         // Private Methods (3) 
 
+        static void Test_RemObjectsScript()
+        {
+            // Funktionen in der JavaScript-Engine
+            // werden über Delegates definiert
+            var myWriteLineAction = new Action<object>(
+                (obj) =>
+                {
+                    Console.WriteLine(obj);
+                });
+
+            using (var javascript = new EcmaScriptComponent())
+            {
+
+
+                // Variabel 'a' mit dem Wert 5979
+                javascript.Globals.SetVariable("a", 5979);
+                // Funktion 'myWriteLine' (s.o.)
+                javascript.Globals.SetVariable("myWriteLine", myWriteLineAction);
+
+                // die eigene Klasse 'A' als
+                // 'KlasseA' registrieren
+                javascript.ExposeType(typeof(A), "KlasseA");
+
+                // Quelltext festlegen
+                javascript.Source = @"
+myWriteLine(a);    // 5979
+
+a = 23979;
+myWriteLine(a);    // 23979
+
+var objA = new KlasseA();
+objA.test();
+";
+
+                javascript.Run();
+            }
+        }
+
         private static void Main(string[] args)
         {
             try
@@ -50,7 +98,9 @@ namespace MarcelJoachimKloubert.Blog.Test
                 // Test_Mef();
                 // Test_AsyncEncryption();
                 // Test_Xslt();
-                Test_XmlObjectSerializer();
+                // Test_XmlObjectSerializer();
+                // Test_GroupedCollection();
+                Test_RemObjectsScript();
             }
             catch (Exception ex)
             {

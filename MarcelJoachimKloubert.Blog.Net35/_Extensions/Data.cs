@@ -25,7 +25,7 @@ public static partial class __DataExtensionMethods
     /// <param name="reader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.
@@ -42,7 +42,7 @@ public static partial class __DataExtensionMethods
     /// <param name="sqlReader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="sqlReader" /> ist eine <see langword="null" /> Referenz.
@@ -59,7 +59,7 @@ public static partial class __DataExtensionMethods
     /// <param name="dbReader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="dbReader" /> ist eine <see langword="null" /> Referenz.
@@ -76,7 +76,7 @@ public static partial class __DataExtensionMethods
     /// <param name="odbcReader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="odbcReader" /> ist eine <see langword="null" /> Referenz.
@@ -93,7 +93,7 @@ public static partial class __DataExtensionMethods
     /// <param name="oleReader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="oleReader" /> ist eine <see langword="null" /> Referenz.
@@ -110,7 +110,7 @@ public static partial class __DataExtensionMethods
     /// <param name="reader">Der Reader, der die Daten bereitstellt.</param>
     /// <returns>
     /// Ein Sequenz mit verzögerter Ausführung, die bei einem foreach Durchlauf
-    /// Schritt-für-Schritt jede einelne Zeile zurückgibt.
+    /// Schritt-für-Schritt jede einzelne Zeile zurückgibt.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="reader" /> ist eine <see langword="null" /> Referenz.

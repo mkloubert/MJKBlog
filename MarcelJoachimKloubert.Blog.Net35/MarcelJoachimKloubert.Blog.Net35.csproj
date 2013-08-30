@@ -90,6 +90,7 @@
     <None Include="zxing.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="_Libs\RemObjects Script for .NET\License.txt" />
     <Content Include="_Libs\zxing\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
