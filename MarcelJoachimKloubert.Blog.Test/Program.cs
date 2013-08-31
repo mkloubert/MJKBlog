@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
@@ -102,7 +104,8 @@ objA.test();
                 // Test_XmlObjectSerializer();
                 // Test_GroupedCollection();
                 // Test_RemObjectsScript();
-                Test_ColorCode();
+                // Test_ColorCode();
+                Test_ForAll();
             }
             catch (Exception ex)
             {
@@ -241,7 +244,7 @@ End Module",
 
             var aspNet = cc.Colorize(@"",
                                      Languages.AspxCs);
-            
+
             var css = cc.Colorize(@"",
                                   Languages.Css);
 
@@ -252,6 +255,46 @@ End Module",
         private static void Test_Xslt()
         {
 
+        }
+
+        static void Test_ForAll()
+        {
+            var test = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            test.ForAll(
+                (i, s) =>
+                {
+                    if ((i + s) % 3 == 0)
+                    {
+                        throw new Exception(i.ToString());
+                    }
+                }, 1, false);
+
+            try
+            {
+                Console.WriteLine("A...");
+
+                var p = test.AsParallel();
+
+                ParallelEnumerable.ForAll(p, (i) =>
+                {
+                    Thread.Sleep(3000);
+
+                    if (i % 3 == 0)
+                    {
+                        throw new Exception(i.ToString());
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                Console.WriteLine("Fertig");
+            }
+
+            Console.ReadLine();
         }
 
         #endregion Methods
