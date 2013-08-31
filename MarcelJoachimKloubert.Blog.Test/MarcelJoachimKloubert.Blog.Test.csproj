@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ColorCode, Version=1.0.1.0, Culture=neutral, PublicKeyToken=27ae66c143cb740e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ColorCode.dll</HintPath>
+    </Reference>
     <Reference Include="RemObjects.Script, Version=2.0.69.1081, Culture=neutral, PublicKeyToken=3df3cad1b7aa5098, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\RemObjects.Script.dll</HintPath>
@@ -68,6 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="RemObjects.Script.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ColorCode.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

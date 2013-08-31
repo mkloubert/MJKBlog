@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using System.Security.Cryptography;
+using ColorCode;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using RemObjects.Script;
@@ -100,7 +101,8 @@ objA.test();
                 // Test_Xslt();
                 // Test_XmlObjectSerializer();
                 // Test_GroupedCollection();
-                Test_RemObjectsScript();
+                // Test_RemObjectsScript();
+                Test_ColorCode();
             }
             catch (Exception ex)
             {
@@ -221,6 +223,30 @@ objA.test();
 
             Console.WriteLine();
             Console.WriteLine("OK");
+        }
+
+        static void Test_ColorCode()
+        {
+            var cc = new CodeColorizer();
+
+            var vbnet = cc.Colorize(@"Module Module1
+    Sub Main()
+        Console.WriteLine(""Hallo Welt!"")
+    End Sub
+End Module",
+                                    Languages.VbDotNet);
+
+            var html = cc.Colorize(@"",
+                                   Languages.Html);
+
+            var aspNet = cc.Colorize(@"",
+                                     Languages.AspxCs);
+            
+            var css = cc.Colorize(@"",
+                                  Languages.Css);
+
+            var js = cc.Colorize(@"",
+                                 Languages.Php);
         }
 
         private static void Test_Xslt()

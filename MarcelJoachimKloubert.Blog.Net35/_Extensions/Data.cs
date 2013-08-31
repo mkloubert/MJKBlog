@@ -14,9 +14,9 @@ using System.Data.SqlClient;
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (11)
+    #region Methods (12)
 
-    // Public Methods (11) 
+    // Public Methods (12) 
 
     /// <summary>
     /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
@@ -188,7 +188,8 @@ public static partial class __DataExtensionMethods
 
     /// <summary>
     /// Wandelt sämtliche Werte eines <see cref="IDataRecord" /> in ein
-    /// <see cref="Dictionary{TKey, TValue}" /> um.
+    /// <see cref="Dictionary{TKey, TValue}" /> um und nutzt den
+    /// Standard <see cref="IEqualityComparer{T}" /> für <see cref="string" />s.
     /// </summary>
     /// <param name="rec">Die Zeile mit den Daten.</param>
     /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="rec" />.</returns>
@@ -197,16 +198,42 @@ public static partial class __DataExtensionMethods
     /// </exception>
     public static Dictionary<string, object> ToDictionary(this IDataRecord rec)
     {
+        return ToDictionary(rec,
+                            EqualityComparer<string>.Default);
+    }
+
+    /// <summary>
+    /// Wandelt sämtliche Werte eines <see cref="IDataRecord" /> in ein
+    /// <see cref="Dictionary{TKey, TValue}" /> um.
+    /// </summary>
+    /// <param name="rec">Die Zeile mit den Daten.</param>
+    /// <param name="keyComparer">
+    /// Der <see cref="IEqualityComparer{T}" />, der zum Vergleichen der Schlüssel
+    /// verwendet werden soll.
+    /// </param>
+    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="rec" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="rec" /> und/oder <paramref name="keyComparer" />
+    /// ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static Dictionary<string, object> ToDictionary(this IDataRecord rec,
+                                                          IEqualityComparer<string> keyComparer)
+    {
         if (rec == null)
         {
             throw new ArgumentNullException("rec");
         }
 
-        var result = new Dictionary<string, object>();
+        if (keyComparer == null)
+        {
+            throw new ArgumentNullException("keyComparer");
+        }
+
+        var result = new Dictionary<string, object>(keyComparer);
 
         for (var i = 0; i < rec.FieldCount; i++)
         {
-            result.Add(rec.GetName(i) ?? string.Empty,
+            result.Add(rec.GetName(i),
                        rec.IsDBNull(i) ? null : rec.GetValue(i));
         }
 
