@@ -148,7 +148,7 @@ static partial class __IOExtensionMethods
         }
 
         stream = new MemoryStream(archiveData is byte[] ? (byte[])archiveData : archiveData.ToArray(),
-                                  false);
+                                  true);
 
         return UnpackArchive(stream);
     }
