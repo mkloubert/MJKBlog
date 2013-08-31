@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading;
 using ColorCode;
+using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using RemObjects.Script;
@@ -105,7 +107,8 @@ objA.test();
                 // Test_GroupedCollection();
                 // Test_RemObjectsScript();
                 // Test_ColorCode();
-                Test_ForAll();
+                Test_UnpackArchiv();
+                // Test_ForAll();
             }
             catch (Exception ex)
             {
@@ -115,7 +118,7 @@ objA.test();
             Console.ReadLine();
         }
 
-        private static void Test_Mef()
+        static void Test_Mef()
         {
             var asmCatalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
 
@@ -125,7 +128,21 @@ objA.test();
             mi1.Refresh();
         }
 
-        private static void Test_AsyncEncryption()
+        static void Test_UnpackArchiv()
+        {
+            using (var stream = File.OpenRead(@"./7zDLLs.7z"))
+            {
+                foreach (var file in new FileInfo(@"./7zDLLs.7z")
+                                         .UnpackArchive()
+                                         .Where(f => f.Type == CompressedArchiveItemType.File)
+                                         .OrderBy(f => (f.Name ?? string.Empty).ToLower().Trim()))
+                {
+
+                }
+            }
+        }
+
+        static void Test_AsyncEncryption()
         {
             using (var rsa = new RSACryptoServiceProvider())    // generate new/random key pair
             {
@@ -133,7 +150,7 @@ objA.test();
             }
         }
 
-        private static void Test_XmlObjectSerializer()
+        static void Test_XmlObjectSerializer()
         {
             var bin = new byte[16];
             new Random().NextBytes(bin);
@@ -252,7 +269,7 @@ End Module",
                                  Languages.Php);
         }
 
-        private static void Test_Xslt()
+        static void Test_Xslt()
         {
 
         }

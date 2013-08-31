@@ -36,6 +36,10 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\SevenZipSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -55,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="DelegateEqualityComparer.cs" />
+    <Compile Include="IO\CompressedArchiveItemType.cs" />
+    <Compile Include="IO\ICompressedArchiveItem.cs" />
     <Compile Include="SyncDisposableBase.DisposeContext.cs">
       <DependentUpon>SyncDisposableBase.cs</DependentUpon>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="_Extensions\Drawing.cs" />
     <Compile Include="_Extensions\IO.cs" />
     <Compile Include="_Extensions\Data.cs" />
+    <Compile Include="_Extensions\IO.UnpackArchive.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="_Extensions\Security.cs" />
     <Compile Include="_Extensions\Strings.cs" />
     <Compile Include="_Extensions\ValuesAndObjects.cs" />
@@ -91,6 +100,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="_Libs\RemObjects Script for .NET\License.txt" />
+    <None Include="SevenZipSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_Libs\SevenZipSharp\LICENSE.txt" />
+    <None Include="7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="_Libs\7-Zip\license.txt" />
     <Content Include="_Libs\zxing\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup />
