@@ -14,9 +14,9 @@ using System.Data.SqlClient;
 /// </summary>
 public static partial class __DataExtensionMethods
 {
-    #region Methods (12)
+    #region Methods (13)
 
-    // Public Methods (12) 
+    // Public Methods (13) 
 
     /// <summary>
     /// Erzeugt eine Sequenz für ein <see cref="IDataReader" /> Objekt, um
@@ -242,7 +242,8 @@ public static partial class __DataExtensionMethods
 
     /// <summary>
     /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Sequenz von
-    /// <see cref="Dictionary{TKey, TValue}" />s mit verzögerter Ausführung um.
+    /// <see cref="Dictionary{TKey, TValue}" />s mit verzögerter Ausführung um und nutzt den
+    /// Standard <see cref="IEqualityComparer{T}" /> für <see cref="string" />s.
     /// </summary>
     /// <param name="reader">Der Reader, der die Daten / Zeilen bereitstellt.</param>
     /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="reader" />.</returns>
@@ -251,14 +252,41 @@ public static partial class __DataExtensionMethods
     /// </exception>
     public static IEnumerable<Dictionary<string, object>> ToDictionaryEnumerable(this IDataReader reader)
     {
+        return ToDictionaryEnumerable(reader,
+                                      EqualityComparer<string>.Default);
+    }
+
+    /// <summary>
+    /// Wandelt sämtliche Zeilen eines <see cref="IDataReader" /> in eine Sequenz von
+    /// <see cref="Dictionary{TKey, TValue}" />s mit verzögerter Ausführung um.
+    /// </summary>
+    /// <param name="reader">Der Reader, der die Daten / Zeilen bereitstellt.</param>
+    /// <param name="keyComparer">
+    /// Der <see cref="IEqualityComparer{T}" />, der zum Vergleichen der Schlüssel
+    /// verwendet werden soll.
+    /// </param>
+    /// <returns>Die umgewandelten / extrahierten Daten aus <paramref name="reader" />.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="reader" /> und/oder <paramref name="keyComparer" />
+    /// ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<Dictionary<string, object>> ToDictionaryEnumerable(this IDataReader reader,
+                                                                                 IEqualityComparer<string> keyComparer)
+    {
         if (reader == null)
         {
             throw new ArgumentNullException("reader");
         }
 
+        if (keyComparer == null)
+        {
+            throw new ArgumentNullException("keyComparer");
+        }
+
         while (reader.Read())
         {
-            yield return ToDictionary(reader);
+            yield return ToDictionary(reader,
+                                      keyComparer);
         }
     }
 
