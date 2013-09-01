@@ -183,18 +183,23 @@ static partial class __CollectionExtensionMethodsNet40
         try
         {
             var runningTasks = new List<Task>();
-            foreach (var t in tasks)
+            using (var enumerator = tasks.GetEnumerator())
             {
-                try
+                while (enumerator.MoveNext())
                 {
-                    t.Start();
-                    runningTasks.Add(t);
-                }
-                catch (Exception ex)
-                {
-                    lock (syncRoot)
+                    try
                     {
-                        exceptions.Add(ex);
+                        var t = enumerator.Current;
+
+                        t.Start();
+                        runningTasks.Add(t);
+                    }
+                    catch (Exception ex)
+                    {
+                        lock (syncRoot)
+                        {
+                            exceptions.Add(ex);
+                        }
                     }
                 }
             }
