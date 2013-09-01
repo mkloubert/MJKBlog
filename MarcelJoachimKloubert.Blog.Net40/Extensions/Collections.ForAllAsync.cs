@@ -252,10 +252,10 @@ static partial class __CollectionExtensionMethodsNet40
         #region Constructors (1)
 
         internal ForAllTuple(T item,
-                                 Action<T, S> action,
-                                 Func<T, S> actionStateFactory,
-                                 ICollection<Exception> exceptions,
-                                 object syncRoot)
+                             Action<T, S> action,
+                             Func<T, S> actionStateFactory,
+                             ICollection<Exception> exceptions,
+                             object syncRoot)
         {
             this.ITEM = item;
             this.ACTION = action;
