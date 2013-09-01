@@ -200,6 +200,7 @@ static partial class __CollectionExtensionMethodsNet40
             }
 
             Task.WaitAll(runningTasks.ToArray());
+            runningTasks.Clear();
         }
         catch (Exception ex)
         {
