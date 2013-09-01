@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Collections.cs" />
+    <Compile Include="Extensions\Collections.ForAllAsync.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="MEF\MultiInstanceComposer.cs" />
     <Compile Include="MEF\SingleInstanceComposer.cs" />
     <Compile Include="MEF\StrongNamedAssemblyPartCatalog.cs" />
