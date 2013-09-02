@@ -61,6 +61,14 @@
     <Compile Include="DelegateEqualityComparer.cs" />
     <Compile Include="IO\CompressedArchiveItemType.cs" />
     <Compile Include="IO\ICompressedArchiveItem.cs" />
+    <Compile Include="ServiceLocation\Impl\DelegateServiceLocatorWrapper.Classes.cs">
+      <DependentUpon>DelegateServiceLocatorWrapper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceLocation\Impl\DelegateServiceLocatorWrapper.cs" />
+    <Compile Include="ServiceLocation\IServiceLocator.cs" />
+    <Compile Include="ServiceLocation\GlobalServiceLocator.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorBase.cs" />
+    <Compile Include="ServiceLocation\ServiceActivationException.cs" />
     <Compile Include="SyncDisposableBase.DisposeContext.cs">
       <DependentUpon>SyncDisposableBase.cs</DependentUpon>
     </Compile>

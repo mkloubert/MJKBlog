@@ -49,9 +49,16 @@
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="MEF\MultiInstanceComposer.cs" />
+    <Compile Include="MEF\ServiceLocation\ExportProviderServiceLocator.cs" />
     <Compile Include="MEF\SingleInstanceComposer.cs" />
     <Compile Include="MEF\StrongNamedAssemblyPartCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.Blog.Net35\MarcelJoachimKloubert.Blog.Net35.csproj">
+      <Project>{6b519320-7f69-491b-896c-88406b86b818}</Project>
+      <Name>MarcelJoachimKloubert.Blog.Net35</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

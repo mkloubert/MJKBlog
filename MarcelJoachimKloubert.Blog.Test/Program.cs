@@ -9,11 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Threading;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
+using MarcelJoachimKloubert.Blog.MEF.ServiceLocation;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
+using MarcelJoachimKloubert.Blog.ServiceLocation;
+using MarcelJoachimKloubert.Blog.ServiceLocation.Impl;
 using RemObjects.Script;
 
 namespace MarcelJoachimKloubert.Blog.Test
@@ -30,35 +32,55 @@ namespace MarcelJoachimKloubert.Blog.Test
     [Export(typeof(IA))]
     class A1 : IA
     {
+        #region Methods (1)
 
+        // Public Methods (1) 
+
+        public override string ToString()
+        {
+            return this.GetType().FullName + "::" + this.GetHashCode();
+        }
+
+        #endregion Methods
     }
     [Export(typeof(IA))]
     class A : IA
     {
-        #region Methods (1)
+        #region Methods (2)
 
-        // Public Methods (1) 
+        // Public Methods (2) 
 
         public void test()
         {
             Console.WriteLine("A:test()");
         }
 
+        public override string ToString()
+        {
+            return this.GetType().FullName + "::" + this.GetHashCode();
+        }
+
         #endregion Methods
     }
     [Export(typeof(IB))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     class B1 : IB
     {
+        #region Methods (1)
 
+        // Public Methods (1) 
+
+        public override string ToString()
+        {
+            return this.GetType().FullName + "::" + this.GetHashCode();
+        }
+
+        #endregion Methods
     }
 
     internal static class Program
     {
-        #region Methods (3)
-
-        // Private Methods (3) 
-
-        static void Test_RemObjectsScript()
+        private static void Test_RemObjectsScript()
         {
             // Funktionen in der JavaScript-Engine
             // werden über Delegates definiert
@@ -107,8 +129,9 @@ objA.test();
                 // Test_GroupedCollection();
                 // Test_RemObjectsScript();
                 // Test_ColorCode();
-                Test_UnpackArchiv();
+                // Test_UnpackArchiv();
                 // Test_ForAll();
+                Test_ServiceLocator();
             }
             catch (Exception ex)
             {
@@ -118,7 +141,7 @@ objA.test();
             Console.ReadLine();
         }
 
-        static void Test_Mef()
+        private static void Test_Mef()
         {
             var asmCatalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
 
@@ -128,7 +151,7 @@ objA.test();
             mi1.Refresh();
         }
 
-        static void Test_UnpackArchiv()
+        private static void Test_UnpackArchiv()
         {
             using (var stream = File.OpenRead(@"./7zDLLs.7z"))
             {
@@ -142,7 +165,7 @@ objA.test();
             }
         }
 
-        static void Test_AsyncEncryption()
+        private static void Test_AsyncEncryption()
         {
             using (var rsa = new RSACryptoServiceProvider())    // generate new/random key pair
             {
@@ -150,7 +173,7 @@ objA.test();
             }
         }
 
-        static void Test_XmlObjectSerializer()
+        private static void Test_XmlObjectSerializer()
         {
             var bin = new byte[16];
             new Random().NextBytes(bin);
@@ -245,7 +268,7 @@ objA.test();
             Console.WriteLine("OK");
         }
 
-        static void Test_ColorCode()
+        private static void Test_ColorCode()
         {
             var cc = new CodeColorizer();
 
@@ -269,15 +292,49 @@ End Module",
                                  Languages.Php);
         }
 
-        static void Test_Xslt()
+        private static void Test_Xslt()
         {
 
         }
 
-        static void Test_ForAll()
+        private static void Test_ServiceLocator()
         {
-            var test = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            test.ForAll(
+            var catalogs = new AggregateCatalog();
+            catalogs.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+
+            var container = new CompositionContainer(catalogs, true);
+
+            var innerServiceLocator = new ExportProviderServiceLocator(container);
+
+            var serviceLocator = new DelegateServiceLocatorWrapper(innerServiceLocator);
+            serviceLocator.RegisterSingle<IA>(Test_ServiceLocator3);
+            serviceLocator.RegisterMulti<IB>(Test_ServiceLocator2);
+
+            var a1 = serviceLocator.GetAllInstances<IA>().ToArray();
+            var a2 = serviceLocator.GetAllInstances<IA>().ToArray();
+            // var a3 = serviceLocator.GetInstance<IA>();
+
+            var b1 = serviceLocator.GetAllInstances<IB>().ToArray();
+            var b2 = serviceLocator.GetAllInstances<IB>().ToArray();
+            var b3 = serviceLocator.GetInstance<IB>();
+        }
+
+        private static Lazy<IB> lazyB = new Lazy<IB>(() => new B1(), true);
+
+        private static IEnumerable<IB> Test_ServiceLocator2(IServiceLocator serviceLocator)
+        {
+            yield return lazyB.Value;
+        }
+
+        private static IA Test_ServiceLocator3(IServiceLocator serviceLocator, object key)
+        {
+            return new A();
+        }
+
+        private static void Test_ForAll()
+        {
+            var test = Enumerable.Range(0, 1000).ToArray();
+            var ex2 = test.ForAllAsync(
                 (i, s) =>
                 {
                     if ((i + s) % 3 == 0)
@@ -290,12 +347,8 @@ End Module",
             {
                 Console.WriteLine("A...");
 
-                var p = test.AsParallel();
-
-                ParallelEnumerable.ForAll(p, (i) =>
+                test.ForAllAsync((i) =>
                 {
-                    Thread.Sleep(3000);
-
                     if (i % 3 == 0)
                     {
                         throw new Exception(i.ToString());
@@ -313,7 +366,5 @@ End Module",
 
             Console.ReadLine();
         }
-
-        #endregion Methods
     }
 }
