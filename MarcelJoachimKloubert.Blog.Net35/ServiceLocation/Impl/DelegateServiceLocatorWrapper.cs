@@ -108,6 +108,7 @@ namespace MarcelJoachimKloubert.Blog.ServiceLocation.Impl
         /// <param name="sender">Das aufrufende Objekt.</param>
         /// <returns>Die Liste mit erzeugten Instanzen.</returns>
         public delegate IEnumerable<T> MultiInstanceProvider<T>(DelegateServiceLocatorWrapper sender);
+
         /// <summary>
         /// Beschreibt eine Funktion oder Methode, die eine einzige Instanz eines Dienstes erzeugt.
         /// </summary>

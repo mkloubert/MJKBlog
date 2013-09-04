@@ -794,7 +794,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                             var clrTypeAttrib = xmlElement.Attribute(XML_ATTRIB_CLRTYPE);
                             if (clrTypeAttrib == null)
                             {
-                                throw new FormatException("Der CLR-Datentype ist nicht definiert!");
+                                throw new FormatException("Der CLR-Datentyp ist nicht definiert!");
                             }
 
                             var clrType = TryFindClrType(clrTypeAttrib.Value.Trim());
@@ -880,7 +880,7 @@ namespace MarcelJoachimKloubert.Blog.Serialization.Xml
                             var clrTypeAttrib = xmlElement.Attribute(XML_ATTRIB_CLRTYPE);
                             if (clrTypeAttrib == null)
                             {
-                                throw new FormatException("Der CLR-Datentype ist nicht definiert!");
+                                throw new FormatException("Der CLR-Datentyp ist nicht definiert!");
                             }
 
                             var clrType = TryFindClrType(clrTypeAttrib.Value.Trim());
