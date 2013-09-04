@@ -24,6 +24,7 @@ namespace MarcelJoachimKloubert.Blog.Test
     {
 
     }
+
     interface IB
     {
 
@@ -43,6 +44,7 @@ namespace MarcelJoachimKloubert.Blog.Test
 
         #endregion Methods
     }
+
     [Export(typeof(IA))]
     class A : IA
     {
@@ -62,6 +64,7 @@ namespace MarcelJoachimKloubert.Blog.Test
 
         #endregion Methods
     }
+
     [Export(typeof(IB))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     class B1 : IB
