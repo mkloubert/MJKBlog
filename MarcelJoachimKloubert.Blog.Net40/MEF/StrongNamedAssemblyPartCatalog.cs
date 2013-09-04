@@ -465,7 +465,8 @@ namespace MarcelJoachimKloubert.Blog.MEF
                 pKey.LongLength > 0)
             {
                 return this._TRUSTED_ASM_KEYS
-                           .Any(k => k.SequenceEqual(pKey));
+                           .Any(k => k != null &&
+                                     k.SequenceEqual(pKey));
             }
 
             return this.HasEmptyPublicKey;
@@ -535,12 +536,13 @@ namespace MarcelJoachimKloubert.Blog.MEF
                 throw new ArgumentNullException("type");
             }
 
-            if (type.Assembly == null)
+            var asm = type.Assembly;
+            if (asm == null)
             {
                 return this.HasEmptyPublicKey;
             }
 
-            return this.IsTrustedAssembly(type.Assembly);
+            return this.IsTrustedAssembly(asm);
         }
         // Protected Methods (1) 
 

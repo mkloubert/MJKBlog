@@ -128,13 +128,13 @@ objA.test();
                 // Test_Mef();
                 // Test_AsyncEncryption();
                 // Test_Xslt();
-                // Test_XmlObjectSerializer();
+                Test_XmlObjectSerializer();
                 // Test_GroupedCollection();
                 // Test_RemObjectsScript();
                 // Test_ColorCode();
                 // Test_UnpackArchiv();
                 // Test_ForAll();
-                Test_ServiceLocator();
+                // Test_ServiceLocator();
             }
             catch (Exception ex)
             {
