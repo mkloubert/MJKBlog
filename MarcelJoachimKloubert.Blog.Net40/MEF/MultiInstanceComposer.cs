@@ -109,6 +109,10 @@ namespace MarcelJoachimKloubert.Blog.MEF
         /// <see cref="MultiInstanceComposer{C}.Instances" /> Eigenschaft,
         /// wenn dies noch nicht geschehen ist.
         /// </summary>
+        /// <returns>
+        /// <see cref="MultiInstanceComposer{C}.Refresh()" /> Methode wurde
+        /// ausgeführt oder nicht.
+        /// </returns>
         public bool RefreshIfNeeded()
         {
             if (this.Instances == null)

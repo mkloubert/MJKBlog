@@ -172,6 +172,8 @@ static partial class __IOExtensionMethods
             {
                 extractor.ExtractFile(file.Index,
                                       result);
+
+                result.Position = 0;
             }
             catch
             {

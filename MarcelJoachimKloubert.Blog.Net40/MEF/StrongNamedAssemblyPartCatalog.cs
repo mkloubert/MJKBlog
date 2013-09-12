@@ -63,6 +63,10 @@ namespace MarcelJoachimKloubert.Blog.MEF
         /// <param name="trustedKeys">
         /// Die Liste mit verstrauenswürdigen, öffentlichen Assembly-Signatur-Schlüsseln.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Mindestens ein Element aus <paramref name="trustedKeys" />
+        /// ist eine <see langword="null" /> Referenz.
+        /// </exception>
         /// <exception cref="NullReferenceException">
         /// <paramref name="trustedKeys" /> ist eine <see langword="null" /> Referenz.
         /// </exception>
@@ -81,8 +85,7 @@ namespace MarcelJoachimKloubert.Blog.MEF
             get
             {
                 return this._TRUSTED_ASM_KEYS
-                           .Any(k => k == null ||
-                                k.Length < 1);
+                           .Any(k => k.Length < 1);
             }
         }
 
@@ -487,7 +490,7 @@ namespace MarcelJoachimKloubert.Blog.MEF
         {
             if (path == null)
             {
-                throw new ArgumentException("path");
+                throw new ArgumentNullException("path");
             }
 
             return this.IsTrustedAssemblyFile(new FileInfo(AsString(path)));
@@ -508,7 +511,7 @@ namespace MarcelJoachimKloubert.Blog.MEF
         {
             if (file == null)
             {
-                throw new ArgumentException("file");
+                throw new ArgumentNullException("file");
             }
 
             if (!file.Exists)

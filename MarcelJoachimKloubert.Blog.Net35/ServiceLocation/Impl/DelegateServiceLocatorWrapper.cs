@@ -10,7 +10,7 @@ namespace MarcelJoachimKloubert.Blog.ServiceLocation.Impl
 {
     /// <summary>
     /// Ein <see cref="IServiceLocator" />, der auf Delegates beruht.
-    /// Ist kein Delegate für einen Dienst nicht definiert, wird versucht eine Instanz
+    /// Ist kein Delegate für einen Dienst definiert, wird versucht eine Instanz
     /// über eine Basis-Instanz aus der <see cref="DelegateServiceLocatorWrapper.InnerLocator" />
     /// Eigenschaft zu nutzen, sofern diese definiert ist / wurde.
     /// </summary>
@@ -427,7 +427,14 @@ namespace MarcelJoachimKloubert.Blog.ServiceLocation.Impl
                             throw new ArgumentException("key");
                         }
 
-                        return (multiProvider(sender) ?? Enumerable.Empty<T>()).Single();
+                        var instances = multiProvider(sender);
+                        if (instances == null)
+                        {
+                            throw new ServiceActivationException(typeof(T),
+                                                                 key);
+                        }
+
+                        return instances.Single();
                     });
             }
 
@@ -441,7 +448,14 @@ namespace MarcelJoachimKloubert.Blog.ServiceLocation.Impl
                 return new MultiInstanceProvider<T>(
                     (sender) =>
                     {
-                        return new T[] { singleProvider(sender, null) };
+                        var instance = singleProvider(sender, null);
+                        if (instance == null)
+                        {
+                            throw new ServiceActivationException(typeof(T),
+                                                                 null);
+                        }
+
+                        return new T[] { instance };
                     });
             }
 
