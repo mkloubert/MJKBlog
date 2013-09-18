@@ -120,10 +120,10 @@ namespace MarcelJoachimKloubert.Blog.WPF
             }
 #if DEBUG
 
-            if (TypeDescriptor.GetProperties(this)[pn] == null)
+            if (global::System.ComponentModel.TypeDescriptor.GetProperties(this)[pn] == null)
             {
-                throw new MissingMemberException(this.GetType().FullName,
-                                                 pn);
+                throw new global::System.MissingMemberException(this.GetType().FullName,
+                                                                pn);
             }
 #endif
 
@@ -205,10 +205,10 @@ namespace MarcelJoachimKloubert.Blog.WPF
             }
 #if DEBUG
 
-            if (TypeDescriptor.GetProperties(this)[pn] == null)
+            if (global::System.ComponentModel.TypeDescriptor.GetProperties(this)[pn] == null)
             {
-                throw new MissingMemberException(this.GetType().FullName,
-                                                 pn);
+                throw new global::System.MissingMemberException(this.GetType().FullName,
+                                                                pn);
             }
 #endif
 
