@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.Blog.Input
     /// <typeparam name="TParam"> Typ der Parameter.</typeparam>
     public class DelegateCommand<TParam> : ICommand
     {
-        #region Constructors (2)
+        #region Constructors (3)
 
         /// <summary>
         /// Initialisiert eine neue Instanz dieser Klasse.
@@ -64,6 +64,14 @@ namespace MarcelJoachimKloubert.Blog.Input
             this.CanExecutePredicate = DefaultCanExecute;
         }
 
+        /// <summary>
+        /// Initialisiert eine neue Instanz dieser Klasse.
+        /// </summary>
+        protected DelegateCommand()
+        {
+
+        }
+
         #endregion Constructors
 
         #region Properties (2)
@@ -75,7 +83,7 @@ namespace MarcelJoachimKloubert.Blog.Input
         public Func<TParam, bool> CanExecutePredicate
         {
             get;
-            private set;
+            protected set;
         }
 
         /// <summary>
@@ -85,7 +93,7 @@ namespace MarcelJoachimKloubert.Blog.Input
         public Action<TParam> ExecuteHandler
         {
             get;
-            private set;
+            protected set;
         }
 
         #endregion Properties
@@ -161,12 +169,19 @@ namespace MarcelJoachimKloubert.Blog.Input
 
             return false;
         }
-        // Private Methods (3) 
+        // Protected Methods (1) 
 
-        private static bool DefaultCanExecute(TParam parameter)
+        /// <summary>
+        /// Die Standardlogik für die <see cref="DelegateCommand{TParam}.CanExecute(TParam)" />
+        /// Methode.
+        /// </summary>
+        /// <param name="parameter">Der Parameter.</param>
+        /// <returns>Liefert immer <see langword="true" />.</returns>
+        protected static bool DefaultCanExecute(TParam parameter)
         {
             return true;
         }
+        // Private Methods (2) 
 
         bool ICommand.CanExecute(object parameter)
         {
@@ -190,7 +205,7 @@ namespace MarcelJoachimKloubert.Blog.Input
     /// </summary>
     public sealed class DelegateCommand : DelegateCommand<object>
     {
-        #region Constructors (2)
+        #region Constructors (4)
 
         /// <summary>
         /// Initialisiert eine neue Instanz dieser Klasse.
@@ -227,8 +242,57 @@ namespace MarcelJoachimKloubert.Blog.Input
 
         }
 
-        #endregion Constructors
+        /// <summary>
+        /// Initialisiert eine neue Instanz dieser Klasse.
+        /// </summary>
+        /// <param name="execute">
+        /// Die Logik für die <see cref="DelegateCommand{TParam}.CanExecutePredicate" /> Eigenschaft.
+        /// </param>
+        /// <param name="canExecute">
+        /// Die Logik für die <see cref="DelegateCommand{TParam}.ExecuteHandler" /> Eigenschaft.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="execute" /> und/oder<paramref name="canExecute" /> sind
+        /// <see langword="null" /> Referenzen.
+        /// </exception>
+        public DelegateCommand(Action execute,
+                               Func<bool> canExecute)
+        {
+            if (execute == null)
+            {
+                throw new ArgumentNullException("execute");
+            }
 
+            if (canExecute == null)
+            {
+                throw new ArgumentNullException("canExecute");
+            }
+
+            this.ExecuteHandler = (p) => execute();
+            this.CanExecutePredicate = (p) => canExecute();
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz dieser Klasse.
+        /// </summary>
+        /// <param name="execute">
+        /// Die Logik für die <see cref="DelegateCommand{TParam}.CanExecutePredicate" /> Eigenschaft.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="execute" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        public DelegateCommand(Action execute)
+        {
+            if (execute == null)
+            {
+                throw new ArgumentNullException("execute");
+            }
+
+            this.ExecuteHandler = (p) => execute();
+            this.CanExecutePredicate = DefaultCanExecute;
+        }
+
+        #endregion Constructors
     }
 
     #endregion
