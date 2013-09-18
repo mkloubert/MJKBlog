@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="DelegateEqualityComparer.cs" />
+    <Compile Include="Input\DelegateCommand.cs" />
+    <Compile Include="Input\DelegateCommandErrorEvent.cs" />
     <Compile Include="IO\CompressedArchiveItemType.cs" />
     <Compile Include="IO\ICompressedArchiveItem.cs" />
     <Compile Include="ServiceLocation\Impl\DelegateServiceLocatorWrapper.Classes.cs">

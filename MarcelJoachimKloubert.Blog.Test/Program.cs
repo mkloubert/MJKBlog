@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
@@ -135,6 +136,16 @@ objA.test();
                 // Test_UnpackArchiv();
                 // Test_ForAll();
                 // Test_ServiceLocator();
+
+                var times = GetTimes();
+                foreach (var t in times.ToArray())
+                {
+
+                }
+
+                times.ForEach(x => Console.WriteLine(x));
+                Thread.Sleep(2000);
+                times.ForEach(x => Console.WriteLine(x));
             }
             catch (Exception ex)
             {
@@ -142,6 +153,11 @@ objA.test();
             }
 
             Console.ReadLine();
+        }
+
+        private static IEnumerable<DateTimeOffset> GetTimes()
+        {
+            yield return DateTimeOffset.Now;
         }
 
         private static void Test_Mef()
