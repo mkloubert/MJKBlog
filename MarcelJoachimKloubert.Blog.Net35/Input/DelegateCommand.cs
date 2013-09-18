@@ -1,4 +1,7 @@
-﻿using System;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System;
 using System.Windows.Input;
 
 namespace MarcelJoachimKloubert.Blog.Input
@@ -157,7 +160,10 @@ namespace MarcelJoachimKloubert.Blog.Input
         /// Führt, wenn möglich, das <see cref="DelegateCommand{TParam}.CanExecuteChanged" />
         /// Ereignis aus.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Ereignis wurde ausgeführt (<see langword="true" />)
+        /// oder nicht (<see langword="false" />).
+        /// </returns>
         public bool OnCanExecuteChanged()
         {
             var handler = this.CanExecuteChanged;

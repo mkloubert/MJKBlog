@@ -1,4 +1,7 @@
-﻿using System;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System;
 using System.IO;
 
 namespace MarcelJoachimKloubert.Blog.Input
