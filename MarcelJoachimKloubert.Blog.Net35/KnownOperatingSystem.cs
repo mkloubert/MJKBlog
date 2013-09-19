@@ -4,7 +4,7 @@
 namespace MarcelJoachimKloubert.Blog
 {
     /// <summary>
-    /// Liste moit bekannten Betriebssystemen.
+    /// Liste mit bekannten Betriebssystemen.
     /// </summary>
     public enum KnownOperatingSystem
     {

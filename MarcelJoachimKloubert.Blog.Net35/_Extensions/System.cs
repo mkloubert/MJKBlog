@@ -15,7 +15,7 @@ public static partial class __SystemExtensionMethods
 
     /// <summary>
     /// Versucht ein <see cref="OperatingSystem" /> Objekt in einen
-    /// <see cref="KnownOperatingSystem" /> umzuwandeln.
+    /// <see cref="KnownOperatingSystem" />-Wert umzuwandeln.
     /// </summary>
     /// <param name="os">Das Eigabeobjekt.</param>
     /// <returns>
