@@ -137,6 +137,8 @@ objA.test();
                 // Test_ForAll();
                 // Test_ServiceLocator();
 
+                var knownOs = Environment.OSVersion.TryGetKnownOS();
+
                 var times = GetTimes();
                 foreach (var t in times.ToArray())
                 {
