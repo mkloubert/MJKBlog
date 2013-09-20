@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MarcelJoachimKloubert.Blog
+namespace MarcelJoachimKloubert.Blog.Collections.Generic
 {
     /// <summary>
     /// Ein genrischer <see cref="EqualityComparer{T}" />, der auf Delegates basiert.
