@@ -60,6 +60,7 @@
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\DelegateComparer.cs" />
+    <Compile Include="Collections\ObjectModel\LockableObservableCollection.cs" />
     <Compile Include="Input\DelegateCommand.cs" />
     <Compile Include="Input\DelegateCommandErrorEvent.cs" />
     <Compile Include="IO\CompressedArchiveItemType.cs" />
