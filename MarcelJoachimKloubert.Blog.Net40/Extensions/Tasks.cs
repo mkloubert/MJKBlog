@@ -18,19 +18,19 @@ public static partial class __TaskExtensionMethodsNet40
     /// Beschreibt eine Methode für eine 'StartNewTask{T}'-Methode.
     /// </summary>
     /// <typeparam name="T">Typ von <paramref name="state" />.</typeparam>
-    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
     /// <param name="state">Das State-Objekt.</param>
-    public delegate void StartNewTaskAction<T>(CancellationToken cancellationToken, T state);
+    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
+    public delegate void StartNewTaskAction<T>(T state, CancellationToken cancellationToken);
 
     /// <summary>
     /// Beschreibt eine Funktion/Methode für eine 'StartNewTask{T, R}'-Methode.
     /// </summary>
     /// <typeparam name="R">Typ des Rückgabewertes für den zugrundeliegenden Task.</typeparam>
     /// <typeparam name="T">Typ von <paramref name="state" />.</typeparam>
-    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
     /// <param name="state">Das State-Objekt.</param>
+    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
     /// <returns>Der Rückgabewert für den zugrundeliegenden Task.</returns>
-    public delegate R StartNewTaskFunc<T, R>(CancellationToken cancellationToken, T state);
+    public delegate R StartNewTaskFunc<T, R>(T state, CancellationToken cancellationToken);
 
     #endregion Delegates and Events
 
