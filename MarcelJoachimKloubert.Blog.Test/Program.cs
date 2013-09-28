@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Threading;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
@@ -25,7 +24,6 @@ namespace MarcelJoachimKloubert.Blog.Test
     {
 
     }
-
     interface IB
     {
 
@@ -122,14 +120,23 @@ objA.test();
             }
         }
 
+        private static void Test_Resources()
+        {
+            var asm = Assembly.GetExecutingAssembly();
+
+            var str = asm.GetManifestResourceString("MarcelJoachimKloubert.Blog.Test._Resources.LoremIpsum.txt");
+        }
+
         private static void Main(string[] args)
         {
             try
             {
+                Test_Resources();
+
                 // Test_Mef();
                 // Test_AsyncEncryption();
                 // Test_Xslt();
-                Test_XmlObjectSerializer();
+                // Test_XmlObjectSerializer();
                 // Test_GroupedCollection();
                 // Test_RemObjectsScript();
                 // Test_ColorCode();
@@ -137,17 +144,17 @@ objA.test();
                 // Test_ForAll();
                 // Test_ServiceLocator();
 
-                var knownOs = Environment.OSVersion.TryGetKnownOS();
+                //var knownOs = Environment.OSVersion.TryGetKnownOS();
 
-                var times = GetTimes();
-                foreach (var t in times.ToArray())
-                {
+                //var times = GetTimes();
+                //foreach (var t in times.ToArray())
+                //{
 
-                }
+                //}
 
-                times.ForEach(x => Console.WriteLine(x));
-                Thread.Sleep(2000);
-                times.ForEach(x => Console.WriteLine(x));
+                //times.ForEach(x => Console.WriteLine(x));
+                //Thread.Sleep(2000);
+                //times.ForEach(x => Console.WriteLine(x));
             }
             catch (Exception ex)
             {
