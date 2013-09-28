@@ -48,7 +48,7 @@
     <Compile Include="Extensions\Collections.ForAllAsync.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\Tasks,Actions.cs">
+    <Compile Include="Extensions\Tasks.Actions.cs">
       <DependentUpon>Tasks.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Tasks.Funcs.cs">

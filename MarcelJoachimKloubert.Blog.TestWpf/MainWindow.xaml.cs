@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System.Windows;
 
 namespace MarcelJoachimKloubert.Blog.TestWpf
 {
@@ -7,9 +10,15 @@ namespace MarcelJoachimKloubert.Blog.TestWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Constructors (1)
+
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
+            this.DataContext = new ViewModel();
         }
+
+        #endregion Constructors
     }
 }

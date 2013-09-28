@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
@@ -156,6 +158,31 @@ objA.test();
                 //times.ForEach(x => Console.WriteLine(x));
                 //Thread.Sleep(2000);
                 //times.ForEach(x => Console.WriteLine(x));
+
+                var tokenSource2 = new CancellationTokenSource();
+
+                var t = Task.Factory
+                    .StartNewTask((state, ct) =>
+                    {
+                        
+
+                        for (ulong i = 0; i <= ulong.MaxValue; i++)
+                        {
+                            if (ct.IsCancellationRequested)
+                            {
+                                ct.ThrowIfCancellationRequested();
+                            }
+
+                            Thread.Sleep(100);
+                        }
+                    }, new
+                    {
+                    }, cancellationToken: tokenSource2.Token);
+                
+                Thread.Sleep(5000);
+                tokenSource2.Cancel(false);
+
+                t.Wait();
 
                 var mo = new MyCloneableObject();
 

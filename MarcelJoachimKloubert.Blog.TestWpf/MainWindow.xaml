@@ -1,8 +1,23 @@
-﻿<Window x:Class="MarcelJoachimKloubert.Blog.TestWpf.MainWindow"
+﻿<!--
+    http://blog.marcel-kloubert.de 
+-->
+<Window x:Class="MarcelJoachimKloubert.Blog.TestWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:MarcelJoachimKloubert.Blog.TestWpf.Converters"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    
+    <Window.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="tmBooleanToVisibilityConverter" />
+    </Window.Resources>
+    
+    <StackPanel>
+        <CheckBox IsChecked="{Binding Path=Test1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Visibility="{Binding Path=Test1,
+                                        Mode=OneWay,
+                                        Converter={StaticResource tmBooleanToVisibilityConverter},
+                                        ConverterParameter='Collapsed',
+                                        UpdateSourceTrigger=PropertyChanged}">Das ist des Jägers Ehrenschild, Daß er beschützt und hegt sein Wild, Waidmännisch jagt, wie sich’s gehört, Den Schöpfer im Geschöpfe ehrt!</TextBlock>
+    </StackPanel>
 </Window>

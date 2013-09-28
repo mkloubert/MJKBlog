@@ -21,7 +21,6 @@ public static partial class __TaskExtensionMethodsNet40
     /// <param name="state">Das State-Objekt.</param>
     /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
     public delegate void StartNewTaskAction<T>(T state, CancellationToken cancellationToken);
-
     /// <summary>
     /// Beschreibt eine Funktion/Methode für eine 'StartNewTask{T, R}'-Methode.
     /// </summary>

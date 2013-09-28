@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System;
 using System.Windows.Forms;
 
 namespace MarcelJoachimKloubert.Blog.TestWinForms

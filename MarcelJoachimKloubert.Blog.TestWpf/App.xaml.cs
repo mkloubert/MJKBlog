@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System;
 using System.Windows;
 
 namespace MarcelJoachimKloubert.Blog.TestWpf
@@ -13,5 +11,10 @@ namespace MarcelJoachimKloubert.Blog.TestWpf
     /// </summary>
     public partial class App : Application
     {
+        [STAThread]
+        private static int Main(string[] args)
+        {
+            return new App().Run(new MainWindow());
+        }
     }
 }

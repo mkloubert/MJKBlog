@@ -1,7 +1,9 @@
-﻿<Application x:Class="MarcelJoachimKloubert.Blog.TestWpf.App"
+﻿<!--
+    http://blog.marcel-kloubert.de 
+-->
+<Application x:Class="MarcelJoachimKloubert.Blog.TestWpf.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
          
     </Application.Resources>

@@ -59,7 +59,7 @@ partial class __TaskExtensionMethodsNet40
                                actionStateFactory: actionStateFactory,
                                cancellationToken: factory.CancellationToken,
                                creationOptions: factory.CreationOptions,
-                               scheduler: factory.Scheduler);
+                               scheduler: factory.Scheduler ?? TaskScheduler.Default);
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ partial class __TaskExtensionMethodsNet40
                                actionStateFactory: actionStateFactory,
                                cancellationToken: cancellationToken,
                                creationOptions: factory.CreationOptions,
-                               scheduler: factory.Scheduler);
+                               scheduler: factory.Scheduler ?? TaskScheduler.Default);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ partial class __TaskExtensionMethodsNet40
                                actionStateFactory: actionStateFactory,
                                cancellationToken: factory.CancellationToken,
                                creationOptions: creationOptions,
-                               scheduler: factory.Scheduler);
+                               scheduler: factory.Scheduler ?? TaskScheduler.Default);
     }
 
     /// <summary>
@@ -317,7 +317,7 @@ partial class __TaskExtensionMethodsNet40
                                actionStateFactory: actionStateFactory,
                                cancellationToken: factory.CancellationToken,
                                creationOptions: factory.CreationOptions,
-                               scheduler: factory.Scheduler);
+                               scheduler: factory.Scheduler ?? TaskScheduler.Default);
     }
 
     /// <summary>
