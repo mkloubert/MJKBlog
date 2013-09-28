@@ -255,7 +255,7 @@ namespace MarcelJoachimKloubert.Blog.WPF
                 field = newValue;
                 this.OnPropertyChanged(propertyName);
 
-                return false;
+                return true;
             }
 
             return false;
