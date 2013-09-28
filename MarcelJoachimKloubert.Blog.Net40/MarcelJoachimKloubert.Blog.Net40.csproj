@@ -48,6 +48,13 @@
     <Compile Include="Extensions\Collections.ForAllAsync.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Tasks,Actions.cs">
+      <DependentUpon>Tasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Tasks.Funcs.cs">
+      <DependentUpon>Tasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Tasks.cs" />
     <Compile Include="MEF\MultiInstanceComposer.cs" />
     <Compile Include="MEF\ServiceLocation\ExportProviderServiceLocator.cs" />
     <Compile Include="MEF\SingleInstanceComposer.cs" />
