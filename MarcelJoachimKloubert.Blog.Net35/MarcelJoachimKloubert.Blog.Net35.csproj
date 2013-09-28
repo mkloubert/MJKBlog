@@ -66,6 +66,7 @@
     <Compile Include="IO\CompressedArchiveItemType.cs" />
     <Compile Include="IO\ICompressedArchiveItem.cs" />
     <Compile Include="KnownOperatingSystem.cs" />
+    <Compile Include="Operators\MyCloneableObject.cs" />
     <Compile Include="ServiceLocation\Impl\DelegateServiceLocatorWrapper.Classes.cs">
       <DependentUpon>DelegateServiceLocatorWrapper.cs</DependentUpon>
     </Compile>

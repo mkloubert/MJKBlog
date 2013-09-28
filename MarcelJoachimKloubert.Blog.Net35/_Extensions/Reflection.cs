@@ -12,7 +12,7 @@ using System.Text;
 /// </summary>
 public static partial class __ReflectionExtensionMethods
 {
-    #region Methods (4)
+    #region Methods (6)
 
     // Public Methods (4) 
 
@@ -23,6 +23,7 @@ public static partial class __ReflectionExtensionMethods
     /// <param name="asm">Das zugrundeliegende Assembly.</param>
     /// <param name="name">Der Name der Resource.</param>
     /// <returns>Der ausgelesene String oder <see langword="null" />, wenn die Resource nicht existiert.</returns>
+    /// <exception cref="ArgumentException"><paramref name="name" /> besteht nur aus Leerezeichen.</exception>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="asm" /> und/oder <paramref name="name" />
     /// sind <see langword="null" /> Referenzen.
@@ -34,12 +35,13 @@ public static partial class __ReflectionExtensionMethods
 
     /// <summary>
     /// Wrapper für <see cref="Assembly.GetManifestResourceStream(string)" />, welcher die
-    /// Streamdaten, wenn möglich, String zurückgibt.
+    /// Streamdaten, wenn möglich, als String zurückgibt.
     /// </summary>
     /// <param name="asm">Das zugrundeliegende Assembly.</param>
     /// <param name="name">Der Name der Resource.</param>
     /// <param name="enc">Das <see cref="Encoding" />, das zum dekodieren benutzt werden soll.</param>
     /// <returns>Der ausgelesene String oder <see langword="null" />, wenn die Resource nicht existiert.</returns>
+    /// <exception cref="ArgumentException"><paramref name="name" /> besteht nur aus Leerezeichen.</exception>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="asm" />, <paramref name="name" /> und/oder <paramref name="enc" />
     /// sind <see langword="null" /> Referenzen.
@@ -66,12 +68,7 @@ public static partial class __ReflectionExtensionMethods
         {
             using (var temp = new MemoryStream())
             {
-                var buffer = new byte[81920];
-                int bytesRead;
-                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    temp.Write(buffer, 0, bytesRead);
-                }
+                CopyTo(stream, temp, null);
 
                 return enc.GetString(temp.ToArray());
             }
@@ -79,13 +76,14 @@ public static partial class __ReflectionExtensionMethods
     }
 
     /// <summary>
-    /// Wrapper für <see cref="Assembly.GetManifestResourceStream(string)" />, welcher die
-    /// Streamdaten, wenn möglich, UTF-8-String zurückgibt.
+    /// Wrapper für <see cref="Assembly.GetManifestResourceStream(Type, string)" />, welcher die
+    /// Streamdaten, wenn möglich, als UTF-8-String zurückgibt.
     /// </summary>
     /// <param name="asm">Das zugrundeliegende Assembly.</param>
     /// <param name="name">Der Name der Resource.</param>
     /// <param name="type">Der Typ, dessen Namespace verwendet wird, um den Gültigkeitsbereich des Manifestressourcennamens festzulegen.</param>
     /// <returns>Der ausgelesene String oder <see langword="null" />, wenn die Resource nicht existiert.</returns>
+    /// <exception cref="ArgumentException"><paramref name="name" /> besteht nur aus Leerezeichen.</exception>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="asm" />, <paramref name="type" /> und/oder <paramref name="name" />
     /// sind <see langword="null" /> Referenzen.
@@ -96,14 +94,15 @@ public static partial class __ReflectionExtensionMethods
     }
 
     /// <summary>
-    /// Wrapper für <see cref="Assembly.GetManifestResourceStream(string)" />, welcher die
-    /// Streamdaten, wenn möglich, String zurückgibt.
+    /// Wrapper für <see cref="Assembly.GetManifestResourceStream(Type, string)" />, welcher die
+    /// Streamdaten, wenn möglich, als String zurückgibt.
     /// </summary>
     /// <param name="asm">Das zugrundeliegende Assembly.</param>
     /// <param name="name">Der Name der Resource.</param>
     /// <param name="type">Der Typ, dessen Namespace verwendet wird, um den Gültigkeitsbereich des Manifestressourcennamens festzulegen.</param>
     /// <param name="enc">Das <see cref="Encoding" />, das zum dekodieren benutzt werden soll.</param>
     /// <returns>Der ausgelesene String oder <see langword="null" />, wenn die Resource nicht existiert.</returns>
+    /// <exception cref="ArgumentException"><paramref name="name" /> besteht nur aus Leerezeichen.</exception>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="asm" />, <paramref name="type" />, <paramref name="name" /> und/oder <paramref name="enc" />
     /// sind <see langword="null" /> Referenzen.
@@ -115,18 +114,34 @@ public static partial class __ReflectionExtensionMethods
             throw new ArgumentNullException("type");
         }
 
-        var ns = type.Namespace;
-        if (!string.IsNullOrEmpty(ns))
+        return GetManifestResourceString(asm,
+                                         ToFullResourceName(type, name),
+                                         enc);
+    }
+    // Private Methods (2) 
+
+    private static void CopyTo(Stream source, Stream target, int? bufferSize)
+    {
+        var buffer = new byte[bufferSize ?? 81920];
+        int bytesRead;
+        while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
         {
-            return GetManifestResourceString(asm,
-                                             string.Format("{0}{1}{2}",
-                                                           ns,
-                                                           Type.Delimiter,
-                                                           name.AsString()),
-                                             enc);
+            target.Write(buffer, 0, bytesRead);
+        }
+    }
+
+    private static IEnumerable<char> ToFullResourceName(Type type, IEnumerable<char> name)
+    {
+        var @namespace = type.Namespace;
+        if (!string.IsNullOrEmpty(@namespace))
+        {
+            return string.Format("{0}{1}{2}",
+                                 @namespace,
+                                 Type.Delimiter,
+                                 name.AsString());
         }
 
-        return GetManifestResourceString(asm, name, enc);
+        return name;
     }
 
     #endregion Methods

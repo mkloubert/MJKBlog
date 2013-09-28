@@ -13,6 +13,7 @@ using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.MEF.ServiceLocation;
+using MarcelJoachimKloubert.Blog.Operators;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using MarcelJoachimKloubert.Blog.ServiceLocation;
 using MarcelJoachimKloubert.Blog.ServiceLocation.Impl;
@@ -155,6 +156,10 @@ objA.test();
                 //times.ForEach(x => Console.WriteLine(x));
                 //Thread.Sleep(2000);
                 //times.ForEach(x => Console.WriteLine(x));
+
+                var mo = new MyCloneableObject();
+
+                var moClones = (mo * long.MaxValue).Skip(1).Take(10).ToArray();
             }
             catch (Exception ex)
             {

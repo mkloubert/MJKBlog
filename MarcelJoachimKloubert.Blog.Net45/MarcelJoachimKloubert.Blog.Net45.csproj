@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WPF\NotificationObjectBase.cs" />
     <Compile Include="_Extensions\Drawing.cs" />
+    <Compile Include="_Extensions\Reflection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FreeImage.dll">
@@ -68,6 +69,16 @@
     <None Include="_Libs\FreeImage\FreeImage Public License 1.0.txt" />
     <None Include="_Libs\FreeImage\gpl-2.0.txt" />
     <None Include="_Libs\FreeImage\gpl-3.0.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.Blog.Net35\MarcelJoachimKloubert.Blog.Net35.csproj">
+      <Project>{6b519320-7f69-491b-896c-88406b86b818}</Project>
+      <Name>MarcelJoachimKloubert.Blog.Net35</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.Blog.Net40\MarcelJoachimKloubert.Blog.Net40.csproj">
+      <Project>{b43d819e-1d59-458b-9aa7-3e3c8d9a897c}</Project>
+      <Name>MarcelJoachimKloubert.Blog.Net40</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

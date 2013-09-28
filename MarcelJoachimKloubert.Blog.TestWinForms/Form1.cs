@@ -20,13 +20,11 @@ namespace MarcelJoachimKloubert.Blog.TestWinForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            using (var stream = this.GetType().Assembly.GetManifestResourceStream("MarcelJoachimKloubert.Blog.TestWinForms.Edward_Snowden-2.jpg"))
-            {
-                this.pictureBox1
-                    .Image = stream.LoadBitmap()
-                                   .Grayscale();
-            }
-
+            this.pictureBox1
+                .Image = this.GetType()
+                             .Assembly
+                             .GetManifestResourceBitmap("MarcelJoachimKloubert.Blog.TestWinForms.Edward_Snowden-21.jpg")
+                             .Grayscale();
         }
 
         #endregion Methods
