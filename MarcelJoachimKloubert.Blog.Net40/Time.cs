@@ -70,7 +70,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Constructors
 
-        #region Methods (55)
+        #region Methods (56)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="Time" />-Wert.
@@ -546,6 +546,30 @@ namespace MarcelJoachimKloubert.Blog
         public static explicit operator Time(long ticks)
         {
             return new Time(ticks: ticks);
+        }
+
+        /// <summary>
+        /// Klont einen Wert.
+        /// </summary>
+        /// <param name="clock">Der zu klonende Wert.</param>
+        /// <param name="count">Die Anzahl der Instanzen.</param>
+        /// <returns>Die verzögerte Sequenz mit geklonten Instanzen.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="count" /> ist kleiner als 0.
+        /// </exception>
+        public static IEnumerable<Time> operator *(Time clock, long count)
+        {
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException("count",
+                                                      count,
+                                                      "Der Wert muss grösser oder gleich 0 sein!");
+            }
+
+            for (long i = 0; i < count; i++)
+            {
+                yield return clock;
+            }
         }
 
         /// <summary>
