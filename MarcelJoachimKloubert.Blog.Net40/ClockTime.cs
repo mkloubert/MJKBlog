@@ -55,7 +55,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Constructors
 
-        #region Methods (36)
+        #region Methods (38)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
@@ -490,7 +490,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Methods
 
-        #region Properties (11)
+        #region Properties (10)
 
         /// <summary>
         /// Gibt die Stunden-Komponente dieses <see cref="ClockTime" />-Wertes zurück.
