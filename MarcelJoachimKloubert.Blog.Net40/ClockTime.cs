@@ -37,7 +37,6 @@ namespace MarcelJoachimKloubert.Blog
         #region Delegates (1)
 
         private delegate bool TryParseInnerHandler(string str,
-                                                   IFormatProvider formatProvider,
                                                    out TimeSpan result);
 
         #endregion Delegates
@@ -308,12 +307,11 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParse(string, out TimeSpan)" />
         public static bool TryParse(string str, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
                                      return TimeSpan.TryParse(input,
                                                               out tsResult);
                                  }, str
-                                  , formatProvider: null
                                   , result: out result);
         }
 
@@ -323,12 +321,11 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParse(string, IFormatProvider, out TimeSpan)" />
         public static bool TryParse(string str, IFormatProvider formatProvider, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParse(input, fp,
+                                     return TimeSpan.TryParse(input, formatProvider,
                                                               out tsResult);
                                  }, str
-                                  , formatProvider
                                   , out result);
         }
 
@@ -338,12 +335,11 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, out TimeSpan)" />
         public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParseExact(input, format, fp,
+                                     return TimeSpan.TryParseExact(input, format, formatProvider,
                                                                    out tsResult);
                                  }, str
-                                  , formatProvider
                                   , out result);
         }
 
@@ -353,13 +349,12 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, out TimeSpan)" />
         public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
-            {
-                return TimeSpan.TryParseExact(input, formats, fp,
-                                              out tsResult);
-            }, str
-             , formatProvider
-             , out result);
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParseExact(input, formats, formatProvider,
+                                                                   out tsResult);
+                                 }, str
+                                  , out result);
         }
 
         /// <summary>
@@ -368,13 +363,12 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, TimeSpanStyles, out TimeSpan)" />
         public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
-            {
-                return TimeSpan.TryParseExact(input, format, fp, styles,
-                                              out tsResult);
-            }, str
-             , formatProvider
-             , out result);
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParseExact(input, format, formatProvider, styles,
+                                                                   out tsResult);
+                                 }, str
+                                  , out result);
         }
 
         /// <summary>
@@ -383,21 +377,20 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, TimeSpanStyles, out TimeSpan)" />
         public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
         {
-            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
-            {
-                return TimeSpan.TryParseExact(input, formats, fp, styles,
-                                              out tsResult);
-            }, str
-             , formatProvider
-             , out result);
+            return TryParseInner(delegate(string input, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParseExact(input, formats, formatProvider, styles,
+                                                                   out tsResult);
+                                 }, str
+                                  , out result);
         }
 
-        private static bool TryParseInner(TryParseInnerHandler handler, string str, IFormatProvider formatProvider, out ClockTime result)
+        private static bool TryParseInner(TryParseInnerHandler handler, string str, out ClockTime result)
         {
             result = default(ClockTime);
 
             TimeSpan ts;
-            if (handler(str, formatProvider, out ts))
+            if (handler(str, out ts))
             {
                 result = (ClockTime)ts;
                 return true;
