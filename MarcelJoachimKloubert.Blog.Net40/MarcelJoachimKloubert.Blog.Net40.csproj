@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClockTime.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Extensions\Collections.cs" />
     <Compile Include="Extensions\Collections.ForAllAsync.cs">
       <DependentUpon>Collections.cs</DependentUpon>
