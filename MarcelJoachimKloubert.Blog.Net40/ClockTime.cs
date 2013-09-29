@@ -56,7 +56,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Constructors
 
-        #region Methods (39)
+        #region Methods (40)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
@@ -252,14 +252,32 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParse(string, out TimeSpan)" />
-        public static bool TryParse(string str, out ClockTime value)
+        public static bool TryParse(string input, out ClockTime result)
         {
-            value = default(ClockTime);
+            result = default(ClockTime);
 
             TimeSpan ts;
-            if (TimeSpan.TryParse(str, out ts))
+            if (TimeSpan.TryParse(input, out ts))
             {
-                value = (ClockTime)ts;
+                result = (ClockTime)ts;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.TryParse(string, IFormatProvider, out TimeSpan)" />
+        public static bool TryParse(string str, IFormatProvider formatProvider, out TimeSpan result)
+        {
+            result = default(ClockTime);
+
+            TimeSpan ts;
+            if (TimeSpan.TryParse(str, formatProvider, out ts))
+            {
+                result = (ClockTime)ts;
                 return true;
             }
 
