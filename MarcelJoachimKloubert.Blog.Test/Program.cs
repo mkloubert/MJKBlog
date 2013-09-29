@@ -9,13 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Threading;
-using System.Threading.Tasks;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.MEF.ServiceLocation;
-using MarcelJoachimKloubert.Blog.Operators;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using MarcelJoachimKloubert.Blog.ServiceLocation;
 using MarcelJoachimKloubert.Blog.ServiceLocation.Impl;
@@ -159,34 +156,39 @@ objA.test();
                 //Thread.Sleep(2000);
                 //times.ForEach(x => Console.WriteLine(x));
 
-                var tokenSource2 = new CancellationTokenSource();
+                //var tokenSource2 = new CancellationTokenSource();
 
-                var t = Task.Factory
-                    .StartNewTask((state, ct) =>
-                    {
-                        
+                //var t = Task.Factory
+                //    .StartNewTask((state, ct) =>
+                //    {
 
-                        for (ulong i = 0; i <= ulong.MaxValue; i++)
-                        {
-                            if (ct.IsCancellationRequested)
-                            {
-                                ct.ThrowIfCancellationRequested();
-                            }
 
-                            Thread.Sleep(100);
-                        }
-                    }, new
-                    {
-                    }, cancellationToken: tokenSource2.Token);
-                
-                Thread.Sleep(5000);
-                tokenSource2.Cancel(false);
+                //        for (ulong i = 0; i <= ulong.MaxValue; i++)
+                //        {
+                //            if (ct.IsCancellationRequested)
+                //            {
+                //                ct.ThrowIfCancellationRequested();
+                //            }
 
-                t.Wait();
+                //            Thread.Sleep(100);
+                //        }
+                //    }, new
+                //    {
+                //    }, cancellationToken: tokenSource2.Token);
 
-                var mo = new MyCloneableObject();
+                //Thread.Sleep(5000);
+                //tokenSource2.Cancel(false);
 
-                var moClones = (mo * long.MaxValue).Skip(1).Take(10).ToArray();
+                //t.Wait();
+
+                ClockTime? clock = ClockTime.Now;
+
+                string str = (string)clock;
+
+                DateTimeOffset dt = new DateTimeOffset(DateTime.Parse("1979-09-05 23:09:19.079"),
+                                                       TimeSpan.FromHours(3));
+
+                Console.WriteLine(clock);
             }
             catch (Exception ex)
             {
