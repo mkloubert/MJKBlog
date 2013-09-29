@@ -5,8 +5,15 @@
     <Members>
       <Field Name="_TICKS" Hidden="true" />
     </Members>
+    <NestedTypes>
+      <Delegate Name="MarcelJoachimKloubert.Blog.ClockTime.TryParseInnerHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ClockTime.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AMIgAAAIAQCQCCwEwAWCAgAAASAACKAAAQBhAAQAByg=</HashCode>
+      <HashCode>AMIgAAIJAQCQCCwEwAWCAgAEASAACKAAAQBhAAQAByg=</HashCode>
       <FileName>ClockTime.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

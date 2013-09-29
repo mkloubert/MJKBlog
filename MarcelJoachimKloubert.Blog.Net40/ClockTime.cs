@@ -210,7 +210,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="TimeSpan.Parse(string, string, IFormatProvider)" />
+        /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider)" />
         public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider)
         {
             return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider);
@@ -219,7 +219,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="TimeSpan.Parse(string, string[], IFormatProvider)" />
+        /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider)" />
         public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider)
         {
             return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider);
@@ -228,7 +228,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="TimeSpan.Parse(string, string, IFormatProvider, TimeSpanStyles)" />
+        /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider, TimeSpanStyles)" />
         public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
             return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider, styles);
@@ -237,7 +237,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="TimeSpan.Parse(string, string[], IFormatProvider, TimeSpanStyles)" />
+        /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider, TimeSpanStyles)" />
         public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
             return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider, styles);
