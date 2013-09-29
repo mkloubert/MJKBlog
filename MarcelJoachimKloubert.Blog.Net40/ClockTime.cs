@@ -274,7 +274,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <returns>Der Zielwert.</returns>
         public static implicit operator TimeSpan(ClockTime clock)
         {
-            return new TimeSpan(clock.Ticks);
+            return new TimeSpan(ticks: clock.Ticks);
         }
 
         /// <summary>

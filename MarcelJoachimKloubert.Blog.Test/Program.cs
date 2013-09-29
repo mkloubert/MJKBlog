@@ -188,6 +188,8 @@ objA.test();
                 DateTimeOffset dt = new DateTimeOffset(DateTime.Parse("1979-09-05 23:09:19.079"),
                                                        TimeSpan.FromHours(3));
 
+                var blubb = dt <= clock.Value;
+
                 Console.WriteLine(clock);
             }
             catch (Exception ex)
