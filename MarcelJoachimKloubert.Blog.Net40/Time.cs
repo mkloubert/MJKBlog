@@ -255,9 +255,9 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.Parse(string)" />
-        public static Time Parse(string str)
+        public static Time Parse(IEnumerable<char> str)
         {
-            return new Time(ticks: TimeSpan.Parse(str).Ticks);
+            return new Time(ticks: TimeSpan.Parse(AsString(str)).Ticks);
         }
 
         /// <summary>
@@ -273,36 +273,48 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider)" />
-        public static Time ParseExact(IEnumerable<char> str, string format, IFormatProvider formatProvider)
+        public static Time ParseExact(IEnumerable<char> str, IEnumerable<char> format, IFormatProvider formatProvider)
         {
-            return (Time)TimeSpan.ParseExact(AsString(str), format, formatProvider);
+            return (Time)TimeSpan.ParseExact(AsString(str),
+                                             AsString(format),
+                                             formatProvider);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider)" />
-        public static Time ParseExact(IEnumerable<char> str, string[] formats, IFormatProvider formatProvider)
+        public static Time ParseExact(IEnumerable<char> str, IEnumerable<IEnumerable<char>> formats, IFormatProvider formatProvider)
         {
-            return (Time)TimeSpan.ParseExact(AsString(str), formats, formatProvider);
+            return (Time)TimeSpan.ParseExact(AsString(str),
+                                             formats == null ? null : formats.Select(f => AsString(f))
+                                                                             .ToArray(),
+                                             formatProvider);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider, TimeSpanStyles)" />
-        public static Time ParseExact(IEnumerable<char> str, string format, IFormatProvider formatProvider, TimeSpanStyles styles)
+        public static Time ParseExact(IEnumerable<char> str, IEnumerable<char> format, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
-            return (Time)TimeSpan.ParseExact(AsString(str), format, formatProvider, styles);
+            return (Time)TimeSpan.ParseExact(AsString(str),
+                                             AsString(format),
+                                             formatProvider,
+                                             styles);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider, TimeSpanStyles)" />
-        public static Time ParseExact(IEnumerable<char> str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles)
+        public static Time ParseExact(IEnumerable<char> str, IEnumerable<IEnumerable<char>> formats, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
-            return (Time)TimeSpan.ParseExact(AsString(str), formats, formatProvider, styles);
+            return (Time)TimeSpan.ParseExact(AsString(str),
+                                             formats == null ? null : formats.Select(f => AsString(f))
+                                                                             .ToArray(),
+                                             formatProvider,
+                                             styles);
         }
 
         /// <summary>
@@ -396,11 +408,11 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, out TimeSpan)" />
-        public static bool TryParseExact(IEnumerable<char> str, string format, IFormatProvider formatProvider, out Time result)
+        public static bool TryParseExact(IEnumerable<char> str, IEnumerable<char> format, IFormatProvider formatProvider, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParseExact(input, format, formatProvider,
+                                     return TimeSpan.TryParseExact(input, AsString(format), formatProvider,
                                                                    out tsResult);
                                  }, str
                                   , out result);
@@ -410,11 +422,14 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, out TimeSpan)" />
-        public static bool TryParseExact(IEnumerable<char> str, string[] formats, IFormatProvider formatProvider, out Time result)
+        public static bool TryParseExact(IEnumerable<char> str, IEnumerable<IEnumerable<char>> formats, IFormatProvider formatProvider, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParseExact(input, formats, formatProvider,
+                                     return TimeSpan.TryParseExact(input,
+                                                                   formats == null ? null : formats.Select(f => AsString(f))
+                                                                                                   .ToArray(),
+                                                                   formatProvider,
                                                                    out tsResult);
                                  }, str
                                   , out result);
@@ -424,11 +439,11 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, TimeSpanStyles, out TimeSpan)" />
-        public static bool TryParseExact(IEnumerable<char> str, string format, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
+        public static bool TryParseExact(IEnumerable<char> str, IEnumerable<char> format, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParseExact(input, format, formatProvider, styles,
+                                     return TimeSpan.TryParseExact(input, AsString(format), formatProvider, styles,
                                                                    out tsResult);
                                  }, str
                                   , out result);
@@ -438,11 +453,15 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, TimeSpanStyles, out TimeSpan)" />
-        public static bool TryParseExact(IEnumerable<char> str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
+        public static bool TryParseExact(IEnumerable<char> str, IEnumerable<IEnumerable<char>> formats, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
-                                     return TimeSpan.TryParseExact(input, formats, formatProvider, styles,
+                                     return TimeSpan.TryParseExact(input,
+                                                                   formats == null ? null : formats.Select(f => AsString(f))
+                                                                                                   .ToArray(),
+                                                                   formatProvider,
+                                                                   styles,
                                                                    out tsResult);
                                  }, str
                                   , out result);
