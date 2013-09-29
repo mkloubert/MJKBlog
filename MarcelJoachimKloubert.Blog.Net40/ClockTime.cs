@@ -112,9 +112,9 @@ namespace MarcelJoachimKloubert.Blog
                 return 1;
             }
 
-            var ts = (ClockTime)other;
+            var otherClock = (ClockTime)other;
 
-            var ticks = ts._TICKS;
+            var ticks = otherClock._TICKS;
             if (this._TICKS > ticks)
             {
                 return 1;
