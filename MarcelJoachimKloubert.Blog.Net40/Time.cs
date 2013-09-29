@@ -201,9 +201,9 @@ namespace MarcelJoachimKloubert.Blog
                                   long additionalTicks = 0)
         {
             return new Time(ticks: (((hours * 3600L) +
-                                          (minutes * 60L) +
-                                          seconds) * 1000L + milliseconds) * 10000L    // ticks per millisecond
-                                                                           + additionalTicks);
+                                     (minutes * 60L) +
+                                     seconds) * 1000L + milliseconds) * 10000L    // ticks per millisecond
+                                                                      + additionalTicks);
         }
 
         /// <summary>
