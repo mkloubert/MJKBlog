@@ -9,9 +9,9 @@ namespace MarcelJoachimKloubert.Blog
     /// <summary>
     /// Speichert den Wert einer Uhrzeit.
     /// </summary>
-    public struct ClockTime : IEquatable<ClockTime>,
-                              IComparable<ClockTime>,
-                              IComparable
+    public struct Time : IEquatable<Time>,
+                         IComparable<Time>,
+                         IComparable
     {
         #region Data Members (6)
 
@@ -25,7 +25,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// Der Minimal-Wert.
         /// </summary>
-        public static readonly ClockTime MinValue = new ClockTime(ticks: MinTicks);
+        public static readonly Time MinValue = new Time(ticks: MinTicks);
 
         /// <summary>
         /// Speichert den maximalen Tick-Wert.
@@ -35,12 +35,12 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// Der Maximal-Wert.
         /// </summary>
-        public static readonly ClockTime MaxValue = new ClockTime(ticks: MaxTicks);
+        public static readonly Time MaxValue = new Time(ticks: MaxTicks);
 
         /// <summary>
         /// Der 0-Wert.
         /// </summary>
-        public static readonly ClockTime Zero = new ClockTime(ticks: 0);
+        public static readonly Time Zero = new Time(ticks: 0);
 
         #endregion Data Members
 
@@ -54,13 +54,13 @@ namespace MarcelJoachimKloubert.Blog
         #region Constructors (1)
 
         /// <summary>
-        /// Initialisiert eine neue Klasse der <see cref="ClockTime" /> Struktur.
+        /// Initialisiert eine neue Klasse der <see cref="Time" /> Struktur.
         /// </summary>
         /// <param name="ticks">Der zugrundeliegende Wert in Ticks.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="ticks" /> ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public ClockTime(long ticks)
+        public Time(long ticks)
         {
             CheckTickValue(ticks);
             this._TICKS = ticks;
@@ -71,29 +71,29 @@ namespace MarcelJoachimKloubert.Blog
         #region Methods (54)
 
         /// <summary>
-        /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
+        /// Addiert eine Zeitspanne auf diesen <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="ts">Der zu addierende Wert.</param>
         /// <returns>Der aufaddierte Wert.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public ClockTime Add(TimeSpan ts)
+        public Time Add(TimeSpan ts)
         {
             return this.Add(ticks: ts.Ticks);
         }
 
         /// <summary>
-        /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
+        /// Addiert eine Zeitspanne auf diesen <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="ticks">Der urspüngliche Wert.</param>
         /// <returns>Der aufaddierte Wert.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public ClockTime Add(long ticks)
+        public Time Add(long ticks)
         {
-            return new ClockTime(this._TICKS + ticks);
+            return new Time(this._TICKS + ticks);
         }
 
         private static void CheckTickValue(long ticks)
@@ -109,7 +109,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Vergleicht zwei <see cref="ClockTime" />-Werte und gibt eine ganze Zahl zurück,
+        /// Vergleicht zwei <see cref="Time" />-Werte und gibt eine ganze Zahl zurück,
         /// die angibt, ob der erste Wert kürzer oder länger als der zweite Wert ist
         /// oder ob beide Werte die gleiche Länge aufweisen.
         /// </summary>
@@ -120,7 +120,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 0 <paramref name="x" /> ist gleich <paramref name="y" />.
         /// 1 <paramref name="x" /> ist länger als <paramref name="y" />.
         /// </returns>
-        public static int Compare(ClockTime x, ClockTime y)
+        public static int Compare(Time x, Time y)
         {
             return x.CompareTo(y);
         }
@@ -136,7 +136,7 @@ namespace MarcelJoachimKloubert.Blog
                 return 1;
             }
 
-            var otherClock = (ClockTime)other;
+            var otherClock = (Time)other;
 
             var ticks = otherClock._TICKS;
             if (this._TICKS > ticks)
@@ -155,29 +155,30 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="IComparable{T}.CompareTo(T)" />
-        public int CompareTo(ClockTime other)
+        public int CompareTo(Time other)
         {
-            return this._TICKS.CompareTo(other._TICKS);
+            return this._TICKS
+                       .CompareTo(other._TICKS);
         }
 
         /// <summary>
-        /// Erzeugt eine neue Klasse der <see cref="ClockTime"/> Struktur.
+        /// Erzeugt eine neue Klasse der <see cref="Time"/> Struktur.
         /// </summary>
-        /// <param name="hours">Der Wert der <see cref="ClockTime.Hours"/>-Eigenschaft.</param>
-        /// <param name="minutes">Der Wert der <see cref="ClockTime.Minutes"/>-Eigenschaft.</param>
-        /// <param name="seconds">Der Wert der <see cref="ClockTime.Seconds"/>-Eigenschaft.</param>
-        /// <param name="milliseconds">Der Wert der <see cref="ClockTime.Milliseconds"/>-Eigenschaft.</param>
+        /// <param name="hours">Der Wert der <see cref="Time.Hours"/>-Eigenschaft.</param>
+        /// <param name="minutes">Der Wert der <see cref="Time.Minutes"/>-Eigenschaft.</param>
+        /// <param name="seconds">Der Wert der <see cref="Time.Seconds"/>-Eigenschaft.</param>
+        /// <param name="milliseconds">Der Wert der <see cref="Time.Milliseconds"/>-Eigenschaft.</param>
         /// <param name="additionalTicks">Der Wert in Ticks, der am Schluss aufaddiert werden soll.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert oder einer der Eingabe-Parameter ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public static ClockTime Create(int hours,
-                                       int minutes = 0,
-                                       int seconds = 0,
-                                       int milliseconds = 0,
-                                       long additionalTicks = 0)
+        public static Time Create(int hours,
+                                  int minutes = 0,
+                                  int seconds = 0,
+                                  int milliseconds = 0,
+                                  long additionalTicks = 0)
         {
-            return new ClockTime(ticks: (((hours * 3600L) +
+            return new Time(ticks: (((hours * 3600L) +
                                           (minutes * 60L) +
                                           seconds) * 1000L + milliseconds) * 10000L    // ticks per millisecond
                                                                            + additionalTicks);
@@ -191,16 +192,16 @@ namespace MarcelJoachimKloubert.Blog
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="ticks" /> ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public static ClockTime FromTicks(long ticks)
+        public static Time FromTicks(long ticks)
         {
-            return new ClockTime(ticks);
+            return new Time(ticks);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="IEquatable{T}.Equals(T)" />
-        public bool Equals(ClockTime other)
+        public bool Equals(Time other)
         {
             return this._TICKS == other._TICKS;
         }
@@ -211,9 +212,9 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="object.Equals(object)" />
         public override bool Equals(object other)
         {
-            if (other is ClockTime)
+            if (other is Time)
             {
-                return this.Equals((ClockTime)other);
+                return this.Equals((Time)other);
             }
 
             return base.Equals(other);
@@ -232,80 +233,80 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.Parse(string)" />
-        public static ClockTime Parse(string str)
+        public static Time Parse(string str)
         {
-            return new ClockTime(ticks: TimeSpan.Parse(str).Ticks);
+            return new Time(ticks: TimeSpan.Parse(str).Ticks);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.Parse(string, IFormatProvider)" />
-        public static ClockTime Parse(string str, IFormatProvider formatProvider)
+        public static Time Parse(string str, IFormatProvider formatProvider)
         {
-            return new ClockTime(ticks: TimeSpan.Parse(str, formatProvider).Ticks);
+            return new Time(ticks: TimeSpan.Parse(str, formatProvider).Ticks);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider)" />
-        public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider)
+        public static Time ParseExact(string str, string format, IFormatProvider formatProvider)
         {
-            return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider);
+            return (Time)TimeSpan.ParseExact(str, format, formatProvider);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider)" />
-        public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider)
+        public static Time ParseExact(string str, string[] formats, IFormatProvider formatProvider)
         {
-            return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider);
+            return (Time)TimeSpan.ParseExact(str, formats, formatProvider);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string, IFormatProvider, TimeSpanStyles)" />
-        public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles)
+        public static Time ParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
-            return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider, styles);
+            return (Time)TimeSpan.ParseExact(str, format, formatProvider, styles);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.ParseExact(string, string[], IFormatProvider, TimeSpanStyles)" />
-        public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles)
+        public static Time ParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles)
         {
-            return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider, styles);
+            return (Time)TimeSpan.ParseExact(str, formats, formatProvider, styles);
         }
 
         /// <summary>
-        /// Subtrahiert eine Zeitspanne von diesem <see cref="ClockTime" />-Wert.
+        /// Subtrahiert eine Zeitspanne von diesem <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="ts">Der zu subtrahierende Wert.</param>
         /// <returns>Der subtrahierte Wert.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public ClockTime Subtract(TimeSpan ts)
+        public Time Subtract(TimeSpan ts)
         {
             return this.Subtract(ticks: ts.Ticks);
         }
 
         /// <summary>
-        /// Subtrahiert eine Zeitspanne von diesem <see cref="ClockTime" />-Wert.
+        /// Subtrahiert eine Zeitspanne von diesem <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="ticks">Der zu addierende Wert in Ticks.</param>
         /// <returns>Der subtrahierte Wert.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert ist ausserhalb des gültigen Bereichs.
         /// </exception>
-        public ClockTime Subtract(long ticks)
+        public Time Subtract(long ticks)
         {
-            return new ClockTime(this._TICKS - ticks);
+            return new Time(this._TICKS - ticks);
         }
 
         /// <summary>
@@ -344,7 +345,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParse(string, out TimeSpan)" />
-        public static bool TryParse(string str, out ClockTime result)
+        public static bool TryParse(string str, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -358,7 +359,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParse(string, IFormatProvider, out TimeSpan)" />
-        public static bool TryParse(string str, IFormatProvider formatProvider, out ClockTime result)
+        public static bool TryParse(string str, IFormatProvider formatProvider, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -372,7 +373,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, out TimeSpan)" />
-        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, out ClockTime result)
+        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -386,7 +387,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, out TimeSpan)" />
-        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, out ClockTime result)
+        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -400,7 +401,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, TimeSpanStyles, out TimeSpan)" />
-        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
+        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -414,7 +415,7 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, TimeSpanStyles, out TimeSpan)" />
-        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
+        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles, out Time result)
         {
             return TryParseInner(delegate(string input, out TimeSpan tsResult)
                                  {
@@ -424,14 +425,14 @@ namespace MarcelJoachimKloubert.Blog
                                   , out result);
         }
 
-        private static bool TryParseInner(TryParseInnerHandler handler, string str, out ClockTime result)
+        private static bool TryParseInner(TryParseInnerHandler handler, string str, out Time result)
         {
-            result = default(ClockTime);
+            result = default(Time);
 
             TimeSpan ts;
             if (handler(str, out ts))
             {
-                result = (ClockTime)ts;
+                result = (Time)ts;
                 return true;
             }
 
@@ -439,70 +440,70 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Konvertiert einen <see cref="ClockTime" /> implizit
+        /// Konvertiert einen <see cref="Time" /> implizit
         /// nach <see cref="TimeSpan" />.
         /// </summary>
         /// <param name="clock">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator TimeSpan(ClockTime clock)
+        public static implicit operator TimeSpan(Time clock)
         {
             return new TimeSpan(ticks: clock.Ticks);
         }
 
         /// <summary>
         /// Konvertiert einen <see cref="TimeSpan" /> explizit
-        /// nach <see cref="ClockTime" />.
+        /// nach <see cref="Time" />.
         /// </summary>
         /// <param name="ts">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="ts" /> ist ein Wert ausserhalb des gültigen Bereichs.
         /// </exception>
-        public static explicit operator ClockTime(TimeSpan ts)
+        public static explicit operator Time(TimeSpan ts)
         {
-            return new ClockTime(ts.Ticks);
+            return new Time(ts.Ticks);
         }
 
         /// <summary>
-        /// Explizite Konvertierung von <see cref="ClockTime" /> nach <see cref="string" />.
+        /// Explizite Konvertierung von <see cref="Time" /> nach <see cref="string" />.
         /// </summary>
         /// <param name="clock">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static explicit operator string(ClockTime clock)
+        public static explicit operator string(Time clock)
         {
             return clock.ToString();
         }
 
         /// <summary>
-        /// Implizite Konvertierung von <see cref="string" /> nach <see cref="ClockTime" />.
+        /// Implizite Konvertierung von <see cref="string" /> nach <see cref="Time" />.
         /// </summary>
         /// <param name="str">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator ClockTime?(string str)
+        public static implicit operator Time?(string str)
         {
-            return str != null ? ClockTime.Parse(str) : (ClockTime?)null;
+            return str != null ? Time.Parse(str) : (Time?)null;
         }
 
         /// <summary>
-        /// Konvertiert einen <see cref="ClockTime" />
+        /// Konvertiert einen <see cref="Time" />
         /// implizit nach <see cref="long" />.
         /// </summary>
         /// <param name="clock">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator long(ClockTime clock)
+        public static implicit operator long(Time clock)
         {
             return clock._TICKS;
         }
 
         /// <summary>
         /// Konvertiert einen <see cref="long" />
-        /// explizit nach <see cref="ClockTime" />.
+        /// explizit nach <see cref="Time" />.
         /// </summary>
         /// <param name="ticks">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static explicit operator ClockTime(long ticks)
+        public static explicit operator Time(long ticks)
         {
-            return new ClockTime(ticks: ticks);
+            return new Time(ticks: ticks);
         }
 
         /// <summary>
@@ -511,7 +512,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist grösser als <paramref name="right" /> oder nicht.</returns>
-        public static bool operator >(ClockTime left, ClockTime right)
+        public static bool operator >(Time left, Time right)
         {
             return left._TICKS > right._TICKS;
         }
@@ -522,7 +523,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist grösser oder gleich als <paramref name="right" /> oder nicht.</returns>
-        public static bool operator >=(ClockTime left, ClockTime right)
+        public static bool operator >=(Time left, Time right)
         {
             return left._TICKS >= right._TICKS;
         }
@@ -533,7 +534,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist kleiner als <paramref name="right" /> oder nicht.</returns>
-        public static bool operator <(ClockTime left, ClockTime right)
+        public static bool operator <(Time left, Time right)
         {
             return left._TICKS < right._TICKS;
         }
@@ -544,7 +545,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist kleiner oder gleich als <paramref name="right" /> oder nicht.</returns>
-        public static bool operator <=(ClockTime left, ClockTime right)
+        public static bool operator <=(Time left, Time right)
         {
             return left._TICKS <= right._TICKS;
         }
@@ -555,7 +556,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist gleich <paramref name="right" /> oder nicht.</returns>
-        public static bool operator ==(ClockTime left, ClockTime right)
+        public static bool operator ==(Time left, Time right)
         {
             return left.Equals(right);
         }
@@ -566,57 +567,57 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="left">Der linke Wert.</param>
         /// <param name="right">Der rechte Wert.</param>
         /// <returns><paramref name="left" /> ist ungleich <paramref name="right" /> oder nicht.</returns>
-        public static bool operator !=(ClockTime left, ClockTime right)
+        public static bool operator !=(Time left, Time right)
         {
             return !(left == right);
         }
 
         /// <summary>
-        /// Addiert eine Zeitspanne auf einen <see cref="ClockTime" />-Wert.
+        /// Addiert eine Zeitspanne auf einen <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="clock">Der urspüngliche Wert.</param>
         /// <param name="ts">Der zu addierende Wert.</param>
         /// <returns>Der aufaddierte Wert.</returns>
-        public static ClockTime operator +(ClockTime clock, TimeSpan ts)
+        public static Time operator +(Time clock, TimeSpan ts)
         {
             return clock.Add(ts);
         }
 
         /// <summary>
-        /// Addiert eine Zeitspanne auf einen <see cref="ClockTime" />-Wert.
+        /// Addiert eine Zeitspanne auf einen <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="clock">Der urspüngliche Wert.</param>
         /// <param name="ticks">Der zu addierende Wert in Ticks.</param>
         /// <returns>Der aufaddierte Wert.</returns>
-        public static ClockTime operator +(ClockTime clock, long ticks)
+        public static Time operator +(Time clock, long ticks)
         {
             return clock.Add(ticks);
         }
 
         /// <summary>
-        /// Subtrahiert eine Zeitspanne von einem <see cref="ClockTime" />-Wert.
+        /// Subtrahiert eine Zeitspanne von einem <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="clock">Der urspüngliche Wert.</param>
         /// <param name="ts">Der zu subtrahierende Wert.</param>
         /// <returns>Der subtrahierte Wert.</returns>
-        public static ClockTime operator -(ClockTime clock, TimeSpan ts)
+        public static Time operator -(Time clock, TimeSpan ts)
         {
             return clock.Subtract(ts);
         }
 
         /// <summary>
-        /// Subtrahiert eine Zeitspanne von einem <see cref="ClockTime" />-Wert.
+        /// Subtrahiert eine Zeitspanne von einem <see cref="Time" />-Wert.
         /// </summary>
         /// <param name="clock">Der urspüngliche Wert.</param>
         /// <param name="ticks">Der zu addierende Wert in Ticks.</param>
         /// <returns>Der subtrahierte Wert.</returns>
-        public static ClockTime operator -(ClockTime clock, long ticks)
+        public static Time operator -(Time clock, long ticks)
         {
             return clock.Subtract(ticks);
         }
 
         /// <summary>
-        /// Überträgt einen <see cref="ClockTime" />-Wert auf einen
+        /// Überträgt einen <see cref="Time" />-Wert auf einen
         /// <see cref="DateTime" />-Wert.
         /// </summary>
         /// <param name="dateTime">Der Wert auf den <paramref name="clock" /> übertragen werden soll.</param>
@@ -624,7 +625,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <returns>
         /// Der verschmolzene Wert aus <paramref name="dateTime" /> und <paramref name="clock" />.
         /// </returns>
-        public static DateTime operator <=(DateTime dateTime, ClockTime clock)
+        public static DateTime operator <=(DateTime dateTime, Time clock)
         {
             return dateTime.Date
                            .AddTicks(clock.Ticks);
@@ -634,13 +635,13 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <exception cref="NotSupportedException">Operation wird nicht unterstützt.</exception>
-        public static DateTime operator >=(DateTime dateTime, ClockTime clock)
+        public static DateTime operator >=(DateTime dateTime, Time clock)
         {
             throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Überträgt einen <see cref="ClockTime" />-Wert auf einen
+        /// Überträgt einen <see cref="Time" />-Wert auf einen
         /// <see cref="DateTimeOffset" />-Wert.
         /// </summary>
         /// <param name="dateTimeOff">Der Wert auf den <paramref name="clock" /> übertragen werden soll.</param>
@@ -648,7 +649,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <returns>
         /// Der verschmolzene Wert aus <paramref name="dateTimeOff" /> und <paramref name="clock" />.
         /// </returns>
-        public static DateTimeOffset operator <=(DateTimeOffset dateTimeOff, ClockTime clock)
+        public static DateTimeOffset operator <=(DateTimeOffset dateTimeOff, Time clock)
         {
             return new DateTimeOffset(dateTimeOff.Date,
                                       dateTimeOff.Offset).AddTicks(clock.Ticks);
@@ -658,13 +659,13 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <exception cref="NotSupportedException">Operation wird nicht unterstützt.</exception>
-        public static DateTimeOffset operator >=(DateTimeOffset dateTimeOff, ClockTime clock)
+        public static DateTimeOffset operator >=(DateTimeOffset dateTimeOff, Time clock)
         {
             throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Überträgt einen <see cref="ClockTime" />-Wert auf einen
+        /// Überträgt einen <see cref="Time" />-Wert auf einen
         /// <see cref="DateTime" />-Wert.
         /// </summary>
         /// <param name="clock">Der zu übertragende Wert.</param>
@@ -672,7 +673,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <returns>
         /// Der verschmolzene Wert aus <paramref name="dateTime" /> und <paramref name="clock" />.
         /// </returns>
-        public static DateTime operator >=(ClockTime clock, DateTime dateTime)
+        public static DateTime operator >=(Time clock, DateTime dateTime)
         {
             return dateTime <= clock;
         }
@@ -681,13 +682,13 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <exception cref="NotSupportedException">Operation wird nicht unterstützt.</exception>
-        public static DateTime operator <=(ClockTime clock, DateTime dateTime)
+        public static DateTime operator <=(Time clock, DateTime dateTime)
         {
             throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Überträgt einen <see cref="ClockTime" />-Wert auf einen
+        /// Überträgt einen <see cref="Time" />-Wert auf einen
         /// <see cref="DateTimeOffset" />-Wert.
         /// </summary>
         /// <param name="clock">Der zu übertragende Wert.</param>
@@ -695,7 +696,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <returns>
         /// Der verschmolzene Wert aus <paramref name="dateTimeOff" /> und <paramref name="clock" />.
         /// </returns>
-        public static DateTimeOffset operator >=(ClockTime clock, DateTimeOffset dateTimeOff)
+        public static DateTimeOffset operator >=(Time clock, DateTimeOffset dateTimeOff)
         {
             return dateTimeOff <= clock;
         }
@@ -704,28 +705,28 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <exception cref="NotSupportedException">Operation wird nicht unterstützt.</exception>
-        public static DateTimeOffset operator <=(ClockTime clock, DateTimeOffset dateTimeOff)
+        public static DateTimeOffset operator <=(Time clock, DateTimeOffset dateTimeOff)
         {
             throw new NotSupportedException();
         }
 
         /// <summary>
-        /// Konvertiert einen <see cref="ClockTime" /> Wert implizit nach <see cref="DateTime" />.
+        /// Konvertiert einen <see cref="Time" /> Wert implizit nach <see cref="DateTime" />.
         /// </summary>
         /// <param name="clock">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator DateTime(ClockTime clock)
+        public static implicit operator DateTime(Time clock)
         {
             return DateTime.Today
                            .AddTicks(clock._TICKS);
         }
 
         /// <summary>
-        /// Konvertiert einen <see cref="ClockTime" /> Wert implizit nach <see cref="DateTimeOffset" />.
+        /// Konvertiert einen <see cref="Time" /> Wert implizit nach <see cref="DateTimeOffset" />.
         /// </summary>
         /// <param name="clock">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator DateTimeOffset(ClockTime clock)
+        public static implicit operator DateTimeOffset(Time clock)
         {
             return DateTime.Today
                            .AddTicks(clock._TICKS);
@@ -736,7 +737,7 @@ namespace MarcelJoachimKloubert.Blog
         #region Properties (10)
 
         /// <summary>
-        /// Gibt die Stunden-Komponente dieses <see cref="ClockTime" />-Wertes zurück.
+        /// Gibt die Stunden-Komponente dieses <see cref="Time" />-Wertes zurück.
         /// </summary>
         public int Hours
         {
@@ -744,7 +745,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Gibt die Millisekunden.Komponente dieses <see cref="ClockTime" />-Wertes zurück.
+        /// Gibt die Millisekunden.Komponente dieses <see cref="Time" />-Wertes zurück.
         /// </summary>
         public int Milliseconds
         {
@@ -752,7 +753,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Gibt die Minuten-Komponente dieses <see cref="ClockTime" />-Wertes zurück.
+        /// Gibt die Minuten-Komponente dieses <see cref="Time" />-Wertes zurück.
         /// </summary>
         public int Minutes
         {
@@ -762,17 +763,17 @@ namespace MarcelJoachimKloubert.Blog
         /// <summary>
         /// Gibt die aktuelle Uhrzeit zurück.
         /// </summary>
-        public static ClockTime Now
+        public static Time Now
         {
             get
             {
                 var now = DateTime.Now;
-                return new ClockTime((now - now.Date).Ticks);
+                return new Time((now - now.Date).Ticks);
             }
         }
 
         /// <summary>
-        /// Gibt die Sekunden-Komponente dieses <see cref="ClockTime" />-Wertes zurück.
+        /// Gibt die Sekunden-Komponente dieses <see cref="Time" />-Wertes zurück.
         /// </summary>
         public int Seconds
         {
@@ -788,7 +789,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Ruft den Wert der aktuellen <see cref="ClockTime" />-Struktur in ganzen Tagen
+        /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur in ganzen Tagen
         /// und Bruchteilen von Stunden ab.
         /// </summary>
         public double TotalHours
@@ -797,7 +798,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Ruft den Wert der aktuellen <see cref="ClockTime" />-Struktur
+        /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
         /// in ganzen Tagen und Bruchteilen von Millisekunden ab.
         /// </summary>
         public double TotalMilliseconds
@@ -821,7 +822,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Ruft den Wert der aktuellen <see cref="ClockTime" />-Struktur
+        /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
         /// in ganzen Tagen und Bruchteilen von Minuten ab.
         /// </summary>
         public double TotalMinutes
@@ -830,7 +831,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Ruft den Wert der aktuellen <see cref="ClockTime" />-Struktur
+        /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
         /// in ganzen Tagen und Bruchteilen von Sekunden ab.
         /// </summary>
         public double TotalSeconds

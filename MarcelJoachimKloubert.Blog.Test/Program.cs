@@ -182,7 +182,7 @@ objA.test();
                 //t.Wait();
 
                 string s = "13:00:12";
-                ClockTime? c = ClockTime.Create(1, 2, 3, 4, 5);
+                Time? c = Time.Create(1, 2, 3, 4, 5);
                 TimeSpan? ts = c;
                 string s2 = (string)c;
 
