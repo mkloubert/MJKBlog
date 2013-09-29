@@ -13,24 +13,34 @@ namespace MarcelJoachimKloubert.Blog
                               IComparable<ClockTime>,
                               IComparable
     {
-        #region Data Members (4)
+        #region Data Members (6)
 
         private readonly long _TICKS;
 
         /// <summary>
+        /// Speichert den minimalen Tick-Wert.
+        /// </summary>
+        public const long MinTicks = 0;
+
+        /// <summary>
         /// Der Minimal-Wert.
         /// </summary>
-        public static readonly ClockTime MinValue = new ClockTime(0);
+        public static readonly ClockTime MinValue = new ClockTime(ticks: MinTicks);
+
+        /// <summary>
+        /// Speichert den maximalen Tick-Wert.
+        /// </summary>
+        public const long MaxTicks = 863999999999;
 
         /// <summary>
         /// Der Maximal-Wert.
         /// </summary>
-        public static readonly ClockTime MaxValue = new ClockTime(863999999999);
+        public static readonly ClockTime MaxValue = new ClockTime(ticks: MaxTicks);
 
         /// <summary>
         /// Der 0-Wert.
         /// </summary>
-        public static readonly ClockTime Zero = new ClockTime(0);
+        public static readonly ClockTime Zero = new ClockTime(ticks: 0);
 
         #endregion Data Members
 
@@ -44,7 +54,7 @@ namespace MarcelJoachimKloubert.Blog
         #region Constructors (1)
 
         /// <summary>
-        /// Initialisiert eine neue Klasse des <see cref="ClockTime" /> Wertes.
+        /// Initialisiert eine neue Klasse der <see cref="ClockTime" /> Struktur.
         /// </summary>
         /// <param name="ticks">Der zugrundeliegende Wert in Ticks.</param>
         /// <exception cref="ArgumentOutOfRangeException">
@@ -52,19 +62,13 @@ namespace MarcelJoachimKloubert.Blog
         /// </exception>
         public ClockTime(long ticks)
         {
-            if (ticks < 0 || ticks >= 864000000000)
-            {
-                throw new ArgumentOutOfRangeException("ticks",
-                                                      ticks,
-                                                      "Der Wert muss zwischen 0 und 863999999999 (einschliesslich) liegen!");
-            }
-
+            CheckTickValue(ticks);
             this._TICKS = ticks;
         }
 
         #endregion Constructors
 
-        #region Methods (49)
+        #region Methods (54)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
@@ -90,6 +94,18 @@ namespace MarcelJoachimKloubert.Blog
         public ClockTime Add(long ticks)
         {
             return new ClockTime(this._TICKS + ticks);
+        }
+
+        private static void CheckTickValue(long ticks)
+        {
+            if (ticks < MinTicks || ticks > MaxTicks)
+            {
+                throw new ArgumentOutOfRangeException("ticks",
+                                                      ticks,
+                                                      string.Format("Der Wert muss grösser oder gleich {0} und kleiner oder gleich {1} sein!",
+                                                                    MinTicks,
+                                                                    MaxTicks));
+            }
         }
 
         /// <summary>
@@ -145,30 +161,26 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Erstellt eine neue Instanz.
+        /// Erzeugt eine neue Klasse der <see cref="ClockTime"/> Struktur.
         /// </summary>
-        /// <param name="hours">Der Wert der <see cref="ClockTime.Hours" />-Eigenschaft.</param>
-        /// <param name="minutes">Der Wert der <see cref="ClockTime.Minutes" />-Eigenschaft.</param>
-        /// <param name="seconds">Der Wert der <see cref="ClockTime.Seconds" />-Eigenschaft.</param>
-        /// <param name="msec">Der Wert der <see cref="ClockTime.Milliseconds" />-Eigenschaft.</param>
-        /// <param name="ticks">Der Wert in Ticks, der am Schluss aufaddiert werden soll.</param>
-        /// <returns>Die neue Instanz.</returns>
+        /// <param name="hours">Der Wert der <see cref="ClockTime.Hours"/>-Eigenschaft.</param>
+        /// <param name="minutes">Der Wert der <see cref="ClockTime.Minutes"/>-Eigenschaft.</param>
+        /// <param name="seconds">Der Wert der <see cref="ClockTime.Seconds"/>-Eigenschaft.</param>
+        /// <param name="milliseconds">Der Wert der <see cref="ClockTime.Milliseconds"/>-Eigenschaft.</param>
+        /// <param name="additionalTicks">Der Wert in Ticks, der am Schluss aufaddiert werden soll.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Der neue Wert oder einer der Eingabe-Parameter ist ausserhalb des gültigen Bereichs.
         /// </exception>
         public static ClockTime Create(int hours,
                                        int minutes = 0,
                                        int seconds = 0,
-                                       int msec = 0,
-                                       long ticks = 0)
+                                       int milliseconds = 0,
+                                       long additionalTicks = 0)
         {
-            var result = (ClockTime)new TimeSpan(days: 0,
-                                                 hours: hours,
-                                                 minutes: minutes,
-                                                 seconds: seconds,
-                                                 milliseconds: msec);
-
-            return result.Add(ticks: ticks);
+            return new ClockTime(ticks: (((hours * 3600L) +
+                                          (minutes * 60L) +
+                                          seconds) * 1000L + milliseconds) * 10000L    // ticks per millisecond
+                                                                           + additionalTicks);
         }
 
         /// <summary>
@@ -222,7 +234,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.Parse(string)" />
         public static ClockTime Parse(string str)
         {
-            return (ClockTime)TimeSpan.Parse(str);
+            return new ClockTime(ticks: TimeSpan.Parse(str).Ticks);
         }
 
         /// <summary>
@@ -231,7 +243,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <see cref="TimeSpan.Parse(string, IFormatProvider)" />
         public static ClockTime Parse(string str, IFormatProvider formatProvider)
         {
-            return (ClockTime)TimeSpan.Parse(str, formatProvider);
+            return new ClockTime(ticks: TimeSpan.Parse(str, formatProvider).Ticks);
         }
 
         /// <summary>
@@ -466,9 +478,31 @@ namespace MarcelJoachimKloubert.Blog
         /// </summary>
         /// <param name="str">Der Quellwert.</param>
         /// <returns>Der Zielwert.</returns>
-        public static implicit operator ClockTime(string str)
+        public static implicit operator ClockTime?(string str)
         {
-            return ClockTime.Parse(str);
+            return str != null ? ClockTime.Parse(str) : (ClockTime?)null;
+        }
+
+        /// <summary>
+        /// Konvertiert einen <see cref="ClockTime" />
+        /// implizit nach <see cref="long" />.
+        /// </summary>
+        /// <param name="clock">Der Quellwert.</param>
+        /// <returns>Der Zielwert.</returns>
+        public static implicit operator long(ClockTime clock)
+        {
+            return clock._TICKS;
+        }
+
+        /// <summary>
+        /// Konvertiert einen <see cref="long" />
+        /// explizit nach <see cref="ClockTime" />.
+        /// </summary>
+        /// <param name="ticks">Der Quellwert.</param>
+        /// <returns>Der Zielwert.</returns>
+        public static explicit operator ClockTime(long ticks)
+        {
+            return new ClockTime(ticks: ticks);
         }
 
         /// <summary>
@@ -673,6 +707,28 @@ namespace MarcelJoachimKloubert.Blog
         public static DateTimeOffset operator <=(ClockTime clock, DateTimeOffset dateTimeOff)
         {
             throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// Konvertiert einen <see cref="ClockTime" /> Wert implizit nach <see cref="DateTime" />.
+        /// </summary>
+        /// <param name="clock">Der Quellwert.</param>
+        /// <returns>Der Zielwert.</returns>
+        public static implicit operator DateTime(ClockTime clock)
+        {
+            return DateTime.Today
+                           .AddTicks(clock._TICKS);
+        }
+
+        /// <summary>
+        /// Konvertiert einen <see cref="ClockTime" /> Wert implizit nach <see cref="DateTimeOffset" />.
+        /// </summary>
+        /// <param name="clock">Der Quellwert.</param>
+        /// <returns>Der Zielwert.</returns>
+        public static implicit operator DateTimeOffset(ClockTime clock)
+        {
+            return DateTime.Today
+                           .AddTicks(clock._TICKS);
         }
 
         #endregion Methods

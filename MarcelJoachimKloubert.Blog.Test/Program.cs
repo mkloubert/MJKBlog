@@ -181,16 +181,12 @@ objA.test();
 
                 //t.Wait();
 
-                ClockTime? clock = ClockTime.Now;
+                string s = "13:00:12";
+                ClockTime? c = ClockTime.Create(1, 2, 3, 4, 5);
+                TimeSpan? ts = c;
+                string s2 = (string)c;
 
-                string str = (string)clock;
-
-                DateTimeOffset dt = new DateTimeOffset(DateTime.Parse("1979-09-05 23:09:19.079"),
-                                                       TimeSpan.FromHours(3));
-
-                var blubb = dt <= clock.Value;
-
-                Console.WriteLine(clock);
+                Console.WriteLine(c);
             }
             catch (Exception ex)
             {
