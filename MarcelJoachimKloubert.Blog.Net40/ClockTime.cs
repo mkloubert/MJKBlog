@@ -145,6 +145,33 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
+        /// Erstellt eine neue Instanz.
+        /// </summary>
+        /// <param name="hours">Der Wert der <see cref="ClockTime.Hours" />-Eigenschaft.</param>
+        /// <param name="minutes">Der Wert der <see cref="ClockTime.Minutes" />-Eigenschaft.</param>
+        /// <param name="seconds">Der Wert der <see cref="ClockTime.Seconds" />-Eigenschaft.</param>
+        /// <param name="msec">Der Wert der <see cref="ClockTime.Milliseconds" />-Eigenschaft.</param>
+        /// <param name="ticks">Der Wert in Ticks, der am Schluss aufaddiert werden soll.</param>
+        /// <returns>Die neue Instanz.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Der neue Wert oder einer der Eingabe-Parameter ist ausserhalb des gültigen Bereichs.
+        /// </exception>
+        public static ClockTime Create(int hours,
+                                       int minutes = 0,
+                                       int seconds = 0,
+                                       int msec = 0,
+                                       long ticks = 0)
+        {
+            var result = (ClockTime)new TimeSpan(days: 0,
+                                                 hours: hours,
+                                                 minutes: minutes,
+                                                 seconds: seconds,
+                                                 milliseconds: msec);
+
+            return result.Add(ticks: ticks);
+        }
+
+        /// <summary>
         /// Erzeugt eine neue Instanz aus einem Ticks-Wert.
         /// </summary>
         /// <param name="ticks">Die Anzahl an Ticks, die den Wert repräsentiert.</param>
