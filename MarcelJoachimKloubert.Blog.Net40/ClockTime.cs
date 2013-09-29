@@ -2,6 +2,7 @@
 
 
 using System;
+using System.Globalization;
 
 namespace MarcelJoachimKloubert.Blog
 {
@@ -33,6 +34,14 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Data Members
 
+        #region Delegates (1)
+
+        private delegate bool TryParseInnerHandler(string str,
+                                                   IFormatProvider formatProvider,
+                                                   out TimeSpan result);
+
+        #endregion Delegates
+
         #region Constructors (1)
 
         /// <summary>
@@ -56,7 +65,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Constructors
 
-        #region Methods (40)
+        #region Methods (49)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
@@ -191,6 +200,51 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.Parse(string, IFormatProvider)" />
+        public static ClockTime Parse(string str, IFormatProvider formatProvider)
+        {
+            return (ClockTime)TimeSpan.Parse(str, formatProvider);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.Parse(string, string, IFormatProvider)" />
+        public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider)
+        {
+            return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.Parse(string, string[], IFormatProvider)" />
+        public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider)
+        {
+            return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.Parse(string, string, IFormatProvider, TimeSpanStyles)" />
+        public static ClockTime ParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles)
+        {
+            return (ClockTime)TimeSpan.ParseExact(str, format, formatProvider, styles);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.Parse(string, string[], IFormatProvider, TimeSpanStyles)" />
+        public static ClockTime ParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles)
+        {
+            return (ClockTime)TimeSpan.ParseExact(str, formats, formatProvider, styles);
+        }
+
+        /// <summary>
         /// Subtrahiert eine Zeitspanne von diesem <see cref="ClockTime" />-Wert.
         /// </summary>
         /// <param name="ts">Der zu subtrahierende Wert.</param>
@@ -252,30 +306,98 @@ namespace MarcelJoachimKloubert.Blog
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParse(string, out TimeSpan)" />
-        public static bool TryParse(string input, out ClockTime result)
+        public static bool TryParse(string str, out ClockTime result)
         {
-            result = default(ClockTime);
-
-            TimeSpan ts;
-            if (TimeSpan.TryParse(input, out ts))
-            {
-                result = (ClockTime)ts;
-                return true;
-            }
-
-            return false;
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParse(input,
+                                                              out tsResult);
+                                 }, str
+                                  , formatProvider: null
+                                  , result: out result);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <see cref="TimeSpan.TryParse(string, IFormatProvider, out TimeSpan)" />
-        public static bool TryParse(string str, IFormatProvider formatProvider, out TimeSpan result)
+        public static bool TryParse(string str, IFormatProvider formatProvider, out ClockTime result)
+        {
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParse(input, fp,
+                                                              out tsResult);
+                                 }, str
+                                  , formatProvider
+                                  , out result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, out TimeSpan)" />
+        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, out ClockTime result)
+        {
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+                                 {
+                                     return TimeSpan.TryParseExact(input, format, fp,
+                                                                   out tsResult);
+                                 }, str
+                                  , formatProvider
+                                  , out result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, out TimeSpan)" />
+        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, out ClockTime result)
+        {
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            {
+                return TimeSpan.TryParseExact(input, formats, fp,
+                                              out tsResult);
+            }, str
+             , formatProvider
+             , out result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.TryParseExact(string, string, IFormatProvider, TimeSpanStyles, out TimeSpan)" />
+        public static bool TryParseExact(string str, string format, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
+        {
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            {
+                return TimeSpan.TryParseExact(input, format, fp, styles,
+                                              out tsResult);
+            }, str
+             , formatProvider
+             , out result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="TimeSpan.TryParseExact(string, string[], IFormatProvider, TimeSpanStyles, out TimeSpan)" />
+        public static bool TryParseExact(string str, string[] formats, IFormatProvider formatProvider, TimeSpanStyles styles, out ClockTime result)
+        {
+            return TryParseInner(delegate(string input, IFormatProvider fp, out TimeSpan tsResult)
+            {
+                return TimeSpan.TryParseExact(input, formats, fp, styles,
+                                              out tsResult);
+            }, str
+             , formatProvider
+             , out result);
+        }
+
+        private static bool TryParseInner(TryParseInnerHandler handler, string str, IFormatProvider formatProvider, out ClockTime result)
         {
             result = default(ClockTime);
 
             TimeSpan ts;
-            if (TimeSpan.TryParse(str, formatProvider, out ts))
+            if (handler(str, formatProvider, out ts))
             {
                 result = (ClockTime)ts;
                 return true;
