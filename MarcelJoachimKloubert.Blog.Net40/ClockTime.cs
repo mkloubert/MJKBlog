@@ -9,7 +9,8 @@ namespace MarcelJoachimKloubert.Blog
     /// Speichert den Wert einer Uhrzeit.
     /// </summary>
     public struct ClockTime : IEquatable<ClockTime>,
-                              IComparable<ClockTime>
+                              IComparable<ClockTime>,
+                              IComparable
     {
         #region Data Members (4)
 
@@ -55,7 +56,7 @@ namespace MarcelJoachimKloubert.Blog
 
         #endregion Constructors
 
-        #region Methods (38)
+        #region Methods (39)
 
         /// <summary>
         /// Addiert eine Zeitspanne auf diesen <see cref="ClockTime" />-Wert.
@@ -98,6 +99,32 @@ namespace MarcelJoachimKloubert.Blog
         public static int Compare(ClockTime x, ClockTime y)
         {
             return x.CompareTo(y);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IComparable.CompareTo(object)" />
+        public int CompareTo(object other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            var ts = (ClockTime)other;
+
+            var ticks = ts._TICKS;
+            if (this._TICKS > ticks)
+            {
+                return 1;
+            }
+            else if (this._TICKS < ticks)
+            {
+                return -1;
+            }
+
+            return 0;
         }
 
         /// <summary>
