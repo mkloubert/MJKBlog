@@ -182,9 +182,11 @@ objA.test();
                 //t.Wait();
 
                 string s = "13:00:12";
-                Time? c = Time.Create(1, 2, 3, 4, 5);
+                Time? c = null;
                 TimeSpan? ts = c;
                 string s2 = (string)c;
+
+                var list = (c.Value * 2).ToArray();
 
                 Console.WriteLine(c);
             }

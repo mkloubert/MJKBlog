@@ -847,7 +847,8 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Gibt den zugrundeliegenden Wert in Ticks zurück.
+        /// Gibt den zugrundeliegenden Wert in Ticks zurück
+        /// (verstrichene Ticks seit 00:00 Uhr).
         /// </summary>
         public long Ticks
         {
@@ -856,7 +857,7 @@ namespace MarcelJoachimKloubert.Blog
 
         /// <summary>
         /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur in ganzen Tagen
-        /// und Bruchteilen von Stunden ab.
+        /// und Bruchteilen von Stunden seit 00:00 Uhr ab.
         /// </summary>
         public double TotalHours
         {
@@ -865,7 +866,7 @@ namespace MarcelJoachimKloubert.Blog
 
         /// <summary>
         /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
-        /// in ganzen Tagen und Bruchteilen von Millisekunden ab.
+        /// in ganzen Tagen und Bruchteilen von Millisekunden seit 00:00 Uhr ab.
         /// </summary>
         public double TotalMilliseconds
         {
@@ -889,7 +890,7 @@ namespace MarcelJoachimKloubert.Blog
 
         /// <summary>
         /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
-        /// in ganzen Tagen und Bruchteilen von Minuten ab.
+        /// in ganzen Tagen und Bruchteilen von Minuten seit 00:00 Uhr ab.
         /// </summary>
         public double TotalMinutes
         {
@@ -898,7 +899,7 @@ namespace MarcelJoachimKloubert.Blog
 
         /// <summary>
         /// Ruft den Wert der aktuellen <see cref="Time" />-Struktur
-        /// in ganzen Tagen und Bruchteilen von Sekunden ab.
+        /// in ganzen Tagen und Bruchteilen von Sekunden seit 00:00 Uhr ab.
         /// </summary>
         public double TotalSeconds
         {
