@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
@@ -181,10 +182,18 @@ objA.test();
 
                 //t.Wait();
 
-                string s = "13:00:12";
+                Time s = (Time)"13:00:12";
                 Time? c = null;
                 TimeSpan? ts = c;
                 string s2 = (string)c;
+
+                var test = XDocument.Parse(@"<?xml version=""1.0"" ?>
+<root xmlns:ms=""http://www.microsoft.com""
+      ms:testAttrib=""hallo"">
+</root>");
+
+                var dict = test.Root.GetAttributeDictionary();
+
 
                 var list = (c.Value * 2).ToArray();
 

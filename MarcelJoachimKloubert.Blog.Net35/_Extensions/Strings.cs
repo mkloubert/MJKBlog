@@ -3,18 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-
 
 /// <summary>
 /// Extension Methoden für Zeichenketten.
 /// </summary>
 public static partial class __StringExtensionMethods
 {
-    #region Methods (4)
+    #region Methods (5)
 
-    // Public Methods (4) 
+    // Public Methods (5) 
 
     /// <summary>
     /// Berecht die Ähnlichkeit zweier Zeichenketten nach dem
@@ -134,6 +134,16 @@ public static partial class __StringExtensionMethods
 
         return 1.0f - (double)d[n, m] /
                       (double)Math.Max(left.Length, right.Length);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <see href="http://msdn.microsoft.com/de-de/library/system.string.isnullorwhitespace%28v=vs.100%29.aspx" />
+    public static bool IsNullOrWhiteSpace(this IEnumerable<char> chars)
+    {
+        return chars == null ||
+               chars.All(c => char.IsWhiteSpace(c));
     }
 
     /// <summary>

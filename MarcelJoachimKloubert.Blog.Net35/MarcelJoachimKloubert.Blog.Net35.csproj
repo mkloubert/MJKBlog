@@ -102,6 +102,7 @@
     <Compile Include="_Extensions\IO.UnpackArchive.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
+    <Compile Include="_Extensions\Xml.cs" />
     <Compile Include="_Extensions\Reflection.cs" />
     <Compile Include="_Extensions\System.cs" />
     <Compile Include="_Extensions\Security.cs" />
