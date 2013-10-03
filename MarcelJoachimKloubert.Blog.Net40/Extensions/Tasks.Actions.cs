@@ -105,9 +105,9 @@ partial class __TaskExtensionMethodsNet40
                                        TaskCreationOptions creationOptions)
     {
         return StartNewTask<T>(factory: factory,
-                                       action: action,
-                                       actionStateFactory: f => actionState,
-                                       creationOptions: creationOptions);
+                               action: action,
+                               actionStateFactory: f => actionState,
+                               creationOptions: creationOptions);
     }
 
     /// <summary>
@@ -130,9 +130,9 @@ partial class __TaskExtensionMethodsNet40
                                        TaskScheduler scheduler)
     {
         return StartNewTask<T>(factory: factory,
-                                       action: action,
-                                       actionStateFactory: f => actionState,
-                                       scheduler: scheduler);
+                               action: action,
+                               actionStateFactory: f => actionState,
+                               scheduler: scheduler);
     }
 
     /// <summary>
@@ -252,10 +252,10 @@ partial class __TaskExtensionMethodsNet40
                                        TaskCreationOptions creationOptions)
     {
         return StartNewTask<T>(factory: factory,
-                                       action: action,
-                                       actionStateFactory: f => actionState,
-                                       cancellationToken: cancellationToken,
-                                       creationOptions: creationOptions);
+                               action: action,
+                               actionStateFactory: f => actionState,
+                               cancellationToken: cancellationToken,
+                               creationOptions: creationOptions);
     }
 
     /// <summary>
