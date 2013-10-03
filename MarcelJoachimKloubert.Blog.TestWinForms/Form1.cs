@@ -2,6 +2,7 @@
 
 
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MarcelJoachimKloubert.Blog.TestWinForms
@@ -28,6 +29,19 @@ namespace MarcelJoachimKloubert.Blog.TestWinForms
                              .Assembly
                              .GetManifestResourceBitmap("MarcelJoachimKloubert.Blog.TestWinForms.Edward_Snowden-21.jpg")
                              .Grayscale();
+
+            Task.Factory.StartNewTask((listBox, cancelToken) =>
+                {
+                    var result = listBox.InvokeSafe((lb =>
+                        {
+                            lb.Items.Add(2);
+                            lb.Items.Add(3);
+
+                            return (int)lb.Items[0] * (int)lb.Items[1];
+                        }));
+
+                    Console.WriteLine(result);
+                }, this.listBox1);
         }
 
         #endregion Methods
