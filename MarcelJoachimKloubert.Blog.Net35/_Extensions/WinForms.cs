@@ -9,9 +9,9 @@ using System.Windows.Forms;
 /// </summary>
 public static partial class __WinFormsExtensionMethods
 {
-    #region Methods (3)
+    #region Methods (6)
 
-    // Public Methods (3) 
+    // Public Methods (6) 
 
     /// <summary>
     /// Führt Logik für ein WinForms <see cref="Control" /> Thread-sicher aus.
@@ -33,7 +33,31 @@ public static partial class __WinFormsExtensionMethods
 
         InvokeSafe<TCtrl, object>(ctrl,
                                   (c, s) => action(c),
-                                  null);
+                                  (object)null);
+    }
+
+    /// <summary>
+    /// Führt Logik für ein WinForms <see cref="Control" /> Thread-sicher aus.
+    /// </summary>
+    /// <typeparam name="TCtrl">Typ des Controls.</typeparam>
+    /// <typeparam name="R">Typ der Rückgabe.</typeparam>
+    /// <param name="ctrl">Das zugrundeliegende Control.</param>
+    /// <param name="func">Die Logik, die ausgeführt werden soll.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="ctrl" /> und/oder <paramref name="func" />
+    /// sind <see langword="null" /> Referenzen.
+    /// </exception>
+    public static R InvokeSafe<TCtrl, R>(this TCtrl ctrl, Func<TCtrl, R> func)
+        where TCtrl : global::System.Windows.Forms.Control
+    {
+        if (func == null)
+        {
+            throw new ArgumentNullException("func");
+        }
+
+        return InvokeSafe<TCtrl, object, R>(ctrl,
+                                            (c, s) => func(c),
+                                            (object)null);
     }
 
     /// <summary>
@@ -81,31 +105,90 @@ public static partial class __WinFormsExtensionMethods
                                             Func<TCtrl, T> actionStateFactory)
         where TCtrl : global::System.Windows.Forms.Control
     {
-        if (ctrl == null)
-        {
-            throw new ArgumentNullException("ctrl");
-        }
-
         if (action == null)
         {
             throw new ArgumentNullException("action");
         }
 
-        if (actionStateFactory == null)
+        InvokeSafe<TCtrl, T, object>(ctrl,
+                                     (c, s) =>
+                                     {
+                                         action(c, s);
+                                         return null;
+                                     },
+                                     actionStateFactory);
+    }
+
+    /// <summary>
+    /// Führt Logik für ein WinForms <see cref="Control" /> Thread-sicher aus.
+    /// </summary>
+    /// <typeparam name="TCtrl">Typ des Controls.</typeparam>
+    /// <typeparam name="T">Typ des zweiten Parameters von <paramref name="func" />.</typeparam>
+    /// <typeparam name="R">Typ der Rückgabe.</typeparam>
+    /// <param name="ctrl">Das zugrundeliegende Control.</param>
+    /// <param name="func">Die Logik, die ausgeführt werden soll.</param>
+    /// <param name="funcState">
+    /// Der Wert für den zweiten Parameters von <paramref name="func" />
+    /// generiert.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="ctrl" /> und/oder <paramref name="func" />
+    /// sind <see langword="null" /> Referenzen.
+    /// </exception>
+    public static R InvokeSafe<TCtrl, T, R>(this TCtrl ctrl,
+                                            Func<TCtrl, T, R> func,
+                                            T funcState)
+        where TCtrl : global::System.Windows.Forms.Control
+    {
+        return InvokeSafe<TCtrl, T, R>(ctrl,
+                                       func,
+                                       (c) => funcState);
+    }
+
+    /// <summary>
+    /// Führt Logik für ein WinForms <see cref="Control" /> Thread-sicher aus.
+    /// </summary>
+    /// <typeparam name="TCtrl">Typ des Controls.</typeparam>
+    /// <typeparam name="T">Typ des zweiten Parameters von <paramref name="func" />.</typeparam>
+    /// <typeparam name="R">Typ der Rückgabe.</typeparam>
+    /// <param name="ctrl">Das zugrundeliegende Control.</param>
+    /// <param name="func">Die Logik, die ausgeführt werden soll.</param>
+    /// <param name="funcStateFactory">
+    /// Die Methode/Funktion, die den zweiten Parameters für <paramref name="func" />
+    /// generiert.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="ctrl" />, <paramref name="func" /> und/oder
+    /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
+    /// </exception>
+    public static R InvokeSafe<TCtrl, T, R>(this TCtrl ctrl,
+                                            Func<TCtrl, T, R> func,
+                                            Func<TCtrl, T> funcStateFactory)
+        where TCtrl : global::System.Windows.Forms.Control
+    {
+        if (ctrl == null)
         {
-            throw new ArgumentNullException("actionStateFactory");
+            throw new ArgumentNullException("ctrl");
+        }
+
+        if (func == null)
+        {
+            throw new ArgumentNullException("func");
+        }
+
+        if (funcStateFactory == null)
+        {
+            throw new ArgumentNullException("funcStateFactory");
         }
 
         if (ctrl.InvokeRequired)
         {
-            ctrl.Invoke(new Action<TCtrl, Action<TCtrl, T>, Func<TCtrl, T>>(InvokeSafe<TCtrl, T>),
-                        new object[] { ctrl, action, actionStateFactory });
+            return (R)ctrl.Invoke(new Func<TCtrl, Func<TCtrl, T, R>, Func<TCtrl, T>, R>(InvokeSafe<TCtrl, T, R>),
+                                  new object[] { ctrl, func, funcStateFactory });
         }
-        else
-        {
-            action(ctrl,
-                   actionStateFactory(ctrl));
-        }
+
+        return (R)func(ctrl,
+                       funcStateFactory(ctrl));
     }
 
     #endregion Methods
