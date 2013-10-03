@@ -43,6 +43,7 @@ public static partial class __WinFormsExtensionMethods
     /// <typeparam name="R">Typ der Rückgabe.</typeparam>
     /// <param name="ctrl">Das zugrundeliegende Control.</param>
     /// <param name="func">Die Logik, die ausgeführt werden soll.</param>
+    /// <returns>Rückgabe von <paramref name="func" />.</returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="ctrl" /> und/oder <paramref name="func" />
     /// sind <see langword="null" /> Referenzen.
@@ -131,6 +132,7 @@ public static partial class __WinFormsExtensionMethods
     /// Der Wert für den zweiten Parameters von <paramref name="func" />
     /// generiert.
     /// </param>
+    /// <returns>Rückgabe von <paramref name="func" />.</returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="ctrl" /> und/oder <paramref name="func" />
     /// sind <see langword="null" /> Referenzen.
@@ -157,6 +159,7 @@ public static partial class __WinFormsExtensionMethods
     /// Die Methode/Funktion, die den zweiten Parameters für <paramref name="func" />
     /// generiert.
     /// </param>
+    /// <returns>Rückgabe von <paramref name="func" />.</returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="ctrl" />, <paramref name="func" /> und/oder
     /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
