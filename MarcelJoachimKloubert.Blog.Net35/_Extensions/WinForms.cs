@@ -111,6 +111,11 @@ public static partial class __WinFormsExtensionMethods
             throw new ArgumentNullException("action");
         }
 
+        if (actionStateFactory == null)
+        {
+            throw new ArgumentNullException("actionStateFactory");
+        }
+
         InvokeSafe<TCtrl, T, object>(ctrl,
                                      (c, s) =>
                                      {
