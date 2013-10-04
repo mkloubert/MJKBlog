@@ -7,6 +7,20 @@ using System.Threading.Tasks;
 
 partial class __TaskExtensionMethodsNet40
 {
+    #region Delegates and Events (1)
+
+    // Delegates (1) 
+
+    /// <summary>
+    /// Beschreibt eine Methode für eine 'StartNewTask{T}'-Methode.
+    /// </summary>
+    /// <typeparam name="T">Typ von <paramref name="state" />.</typeparam>
+    /// <param name="state">Das State-Objekt.</param>
+    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
+    public delegate void StartNewTaskAction<T>(T state, CancellationToken cancellationToken);
+
+    #endregion Delegates and Events
+
     #region Methods (14)
 
     // Public Methods (14) 
@@ -445,4 +459,47 @@ partial class __TaskExtensionMethodsNet40
     }
 
     #endregion Methods
+
+    #region Nested Classes (1)
+
+    private sealed class StartNewTaskState<T>
+    {
+        #region Fields (4)
+
+        internal readonly StartNewTaskAction<T> ACTION;
+        internal readonly Func<TaskFactory, T> ACTION_STATE_FACTORY;
+        internal readonly CancellationToken CANCELLATION_TOKEN;
+        internal readonly TaskFactory TASK_FACTORY;
+
+        #endregion Fields
+
+        #region Constructors (1)
+
+        internal StartNewTaskState(TaskFactory taskFactory,
+                                   StartNewTaskAction<T> action,
+                                   Func<TaskFactory, T> actionStateFactory,
+                                   CancellationToken cancellationToken)
+        {
+            this.ACTION = action;
+            this.ACTION_STATE_FACTORY = actionStateFactory;
+            this.TASK_FACTORY = taskFactory;
+            this.CANCELLATION_TOKEN = cancellationToken;
+        }
+
+        #endregion Constructors
+
+        #region Methods (1)
+
+        // Internal Methods (1) 
+
+        internal void Invoke()
+        {
+            this.ACTION(cancellationToken: this.CANCELLATION_TOKEN,
+                        state: this.ACTION_STATE_FACTORY(this.TASK_FACTORY));
+        }
+
+        #endregion Methods
+    }
+
+    #endregion Nested Classes
 }

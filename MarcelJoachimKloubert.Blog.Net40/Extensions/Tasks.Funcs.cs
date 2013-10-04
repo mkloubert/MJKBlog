@@ -7,6 +7,22 @@ using System.Threading.Tasks;
 
 partial class __TaskExtensionMethodsNet40
 {
+    #region Delegates and Events (1)
+
+    // Delegates (1) 
+
+    /// <summary>
+    /// Beschreibt eine Funktion/Methode für eine 'StartNewTask{T, R}'-Methode.
+    /// </summary>
+    /// <typeparam name="R">Typ des Rückgabewertes für den zugrundeliegenden Task.</typeparam>
+    /// <typeparam name="T">Typ von <paramref name="state" />.</typeparam>
+    /// <param name="state">Das State-Objekt.</param>
+    /// <param name="cancellationToken">Das zugrundeliegende Cancellation-Token.</param>
+    /// <returns>Der Rückgabewert für den zugrundeliegenden Task.</returns>
+    public delegate R StartNewTaskFunc<T, R>(T state, CancellationToken cancellationToken);
+
+    #endregion Delegates and Events
+
     #region Methods (14)
 
     // Public Methods (14) 
@@ -459,4 +475,47 @@ partial class __TaskExtensionMethodsNet40
     }
 
     #endregion Methods
+
+    #region Nested Classes (1)
+
+    private sealed class StartNewTaskState<T, R>
+    {
+        #region Fields (4)
+
+        internal readonly CancellationToken CANCELLATION_TOKEN;
+        internal readonly StartNewTaskFunc<T, R> FUNC;
+        internal readonly Func<TaskFactory, T> FUNC_STATE_FACTORY;
+        internal readonly TaskFactory TASK_FACTORY;
+
+        #endregion Fields
+
+        #region Constructors (1)
+
+        internal StartNewTaskState(TaskFactory taskFactory,
+                                   StartNewTaskFunc<T, R> func,
+                                   Func<TaskFactory, T> funcStateFactory,
+                                   CancellationToken cancellationToken)
+        {
+            this.FUNC = func;
+            this.FUNC_STATE_FACTORY = funcStateFactory;
+            this.TASK_FACTORY = taskFactory;
+            this.CANCELLATION_TOKEN = cancellationToken;
+        }
+
+        #endregion Constructors
+
+        #region Methods (1)
+
+        // Internal Methods (1) 
+
+        internal R Invoke()
+        {
+            return this.FUNC(cancellationToken: this.CANCELLATION_TOKEN,
+                             state: this.FUNC_STATE_FACTORY(this.TASK_FACTORY));
+        }
+
+        #endregion Methods
+    }
+
+    #endregion Nested Classes
 }
