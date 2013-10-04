@@ -103,6 +103,9 @@
     <Compile Include="_Extensions\IO.UnpackArchive.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
+    <Compile Include="_Extensions\WPF.BeginInvokeSafe.cs">
+      <DependentUpon>WPF.cs</DependentUpon>
+    </Compile>
     <Compile Include="_Extensions\WinForms.cs" />
     <Compile Include="_Extensions\Xml.cs" />
     <Compile Include="_Extensions\Reflection.cs" />
