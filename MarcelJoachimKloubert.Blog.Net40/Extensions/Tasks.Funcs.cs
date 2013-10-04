@@ -24,9 +24,9 @@ partial class __TaskExtensionMethodsNet40
     /// <exception cref="ArgumentNullException">
     /// <paramref name="factory" /> und/oder <paramref name="func" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -47,9 +47,9 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory)
     {
         if (factory == null)
         {
@@ -78,10 +78,10 @@ partial class __TaskExtensionMethodsNet40
     /// <exception cref="ArgumentNullException">
     /// <paramref name="factory" /> und/oder <paramref name="func" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          CancellationToken cancellationToken)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             CancellationToken cancellationToken)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -103,10 +103,10 @@ partial class __TaskExtensionMethodsNet40
     /// <exception cref="ArgumentNullException">
     /// <paramref name="factory" /> und/oder <paramref name="func" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          TaskCreationOptions creationOptions)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             TaskCreationOptions creationOptions)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -129,10 +129,10 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             TaskScheduler scheduler)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -155,10 +155,10 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          CancellationToken cancellationToken)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             CancellationToken cancellationToken)
     {
         if (factory == null)
         {
@@ -188,10 +188,10 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          TaskCreationOptions creationOptions)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             TaskCreationOptions creationOptions)
     {
         if (factory == null)
         {
@@ -221,10 +221,10 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" />, <paramref name="funcStateFactory" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             TaskScheduler scheduler)
     {
         if (factory == null)
         {
@@ -254,11 +254,11 @@ partial class __TaskExtensionMethodsNet40
     /// <exception cref="ArgumentNullException">
     /// <paramref name="factory" /> und/oder <paramref name="func" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          CancellationToken cancellationToken,
-                                          TaskCreationOptions creationOptions)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             CancellationToken cancellationToken,
+                                             TaskCreationOptions creationOptions)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -283,11 +283,11 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          CancellationToken cancellationToken,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             CancellationToken cancellationToken,
+                                             TaskScheduler scheduler)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -312,11 +312,11 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="funcStateFactory" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          CancellationToken cancellationToken,
-                                          TaskCreationOptions creationOptions)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             CancellationToken cancellationToken,
+                                             TaskCreationOptions creationOptions)
     {
         if (factory == null)
         {
@@ -347,11 +347,11 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" />, <paramref name="funcStateFactory" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          CancellationToken cancellationToken,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             CancellationToken cancellationToken,
+                                             TaskScheduler scheduler)
     {
         if (factory == null)
         {
@@ -383,12 +383,12 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          T funcState,
-                                          CancellationToken cancellationToken,
-                                          TaskCreationOptions creationOptions,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             T funcState,
+                                             CancellationToken cancellationToken,
+                                             TaskCreationOptions creationOptions,
+                                             TaskScheduler scheduler)
     {
         return StartNewTask<T, R>(factory: factory,
                                   func: func,
@@ -415,12 +415,12 @@ partial class __TaskExtensionMethodsNet40
     /// <paramref name="factory" />, <paramref name="func" />, <paramref name="funcStateFactory" /> und/oder
     /// <paramref name="scheduler" /> sind <see langword="null" /> Referenzen.
     /// </exception>
-    public static Task StartNewTask<T, R>(this TaskFactory factory,
-                                          StartNewTaskFunc<T, R> func,
-                                          Func<TaskFactory, T> funcStateFactory,
-                                          CancellationToken cancellationToken,
-                                          TaskCreationOptions creationOptions,
-                                          TaskScheduler scheduler)
+    public static Task<R> StartNewTask<T, R>(this TaskFactory factory,
+                                             StartNewTaskFunc<T, R> func,
+                                             Func<TaskFactory, T> funcStateFactory,
+                                             CancellationToken cancellationToken,
+                                             TaskCreationOptions creationOptions,
+                                             TaskScheduler scheduler)
     {
         if (factory == null)
         {
