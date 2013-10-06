@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MarcelJoachimKloubert.Blog.Helpers
+namespace MarcelJoachimKloubert.Blog.Threading.Tasks
 {
     /// <summary>
     /// Hilfs-/Erweiterungsklasse für (statische) <see cref="Task" />-Operationen.

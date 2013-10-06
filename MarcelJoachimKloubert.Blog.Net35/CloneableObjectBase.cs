@@ -112,7 +112,7 @@ namespace MarcelJoachimKloubert.Blog
 
             for (long i = 1; i < count; i++)
             {
-                yield return parent != null ? parent.Clone() : parent;
+                yield return parent != null ? parent.Clone() : null;
             }
         }
     }
