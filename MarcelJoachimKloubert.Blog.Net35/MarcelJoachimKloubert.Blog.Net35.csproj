@@ -69,6 +69,9 @@
     <Compile Include="IO\CompressedArchiveItemType.cs" />
     <Compile Include="IO\ICompressedArchiveItem.cs" />
     <Compile Include="KnownOperatingSystem.cs" />
+    <Compile Include="Net\Http\HttpServerBase.cs" />
+    <Compile Include="Net\Http\IHttpServer.cs" />
+    <Compile Include="Net\Http\Impl\WcfHttpServer.cs" />
     <Compile Include="ServiceLocation\Impl\DelegateServiceLocatorWrapper.Classes.cs">
       <DependentUpon>DelegateServiceLocatorWrapper.cs</DependentUpon>
     </Compile>
