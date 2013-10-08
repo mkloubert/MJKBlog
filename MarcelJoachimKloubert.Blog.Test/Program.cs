@@ -9,11 +9,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Xml.Linq;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.MEF.ServiceLocation;
+using MarcelJoachimKloubert.Blog.Net.Http.Impl;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using MarcelJoachimKloubert.Blog.ServiceLocation;
 using MarcelJoachimKloubert.Blog.ServiceLocation.Impl;
@@ -132,8 +132,8 @@ objA.test();
         {
             try
             {
-                Test_Resources();
-
+                // Test_Resources();
+                Test_HttpServer();
                 // Test_Mef();
                 // Test_AsyncEncryption();
                 // Test_Xslt();
@@ -182,22 +182,22 @@ objA.test();
 
                 //t.Wait();
 
-                Time s = (Time)"13:00:12";
-                Time? c = null;
-                TimeSpan? ts = c;
-                string s2 = (string)c;
+                //                Time s = (Time)"13:00:12";
+                //                Time? c = null;
+                //                TimeSpan? ts = c;
+                //                string s2 = (string)c;
 
-                var test = XDocument.Parse(@"<?xml version=""1.0"" ?>
-<root xmlns:ms=""http://www.microsoft.com""
-      ms:testAttrib=""hallo"">
-</root>");
+                //                var test = XDocument.Parse(@"<?xml version=""1.0"" ?>
+                //<root xmlns:ms=""http://www.microsoft.com""
+                //      ms:testAttrib=""hallo"">
+                //</root>");
 
-                var dict = test.Root.GetAttributeDictionary();
+                //                var dict = test.Root.GetAttributeDictionary();
 
 
-                var list = (c.Value * 2).ToArray();
+                //                var list = (c.Value * 2).ToArray();
 
-                Console.WriteLine(c);
+                //                Console.WriteLine(c);
             }
             catch (Exception ex)
             {
@@ -366,6 +366,20 @@ End Module",
         private static void Test_Xslt()
         {
 
+        }
+
+        private static void Test_HttpServer()
+        {
+            using (var server = new HttpListenerServer())
+            {
+                server.TcpPort = 23979;
+                server.Start();
+
+                while (server.IsRunning)
+                {
+
+                }
+            }
         }
 
         private static void Test_ServiceLocator()
