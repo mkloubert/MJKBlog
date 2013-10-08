@@ -1,6 +1,9 @@
+--
+-- http://blog.marcel-kloubert.de
+--
 
 --
--- Tabellenstruktur für Tabelle `bellum_gallicum`
+-- structure of table `bellum_gallicum`
 --
 
 CREATE TABLE IF NOT EXISTS `bellum_gallicum` (
@@ -10,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `bellum_gallicum` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `bellum_gallicum`
+-- table `bellum_gallicum`
 --
 
 INSERT INTO `bellum_gallicum` (`chapter`, `content`) VALUES
@@ -70,6 +73,3 @@ INSERT INTO `bellum_gallicum` (`chapter`, `content`) VALUES
 (8, 'Interea ea legione quam secum habebat militibusque, qui ex provincia convenerant, a lacu Lemanno, qui in flumen Rhodanum influit, ad montem Iuram, qui fines Sequanorum ab Helvetiis dividit, milia passuum XVIIII murum in altitudinem pedum sedecim fossamque perducit. Eo opere perfecto praesidia disponit, castella communit, quo facilius, si se invito transire conentur, prohibere possit. Ubi ea dies quam constituerat cum legatis venit et legati ad eum reverterunt, negat se more et exemplo populi Romani posse iter ulli per provinciam dare et, si vim lacere conentur, prohibiturum ostendit. Helvetii ea spe deiecti navibus iunctis ratibusque compluribus factis, alii vadis Rhodani, qua minima altitudo fluminis erat, non numquam interdiu, saepius noctu si perrumpere possent conati, operis munitione et militum concursu et telis repulsi, hoc conatu destiterunt.'),
 (9, 'Relinquebatur una per Sequanos via, qua Sequanis invitis propter angustias ire non poterant. His cum sua sponte persuadere non possent, legatos ad Dumnorigem Haeduum mittunt, ut eo deprecatore a Sequanis impetrarent. Dumnorix gratia et largitione apud Sequanos plurimum poterat et Helvetiis erat amicus, quod ex ea civitate Orgetorigis filiam in matrimonium duxerat, et cupiditate regni adductus novis rebus studebat et quam plurimas civitates suo beneficio habere obstrictas volebat. Itaque rem suscipit et a Sequanis impetrat ut per fines suos Helvetios ire patiantur, obsidesque uti inter sese dent perficit: Sequani, ne itinere Helvetios prohibeant, Helvetii, ut sine maleficio et iniuria transeant.');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
