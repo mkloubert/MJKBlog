@@ -122,9 +122,44 @@ namespace MarcelJoachimKloubert.Blog.Collections.ObjectModel
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods (6)
 
-        // Public Methods (3) 
+        // Public Methods (4) 
+
+        /// <summary>
+        /// Fügt eine Liste von Elementen dieser Liste zu.
+        /// Währenddessen wird der Aufruf von <see cref="ObservableCollection{T}.CollectionChanged" />
+        /// und <see cref="ObservableCollection{T}.PropertyChanged" /> werden solange unterbunden,
+        /// bis die Sequenz durchlaufen wurden oder ein Fehler aufgetreten ist.
+        /// </summary>
+        /// <param name="items">Die Liste der Elemente, die hinzugefügt werden soll.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> ist <see langword="null" />,
+        /// </exception>
+        public void AddRange(IEnumerable<T> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            try
+            {
+                this.BeginLock();
+
+                lock (this.SyncRoot)
+                {
+                    foreach (var i in items)
+                    {
+                        base.Add(i);
+                    }
+                }
+            }
+            finally
+            {
+                this.EndLock(true);
+            }
+        }
 
         /// <summary>
         /// Sperrt diese Liste.
