@@ -811,7 +811,7 @@ namespace MarcelJoachimKloubert.Blog
         }
 
         /// <summary>
-        /// Gibt die Millisekunden.Komponente dieses <see cref="Time" />-Wertes zurück.
+        /// Gibt die Millisekunden-Komponente dieses <see cref="Time" />-Wertes zurück.
         /// </summary>
         public int Milliseconds
         {
