@@ -50,6 +50,25 @@ namespace MarcelJoachimKloubert.Blog.Values
         void AddObserver(IValueRouter<TValue> router);
 
         /// <summary>
+        /// Entfernt einen Router, der seinen Wert an diese Instanz weiterleitet / meldet.
+        /// </summary>
+        /// <param name="router">Der zu löschende Router.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        void RemoveMediator(IValueRouter<TValue> router);
+
+        /// <summary>
+        /// Entfernt einen Router, der seinen Wert von dieser Instanz
+        /// weitergeleitet / gemeldet bekommt.
+        /// </summary>
+        /// <param name="router">Der zu löschende Router.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        void RemoveObserver(IValueRouter<TValue> router);
+
+        /// <summary>
         /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedValue" />.
         /// </summary>
         /// <returns>Der berechnete Wert.</returns>

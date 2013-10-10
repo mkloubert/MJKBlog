@@ -11,7 +11,8 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// 
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
-    public class ValueRouter<TValue> : IValueRouter<TValue> where TValue : global::System.IComparable, global::System.IComparable<TValue>
+    public class ValueRouter<TValue> : IValueRouter<TValue>
+        where TValue : global::System.IComparable, global::System.IComparable<TValue>
     {
         #region Fields (3)
 
@@ -95,9 +96,9 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Delegates and Events
 
-        #region Methods (13)
+        #region Methods (16)
 
-        // Public Methods (5) 
+        // Public Methods (8) 
 
         /// <summary>
         /// 
@@ -167,6 +168,53 @@ namespace MarcelJoachimKloubert.Blog.Values
         public IList<IValueRouter<TValue>> GetObservers()
         {
             return new List<IValueRouter<TValue>>(this._OBSERVERS);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.RemoveMediator(IValueRouter{TValue})" />
+        public void RemoveMediator(IValueRouter<TValue> router)
+        {
+            if (router == null)
+            {
+                throw new ArgumentNullException("router");
+            }
+
+            if (this._MEDIATORS.Remove(router))
+            {
+                router.PropertyChanged -= this.Router_PropertyChanged;
+
+                router.RemoveObserver(this);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.RemoveObserver(IValueRouter{TValue})" />
+        public void RemoveObserver(IValueRouter<TValue> router)
+        {
+            if (router == null)
+            {
+                throw new ArgumentNullException("router");
+            }
+
+            if (this._OBSERVERS.Remove(router))
+            {
+                router.RemoveMediator(this);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="object.ToString()" />.
+        public override string ToString()
+        {
+            return string.Format("{0}={1}",
+                                 this.GetType().Name,
+                                 this.RoutedValue);
         }
         // Protected Methods (6) 
 
@@ -421,17 +469,6 @@ namespace MarcelJoachimKloubert.Blog.Values
             {
                 this.OnPropertyChanged(() => this.RoutedValue);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <see cref="object.ToString()" />.
-        public override string ToString()
-        {
-            return string.Format("{0}={1}",
-                                 this.GetType().Name,
-                                 this.RoutedValue);
         }
 
         #endregion Methods
