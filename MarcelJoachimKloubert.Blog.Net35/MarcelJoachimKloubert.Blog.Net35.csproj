@@ -88,6 +88,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Xml\XmlObjectSerializer.cs" />
     <Compile Include="StoredProcedures\MeineTestSP.cs" />
+    <Compile Include="Values\ColorState.cs" />
+    <Compile Include="Values\IValueRouter.cs" />
+    <Compile Include="Values\StateRouter.cs" />
+    <Compile Include="Values\ValueRouter.cs" />
     <Compile Include="WCF\HTTP\BinaryMessage.cs" />
     <Compile Include="WCF\HTTP\IWcfHttpServer.cs" />
     <Compile Include="WCF\HTTP\RawContentTypeMapper.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="_Extensions\IO.UnpackArchive.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
+    <Compile Include="_Extensions\Expressions.cs" />
     <Compile Include="_Extensions\WPF.BeginInvokeSafe.cs">
       <DependentUpon>WPF.cs</DependentUpon>
     </Compile>

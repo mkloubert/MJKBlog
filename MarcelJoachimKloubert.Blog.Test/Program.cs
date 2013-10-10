@@ -17,6 +17,7 @@ using MarcelJoachimKloubert.Blog.Net.Http.Impl;
 using MarcelJoachimKloubert.Blog.Serialization.Xml;
 using MarcelJoachimKloubert.Blog.ServiceLocation;
 using MarcelJoachimKloubert.Blog.ServiceLocation.Impl;
+using MarcelJoachimKloubert.Blog.Values;
 using RemObjects.Script;
 
 namespace MarcelJoachimKloubert.Blog.Test
@@ -133,7 +134,8 @@ objA.test();
             try
             {
                 // Test_Resources();
-                Test_HttpServer();
+                // Test_HttpServer();
+                Test_ValueRouter();
                 // Test_Mef();
                 // Test_AsyncEncryption();
                 // Test_Xslt();
@@ -366,6 +368,32 @@ End Module",
         private static void Test_Xslt()
         {
 
+        }
+
+        private static void Test_ValueRouter()
+        {
+            var a1 = new ValueRouter<int>(2);
+
+            var b1 = new ValueRouter<int>();
+            var b2 = new ValueRouter<int>();
+
+            var c1 = new ValueRouter<int>();
+            var c2 = new ValueRouter<int>();
+            var c3 = new ValueRouter<int>();
+
+            // Struktur festlegen
+            {
+                a1.AddMediator(b1);
+                a1.AddMediator(b2);
+
+                b1.AddMediator(c1);
+                b1.AddMediator(c2);
+
+                b2.AddMediator(c3);
+            }
+
+            c1.MyValue = 1;
+            b1.MyValue = 3;
         }
 
         private static void Test_HttpServer()
