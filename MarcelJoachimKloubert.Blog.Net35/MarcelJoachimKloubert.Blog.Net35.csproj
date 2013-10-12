@@ -69,6 +69,7 @@
     <Compile Include="Diagnostics\Impl\AggregateLoggerFacade.cs" />
     <Compile Include="Diagnostics\Impl\DelegateLoggerFacade.cs" />
     <Compile Include="Diagnostics\Impl\ThreadPoolLoggerFacade.cs" />
+    <Compile Include="Diagnostics\GlobalLogger.cs" />
     <Compile Include="Diagnostics\LoggerFacadeBase.cs" />
     <Compile Include="Diagnostics\LoggerFacadeCategories.cs" />
     <Compile Include="Diagnostics\LoggerFacadeWrapperBase.cs" />
