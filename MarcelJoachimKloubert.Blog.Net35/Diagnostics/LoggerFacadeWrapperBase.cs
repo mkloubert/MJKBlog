@@ -11,18 +11,15 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     public abstract class LoggerFacadeWrapperBase<L> : LoggerFacadeBase
         where L : global::MarcelJoachimKloubert.Blog.Diagnostics.ILoggerFacade
     {
-        #region Constructors (1)
+        #region Constructors (2)
 
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeWrapperBase{L}" />.
+        /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeBase" />.
         /// </summary>
-        /// <param name="innerLogger">
-        /// Der Wert für die <see cref="LoggerFacadeWrapperBase{L}.InnerLogger" /> Eigenschaft.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="innerLogger" /> ist <see langword="null" />.
-        /// </exception>
-        protected LoggerFacadeWrapperBase(L innerLogger)
+        /// <param name="isThreadSafe">Log-Vorgänge Thread-sicher ausführen oder nicht.</param>
+        protected LoggerFacadeWrapperBase(L innerLogger,
+                                          bool isThreadSafe)
+            : base(isThreadSafe)
         {
             if (innerLogger == null)
             {
@@ -30,6 +27,23 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             }
 
             this.InnerLogger = innerLogger;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeWrapperBase{L}" />.
+        /// </summary>
+        /// <param name="innerLogger">
+        /// Der Wert für die <see cref="LoggerFacadeWrapperBase{L}.InnerLogger" /> Eigenschaft.
+        /// </param>
+        /// <remarks>Log-Vorgänge werden Thread-safe ausgeführt.</remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerLogger" /> ist <see langword="null" />.
+        /// </exception>
+        protected LoggerFacadeWrapperBase(L innerLogger)
+            : this(innerLogger,
+                   true)
+        {
+
         }
 
         #endregion Constructors
@@ -70,6 +84,18 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// </exception>
         protected LoggerFacadeWrapperBase(ILoggerFacade innerLogger)
             : base(innerLogger)
+        {
+
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeWrapperBase{L}" />.
+        /// </summary>
+        /// <param name="isThreadSafe">Log-Vorgänge Thread-sicher ausführen oder nicht.</param>
+        protected LoggerFacadeWrapperBase(ILoggerFacade innerLogger,
+                                          bool isThreadSafe)
+            : base(innerLogger,
+                   isThreadSafe)
         {
 
         }

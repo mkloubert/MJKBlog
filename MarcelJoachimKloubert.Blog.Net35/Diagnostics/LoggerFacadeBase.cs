@@ -14,19 +14,47 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// </summary>
     public abstract class LoggerFacadeBase : ILoggerFacade
     {
-        #region Constructors (1)
+        #region Fields (2)
+
+        private readonly Action<ILogMessage> _ON_LOG_ACTION;
+        /// <summary>
+        /// Ein eindeutiges Objekt für Thread-sichere Operationen.
+        /// </summary>
+        protected readonly object _SYNC = new object();
+
+        #endregion Fields
+
+        #region Constructors (2)
 
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeBase" />.
         /// </summary>
+        /// <param name="isThreadSafe">Log-Vorgänge Thread-sicher ausführen oder nicht.</param>
+        protected LoggerFacadeBase(bool isThreadSafe)
+        {
+            if (isThreadSafe)
+            {
+                this._ON_LOG_ACTION = this.OnLog_ThreadSafe;
+            }
+            else
+            {
+                this._ON_LOG_ACTION = this.OnLog;
+            }
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeBase" />.
+        /// </summary>
+        /// <remarks>Das verarbeiten Log-Vorgängen geschieht Thread-safe.</remarks>
         protected LoggerFacadeBase()
+            : this(true)
         {
 
         }
 
         #endregion Constructors
 
-        #region Methods (8)
+        #region Methods (9)
 
         // Public Methods (5) 
 
@@ -95,16 +123,14 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                           AsString(tag),
                           msg);
         }
-        // Protected Methods (1) 
+        // Protected Methods (2) 
 
         /// <summary>
-        /// Die Logger-Logik.
+        /// Gibt eine Zeichenfolge als <see cref="string" /> zurück.
         /// </summary>
-        /// <param name="msg">Die zu loggende Lognachricht.</param>
-        protected abstract void OnLog(ILogMessage msg);
-        // Private Methods (2) 
-
-        private static string AsString(IEnumerable<char> charSequence)
+        /// <param name="charSequence">Die umzuwandelnde Sequenz</param>
+        /// <returns>Die umgewandelete Zeichenfolge.</returns>
+        protected static string AsString(IEnumerable<char> charSequence)
         {
             if (charSequence is string)
             {
@@ -123,6 +149,13 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
 
             return new string(charSequence.ToArray());
         }
+
+        /// <summary>
+        /// Die Logger-Logik.
+        /// </summary>
+        /// <param name="msg">Die zu loggende Lognachricht.</param>
+        protected abstract void OnLog(ILogMessage msg);
+        // Private Methods (2) 
 
         private void LogInner(DateTimeOffset time,
                               Assembly asm,
@@ -155,7 +188,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                     member = null;
                 }
 
-                this.OnLog(new SimpleLogMessage()
+                this._ON_LOG_ACTION(new SimpleLogMessage()
                     {
                         Assembly = asm,
                         Categories = categories.ToString()
@@ -173,6 +206,14 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             catch
             {
                 // Fehler beim Loggen ignorieren
+            }
+        }
+
+        private void OnLog_ThreadSafe(ILogMessage msg)
+        {
+            lock (this._SYNC)
+            {
+                this.OnLog(msg);
             }
         }
 

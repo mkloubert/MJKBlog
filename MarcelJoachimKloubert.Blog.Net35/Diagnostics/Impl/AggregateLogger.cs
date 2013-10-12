@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace MarcelJoachimKloubert.Blog.Diagnostics.Impl
+namespace MarcelJoachimKloubert.Blog.Diagnostics
 {
     /// <summary>
     /// Führt mehere Logger nacheinander bzw. gleichzeitig aus.
     /// </summary>
-    public sealed class AggregateLoggerFacade : LoggerFacadeBase
+    public sealed class AggregateLogger : LoggerFacadeBase
     {
         #region Fields (1)
 
@@ -32,7 +32,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics.Impl
         /// <exception cref="ArgumentNullException">
         /// <paramref name="logger" /> ist <see langword="null" />.
         /// </exception>
-        public AggregateLoggerFacade Add(ILoggerFacade logger)
+        public AggregateLogger Add(ILoggerFacade logger)
         {
             if (logger == null)
             {
@@ -52,7 +52,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics.Impl
         /// Entfernt alle Logiken.
         /// </summary>
         /// <returns>Diese Instanz.</returns>
-        public AggregateLoggerFacade Clear()
+        public AggregateLogger Clear()
         {
             this._LOGGERS.Clear();
             return this;
@@ -66,7 +66,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics.Impl
         /// <exception cref="ArgumentNullException">
         /// <paramref name="logger" /> ist <see langword="null" />.
         /// </exception>
-        public AggregateLoggerFacade Remove(ILoggerFacade logger)
+        public AggregateLogger Remove(ILoggerFacade logger)
         {
             if (logger == null)
             {

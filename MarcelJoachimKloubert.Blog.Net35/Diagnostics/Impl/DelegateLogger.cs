@@ -9,7 +9,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// <summary>
     /// Ein Logger, die auf Methoden und Funktionen basiert.
     /// </summary>
-    public sealed class DelegateLoggerFacade : LoggerFacadeBase
+    public sealed class DelegateLogger : LoggerFacadeBase
     {
         #region Fields (1)
 
@@ -29,7 +29,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> ist <see langword="null" />.
         /// </exception>
-        public DelegateLoggerFacade Add(Action<ILogMessage> action)
+        public DelegateLogger Add(Action<ILogMessage> action)
         {
             if (action == null)
             {
@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// Entfernt alle Logiken.
         /// </summary>
         /// <returns>Diese Instanz.</returns>
-        public DelegateLoggerFacade Clear()
+        public DelegateLogger Clear()
         {
             this._ACTIONS.Clear();
             return this;
@@ -58,7 +58,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> ist <see langword="null" />.
         /// </exception>
-        public DelegateLoggerFacade Remove(Action<ILogMessage> action)
+        public DelegateLogger Remove(Action<ILogMessage> action)
         {
             if (action == null)
             {

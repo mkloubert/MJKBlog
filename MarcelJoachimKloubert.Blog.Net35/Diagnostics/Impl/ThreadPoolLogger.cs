@@ -11,19 +11,20 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// Logger ist und dessen Logik asynchron über einen <see cref="ThreadPool" />
     /// ausführt.
     /// </summary>
-    public sealed class ThreadPoolLoggerFacade : LoggerFacadeWrapperBase
+    public sealed class ThreadPoolLogger : LoggerFacadeWrapperBase
     {
         #region Constructors (1)
 
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="ThreadPoolLoggerFacade" />.
+        /// Initialisiert eine neue Instanz der Klasse <see cref="ThreadPoolLogger" />.
         /// </summary>
         /// <param name="innerLogger">Der zugrundeliegende Logger.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="innerLogger" /> ist <see langword="null" />.
         /// </exception>
-        public ThreadPoolLoggerFacade(ILoggerFacade innerLogger)
-            : base(innerLogger)
+        public ThreadPoolLogger(ILoggerFacade innerLogger)
+            : base(innerLogger,
+                   false)
         {
 
         }
