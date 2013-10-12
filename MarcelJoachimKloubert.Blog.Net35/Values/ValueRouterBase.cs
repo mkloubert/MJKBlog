@@ -1,4 +1,7 @@
-﻿using System;
+﻿// s. http://blog.marcel-kloubert.de
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,16 +11,17 @@ using System.Reflection;
 namespace MarcelJoachimKloubert.Blog.Values
 {
     /// <summary>
-    /// 
+    /// Ein Basis <see cref="IValueRouter{TValue}" />.
     /// </summary>
-    /// <typeparam name="TValue"></typeparam>
-    public class ValueRouter<TValue> : IValueRouter<TValue>
-        where TValue : global::System.IComparable, global::System.IComparable<TValue>
+    /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
+    public abstract class ValueRouterBase<TValue> : IValueRouter<TValue>
     {
-        #region Fields (3)
+        #region Fields (5)
 
+        private object _dataContext;
         private readonly HashSet<IValueRouter<TValue>> _MEDIATORS = new HashSet<IValueRouter<TValue>>();
         private TValue _myValue;
+        private string _name;
         private readonly HashSet<IValueRouter<TValue>> _OBSERVERS = new HashSet<IValueRouter<TValue>>();
 
         #endregion Fields
@@ -25,20 +29,20 @@ namespace MarcelJoachimKloubert.Blog.Values
         #region Constructors (2)
 
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="ValueRouter{TValue}" />.
+        /// Initialisiert eine neue Instanz der Klasse <see cref="ValueRouterBase{TValue}" />.
         /// </summary>
         /// <param name="initalValue">
-        /// Der initiale Wert für <see cref="ValueRouter{TValue}.MyValue" />.
+        /// Der initiale Wert für <see cref="ValueRouterBase{TValue}.MyValue" />.
         /// </param>
-        public ValueRouter(TValue initalValue)
+        public ValueRouterBase(TValue initalValue)
         {
             this.MyValue = initalValue;
         }
 
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="ValueRouter{TValue}" />.
+        /// Initialisiert eine neue Instanz der Klasse <see cref="ValueRouterBase{TValue}" />.
         /// </summary>
-        public ValueRouter()
+        public ValueRouterBase()
             : this(default(TValue))
         {
 
@@ -46,7 +50,26 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Constructors
 
-        #region Properties (2)
+        #region Properties (4)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.DataContext" />
+        public object DataContext
+        {
+            get { return this._dataContext; }
+
+            set
+            {
+                if (!EqualityComparer<object>.Default.Equals(this._dataContext, value))
+                {
+                    this.OnPropertyChanging(() => this.DataContext);
+                    this._dataContext = value;
+                    this.OnPropertyChanged(() => this.DataContext);
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -63,6 +86,25 @@ namespace MarcelJoachimKloubert.Blog.Values
                     this.OnPropertyChanging(() => this.MyValue);
                     this._myValue = value;
                     this.OnPropertyChanged(() => this.MyValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.Name" />
+        public string Name
+        {
+            get { return this._name; }
+
+            set
+            {
+                if (!EqualityComparer<string>.Default.Equals(this._name, value))
+                {
+                    this.OnPropertyChanging(() => this.Name);
+                    this._name = value;
+                    this.OnPropertyChanged(() => this.Name);
                 }
             }
         }
@@ -96,7 +138,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Delegates and Events
 
-        #region Methods (16)
+        #region Methods (14)
 
         // Public Methods (8) 
 
@@ -140,17 +182,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// 
         /// </summary>
         /// <see cref="IValueRouter{TValue}.CalculateRoutedValue()" />
-        public virtual TValue CalculateRoutedValue()
-        {
-            TValue result = this.MyValue;
-            foreach (var mediatorValue in this.GetMediators()
-                                              .Select(m => m.RoutedValue))
-            {
-                result = Max(result, mediatorValue);
-            }
-
-            return result;
-        }
+        public abstract TValue CalculateRoutedValue();
 
         /// <summary>
         /// 
@@ -216,62 +248,10 @@ namespace MarcelJoachimKloubert.Blog.Values
                                  this.GetType().Name,
                                  this.RoutedValue);
         }
-        // Protected Methods (6) 
+        // Protected Methods (4) 
 
         /// <summary>
-        /// Gibt den grösseren von zwei Werten zurück.
-        /// </summary>
-        /// <param name="x">Der linke Wert.</param>
-        /// <param name="y">Der rechte Wert.</param>
-        /// <returns>Der grössere Wert.</returns>
-        protected static TValue Max(TValue x, TValue y)
-        {
-            if (x == null && y == null)
-            {
-                return x;
-            }
-
-            var left = x != null ? x : y;
-            var right = x != null ? y : x;
-
-            if (left.CompareTo(right) < 0)
-            {
-                return right;
-            }
-            else
-            {
-                return left;
-            }
-        }
-
-        /// <summary>
-        /// Gibt den kleineren von zwei Werten zurück.
-        /// </summary>
-        /// <param name="x">Der linke Wert.</param>
-        /// <param name="y">Der rechte Wert.</param>
-        /// <returns>Der kleinere Wert.</returns>
-        protected static TValue Min(TValue x, TValue y)
-        {
-            if (x == null && y == null)
-            {
-                return x;
-            }
-
-            var left = x != null ? x : y;
-            var right = x != null ? y : x;
-
-            if (left.CompareTo(right) > 0)
-            {
-                return right;
-            }
-            else
-            {
-                return left;
-            }
-        }
-
-        /// <summary>
-        /// Führt das <see cref="ValueRouter{TValue}.PropertyChanged" />
+        /// Führt das <see cref="ValueRouterBase{TValue}.PropertyChanged" />
         /// Ereignis aus.
         /// </summary>
         /// <typeparam name="T">Typ der zugrundeliegenden Eigenschaft.</typeparam>
@@ -310,7 +290,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         }
 
         /// <summary>
-        /// Führt das <see cref="ValueRouter{TValue}.PropertyChanged" />
+        /// Führt das <see cref="ValueRouterBase{TValue}.PropertyChanged" />
         /// Ereignis aus.
         /// </summary>
         /// <param name="propertyName">Der Name der zugrundeliegenden Eigenschaft.</param>
@@ -356,7 +336,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         }
 
         /// <summary>
-        /// Führt das <see cref="ValueRouter{TValue}.PropertyChanging" />
+        /// Führt das <see cref="ValueRouterBase{TValue}.PropertyChanging" />
         /// Ereignis aus.
         /// </summary>
         /// <typeparam name="T">Typ der zugrundeliegenden Eigenschaft.</typeparam>
@@ -395,7 +375,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         }
 
         /// <summary>
-        /// Führt das <see cref="ValueRouter{TValue}.PropertyChanging" />
+        /// Führt das <see cref="ValueRouterBase{TValue}.PropertyChanging" />
         /// Ereignis aus.
         /// </summary>
         /// <param name="propertyName">Der Name der zugrundeliegenden Eigenschaft.</param>

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using ColorCode;
+using MarcelJoachimKloubert.Blog.Diagnostics;
 using MarcelJoachimKloubert.Blog.IO;
 using MarcelJoachimKloubert.Blog.MEF;
 using MarcelJoachimKloubert.Blog.MEF.ServiceLocation;
@@ -372,14 +373,20 @@ End Module",
 
         private static void Test_ValueRouter()
         {
-            var a1 = new ValueRouter<int>(2);
+            var logger = new DelegateLoggerFacade();
+            logger.Add((msg) =>
+                {
+                    Console.WriteLine(msg.Time);
+                });
 
-            var b1 = new ValueRouter<int>();
-            var b2 = new ValueRouter<int>();
+            var a1 = new EnumValueRouter<TrafficLightState>(TrafficLightState.Yellow);
 
-            var c1 = new ValueRouter<int>();
-            var c2 = new ValueRouter<int>();
-            var c3 = new ValueRouter<int>();
+            var b1 = new EnumValueRouter<TrafficLightState>();
+            var b2 = new EnumValueRouter<TrafficLightState>();
+
+            var c1 = new EnumValueRouter<TrafficLightState>();
+            var c2 = new EnumValueRouter<TrafficLightState>();
+            var c3 = new EnumValueRouter<TrafficLightState>();
 
             // Struktur festlegen
             {
@@ -392,8 +399,11 @@ End Module",
                 b2.AddMediator(c3);
             }
 
-            c1.MyValue = 1;
-            b1.MyValue = 3;
+            c1.MyValue = TrafficLightState.Green;
+            b1.MyValue = TrafficLightState.None;
+            c3.MyValue = TrafficLightState.Red;
+
+            logger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
         }
 
         private static void Test_HttpServer()

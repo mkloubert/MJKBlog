@@ -12,14 +12,24 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// </summary>
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public interface IValueRouter<TValue> : INotifyPropertyChanged, INotifyPropertyChanging
-        where TValue : global::System.IComparable<TValue>
     {
-        #region Data Members (2)
+        #region Data Members (4)
+
+        /// <summary>
+        /// Gibt das Objekt zurück, das mit dieser Instanz verlinkt werden soll oder nicht,
+        /// oder legt dieses fest.
+        /// </summary>
+        object DataContext { get; set; }
 
         /// <summary>
         /// Gibt den Wert dieses Routers zurück oder legt diesen fest.
         /// </summary>
         TValue MyValue { get; set; }
+
+        /// <summary>
+        /// Gibt Namen dieser Instanz zurück, oder legt dieses fest.
+        /// </summary>
+        string Name { get; set; }
 
         /// <summary>
         /// Get den eskalierten Wert zurück.
@@ -28,7 +38,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Data Members
 
-        #region Operations (5)
+        #region Operations (7)
 
         /// <summary>
         /// Fügt einen Router hinzu, der seinen Wert an diese Instanz weiterleitet / meldet.
@@ -50,25 +60,6 @@ namespace MarcelJoachimKloubert.Blog.Values
         void AddObserver(IValueRouter<TValue> router);
 
         /// <summary>
-        /// Entfernt einen Router, der seinen Wert an diese Instanz weiterleitet / meldet.
-        /// </summary>
-        /// <param name="router">Der zu löschende Router.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
-        /// </exception>
-        void RemoveMediator(IValueRouter<TValue> router);
-
-        /// <summary>
-        /// Entfernt einen Router, der seinen Wert von dieser Instanz
-        /// weitergeleitet / gemeldet bekommt.
-        /// </summary>
-        /// <param name="router">Der zu löschende Router.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
-        /// </exception>
-        void RemoveObserver(IValueRouter<TValue> router);
-
-        /// <summary>
         /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedValue" />.
         /// </summary>
         /// <returns>Der berechnete Wert.</returns>
@@ -87,6 +78,25 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// </summary>
         /// <returns>Die Liste der empfangenden Router.</returns>
         IList<IValueRouter<TValue>> GetObservers();
+
+        /// <summary>
+        /// Entfernt einen Router, der seinen Wert an diese Instanz weiterleitet / meldet.
+        /// </summary>
+        /// <param name="router">Der zu löschende Router.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        void RemoveMediator(IValueRouter<TValue> router);
+
+        /// <summary>
+        /// Entfernt einen Router, der seinen Wert von dieser Instanz
+        /// weitergeleitet / gemeldet bekommt.
+        /// </summary>
+        /// <param name="router">Der zu löschende Router.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
+        /// </exception>
+        void RemoveObserver(IValueRouter<TValue> router);
 
         #endregion Operations
     }
