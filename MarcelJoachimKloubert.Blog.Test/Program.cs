@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using ColorCode;
 using MarcelJoachimKloubert.Blog.Diagnostics;
 using MarcelJoachimKloubert.Blog.IO;
@@ -373,11 +375,16 @@ End Module",
 
         private static void Test_ValueRouter()
         {
-            var logger = new DelegateLoggerFacade();
+            var t = Thread.CurrentThread;
+
+            var logger = new DelegateLogger();
             logger.Add((msg) =>
                 {
-                    Console.WriteLine(msg.Time);
+                    Console.WriteLine(msg.Message);
                 });
+
+            var taskLogger = new TaskLogger(logger,
+                                            TaskScheduler.Current);
 
             var a1 = new EnumValueRouter<TrafficLightState>(TrafficLightState.Yellow);
 
@@ -403,7 +410,7 @@ End Module",
             b1.MyValue = TrafficLightState.None;
             c3.MyValue = TrafficLightState.Red;
 
-            logger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
+            taskLogger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
         }
 
         private static void Test_HttpServer()

@@ -17,6 +17,19 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
 
         #endregion Fields
 
+        #region Constructors (1)
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse <see cref="DelegateLogger" />.
+        /// </summary>
+        public DelegateLogger()
+            : base(true)
+        {
+
+        }
+
+        #endregion Constructors
+
         #region Methods (4)
 
         // Public Methods (3) 
@@ -36,7 +49,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                 throw new ArgumentNullException("action");
             }
 
-            this._ACTIONS.Add(action);
+            lock (this._SYNC)
+            {
+                this._ACTIONS
+                    .Add(action);
+            }
+
             return this;
         }
 
@@ -46,7 +64,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <returns>Diese Instanz.</returns>
         public DelegateLogger Clear()
         {
-            this._ACTIONS.Clear();
+            lock (this._SYNC)
+            {
+                this._ACTIONS
+                    .Clear();
+            }
+
             return this;
         }
 
@@ -65,7 +88,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                 throw new ArgumentNullException("action");
             }
 
-            this._ACTIONS.Remove(action);
+            lock (this._SYNC)
+            {
+                this._ACTIONS
+                    .Remove(action);
+            }
+
             return this;
         }
         // Protected Methods (1) 

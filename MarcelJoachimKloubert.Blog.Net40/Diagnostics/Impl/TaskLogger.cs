@@ -71,7 +71,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             : this(innerLogger: innerLogger,
                    token: token,
                    options: options,
-                   scheduler: Task.Factory.Scheduler,
+                   scheduler: Task.Factory.Scheduler ?? TaskScheduler.Default,
                    isThreadSafe: isThreadSafe)
         {
 
@@ -140,7 +140,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             : this(innerLogger: innerLogger,
                    token: token,
                    options: Task.Factory.CreationOptions,
-                   scheduler: Task.Factory.Scheduler,
+                   scheduler: Task.Factory.Scheduler ?? TaskScheduler.Default,
                    isThreadSafe: isThreadSafe)
         {
 
@@ -161,7 +161,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             : this(innerLogger: innerLogger,
                    token: Task.Factory.CancellationToken,
                    options: options,
-                   scheduler: Task.Factory.Scheduler,
+                   scheduler: Task.Factory.Scheduler ?? TaskScheduler.Default,
                    isThreadSafe: isThreadSafe)
         {
 
@@ -202,7 +202,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             : this(innerLogger: innerLogger,
                    token: Task.Factory.CancellationToken,
                    options: Task.Factory.CreationOptions,
-                   scheduler: Task.Factory.Scheduler,
+                   scheduler: Task.Factory.Scheduler ?? TaskScheduler.Default,
                    isThreadSafe: isThreadSafe)
         {
 

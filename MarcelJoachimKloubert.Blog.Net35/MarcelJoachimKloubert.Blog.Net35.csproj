@@ -66,10 +66,11 @@
     <Compile Include="Data\ValueConverterBase.cs" />
     <Compile Include="Diagnostics\ILoggerFacade.cs" />
     <Compile Include="Diagnostics\ILogMessage.cs" />
-    <Compile Include="Diagnostics\Impl\AggregateLoggerFacade.cs" />
-    <Compile Include="Diagnostics\Impl\DelegateLoggerFacade.cs" />
-    <Compile Include="Diagnostics\Impl\ThreadPoolLoggerFacade.cs" />
+    <Compile Include="Diagnostics\Impl\AggregateLogger.cs" />
+    <Compile Include="Diagnostics\Impl\DelegateLogger.cs" />
+    <Compile Include="Diagnostics\Impl\ThreadPoolLogger.cs" />
     <Compile Include="Diagnostics\GlobalLogger.cs" />
+    <Compile Include="Diagnostics\Impl\XmlFileLogger.cs" />
     <Compile Include="Diagnostics\LoggerFacadeBase.cs" />
     <Compile Include="Diagnostics\LoggerFacadeCategories.cs" />
     <Compile Include="Diagnostics\LoggerFacadeWrapperBase.cs" />

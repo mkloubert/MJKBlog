@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
+using System.Security.Principal;
+using System.Threading;
 
 namespace MarcelJoachimKloubert.Blog.Diagnostics
 {
@@ -12,7 +15,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// </summary>
     public sealed class SimpleLogMessage : ILogMessage
     {
-        #region Properties (5)
+        #region Properties (9)
 
         /// <summary>
         /// 
@@ -29,6 +32,26 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// </summary>
         /// <see cref="ILogMessage.Categories" />
         public IList<LoggerFacadeCategories> Categories
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ILogMessage.Context" />
+        public Context Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ILogMessage.Id" />
+        public Guid Id
         {
             get;
             set;
@@ -57,6 +80,26 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <summary>
         /// 
         /// </summary>
+        /// <see cref="ILogMessage.Principal" />
+        public IPrincipal Principal
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ILogMessage.Thread" />
+        public Thread Thread
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <see cref="ILogMessage.Time" />
         public DateTimeOffset Time
         {
@@ -65,5 +108,48 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         }
 
         #endregion Properties
+
+        #region Methods (3)
+
+        // Public Methods (3) 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IEquatable{T}.Equals(T)" />
+        public bool Equals(ILogMessage other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Id == other.Id;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="object.Equals(object)" />
+        public override bool Equals(object other)
+        {
+            if (other is ILogMessage)
+            {
+                return this.Equals((ILogMessage)other);
+            }
+
+            return base.Equals(other);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="object.GetHashCode()" />
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion Methods
     }
 }

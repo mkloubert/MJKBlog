@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace MarcelJoachimKloubert.Blog.Diagnostics
 {
@@ -175,10 +176,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                     msg = AsString((IEnumerable<char>)msg);
                 }
 
+                var thread = Thread.CurrentThread;
+
                 MemberInfo member = null;
                 try
                 {
-                    var st = new StackTrace();
+                    var st = new StackTrace(thread, false);
                     var sf = st.GetFrame(2);
 
                     member = sf.GetMethod();
@@ -198,8 +201,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                                                .Distinct()
                                                .Select(s => (LoggerFacadeCategories)Enum.Parse(typeof(LoggerFacadeCategories), s, false))
                                                .ToArray(),
+                        Context = Thread.CurrentContext,
+                        Id = Guid.NewGuid(),
                         Member = member,
                         Message = msg,
+                        Principal = Thread.CurrentPrincipal,
+                        Thread = thread,
                         Time = time,
                     });
             }

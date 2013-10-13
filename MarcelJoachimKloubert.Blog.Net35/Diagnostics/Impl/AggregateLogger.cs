@@ -17,6 +17,19 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
 
         #endregion Fields
 
+        #region Constructors (1)
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse <see cref="AggregateLogger" />.
+        /// </summary>
+        public AggregateLogger()
+            : base(true)
+        {
+
+        }
+
+        #endregion Constructors
+
         #region Methods (4)
 
         // Public Methods (3) 
@@ -44,7 +57,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                 throw new ArgumentException("logger");
             }
 
-            this._LOGGERS.Add(logger);
+            lock (this._SYNC)
+            {
+                this._LOGGERS
+                    .Add(logger);
+            }
+
             return this;
         }
 
@@ -54,7 +72,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <returns>Diese Instanz.</returns>
         public AggregateLogger Clear()
         {
-            this._LOGGERS.Clear();
+            lock (this._SYNC)
+            {
+                this._LOGGERS
+                    .Clear();
+            }
+
             return this;
         }
 
@@ -73,7 +96,12 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                 throw new ArgumentNullException("logger");
             }
 
-            this._LOGGERS.Remove(logger);
+            lock (this._SYNC)
+            {
+                this._LOGGERS
+                    .Remove(logger);
+            }
+
             return this;
         }
         // Protected Methods (1) 

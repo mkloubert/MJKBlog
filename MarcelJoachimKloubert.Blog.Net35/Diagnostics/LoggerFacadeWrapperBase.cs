@@ -16,6 +16,9 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeBase" />.
         /// </summary>
+        /// <param name="innerLogger">
+        /// Der Wert für die <see cref="LoggerFacadeWrapperBase{L}.InnerLogger" /> Eigenschaft.
+        /// </param>
         /// <param name="isThreadSafe">Log-Vorgänge Thread-sicher ausführen oder nicht.</param>
         protected LoggerFacadeWrapperBase(L innerLogger,
                                           bool isThreadSafe)
@@ -91,6 +94,9 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse <see cref="LoggerFacadeWrapperBase{L}" />.
         /// </summary>
+        /// <param name="innerLogger">
+        /// Der Wert für die <see cref="LoggerFacadeWrapperBase{L}.InnerLogger" /> Eigenschaft.
+        /// </param>
         /// <param name="isThreadSafe">Log-Vorgänge Thread-sicher ausführen oder nicht.</param>
         protected LoggerFacadeWrapperBase(ILoggerFacade innerLogger,
                                           bool isThreadSafe)
