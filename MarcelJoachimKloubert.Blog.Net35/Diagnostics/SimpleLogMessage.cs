@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// </summary>
     public sealed class SimpleLogMessage : ILogMessage
     {
-        #region Properties (9)
+        #region Properties (10)
 
         /// <summary>
         /// 
@@ -82,6 +82,16 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// </summary>
         /// <see cref="ILogMessage.Principal" />
         public IPrincipal Principal
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ILogMessage.Tag" />
+        public string Tag
         {
             get;
             set;

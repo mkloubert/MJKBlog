@@ -373,14 +373,17 @@ End Module",
 
         }
 
-        private static void Test_ValueRouter()
+        private static void Test_ValueRouter(dynamic test = null,
+                                             bool test3 = false,
+                                             string test2 = "wurst")
         {
-            var t = Thread.CurrentThread;
+            Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
 
             var logger = new DelegateLogger();
             logger.Add((msg) =>
                 {
-                    Console.WriteLine(msg.Message);
+                    Console.WriteLine("\t" + msg.Thread.ManagedThreadId);
+                    Console.WriteLine("\t" + Thread.CurrentThread.ManagedThreadId);
                 });
 
             var taskLogger = new TaskLogger(logger,
@@ -411,6 +414,29 @@ End Module",
             c3.MyValue = TrafficLightState.Red;
 
             taskLogger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
+
+            var xmlLogger = new XmlFileLogger(@"D:\logfiles");
+            //try
+            //{
+            //    throw new Exception("test");
+            //}
+            //catch (Exception ex)
+            //{
+            //    xmlLogger.Log(ex,
+            //                  LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
+            //}
+
+            //var tasks = Enumerable.Range(0, 999)
+            //          .Select(i => Task.Factory.StartNew((state) =>
+            //              {
+            //                  var xl = (XmlFileLogger)state;
+
+            //                  xmlLogger.Log(new Exception(),
+            //                                LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
+            //              }, xmlLogger))
+            //          .ToArray();
+
+            //Task.WaitAll(tasks);
         }
 
         private static void Test_HttpServer()

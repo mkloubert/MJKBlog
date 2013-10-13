@@ -198,14 +198,16 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
                                                .Split(',')
                                                .Select(s => s.Trim())
                                                .Where(s => s != string.Empty)
-                                               .Distinct()
                                                .Select(s => (LoggerFacadeCategories)Enum.Parse(typeof(LoggerFacadeCategories), s, false))
+                                               .Distinct()
+                                               .OrderBy(c => c)
                                                .ToArray(),
                         Context = Thread.CurrentContext,
                         Id = Guid.NewGuid(),
                         Member = member,
                         Message = msg,
                         Principal = Thread.CurrentPrincipal,
+                        Tag = AsString(tag),
                         Thread = thread,
                         Time = time,
                     });

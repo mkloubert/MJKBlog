@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.SimpleLogMessage" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAAAwAAAAAAgAAAAAAAAAAIEIAAAAAAIAAAAQA=</HashCode>
+      <FileName>Diagnostics\SimpleLogMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.LoggerFacadeBase">
+    <Position X="5.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAIAAAAAgAAACAAAQAAAgAAAA=</HashCode>
+      <FileName>Diagnostics\LoggerFacadeBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.LoggerFacadeWrapperBase&lt;L&gt;">
+    <Position X="1.75" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Diagnostics\LoggerFacadeWrapperBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.LoggerFacadeWrapperBase">
+    <Position X="1.5" Y="6.75" Width="2.75" />
+    <Members>
+      <Method Name="LoggerFacadeWrapperBase" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Diagnostics\LoggerFacadeWrapperBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GlobalLogger">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <Members>
+      <Field Name="_provider" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAACAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Diagnostics\GlobalLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.AggregateLogger">
+    <Position X="5" Y="4.25" Width="1.5" />
+    <Members>
+      <Field Name="_LOGGERS" Hidden="true" />
+      <Method Name="AggregateLogger" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AQIAAAAAAAAAAAAAAAAABAAAAAAAAACAAAAAAABAAAA=</HashCode>
+      <FileName>Diagnostics\Impl\AggregateLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.DelegateLogger">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <Members>
+      <Field Name="_ACTIONS" Hidden="true" />
+      <Method Name="DelegateLogger" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAABAAAAAAABAAAAAAAAACAAAAAAABAAAA=</HashCode>
+      <FileName>Diagnostics\Impl\DelegateLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.ThreadPoolLogger">
+    <Position X="2" Y="8.75" Width="1.75" />
+    <Members>
+      <Method Name="ThreadPoolLogger" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Diagnostics\Impl\ThreadPoolLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarcelJoachimKloubert.Blog.Diagnostics.XmlFileLogger">
+    <Position X="9.5" Y="4.25" Width="1.5" />
+    <Members>
+      <Method Name="XmlFileLogger" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAACAAAAAAAAAAAAAAAACACQAAAAAAgAA=</HashCode>
+      <FileName>Diagnostics\Impl\XmlFileLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MarcelJoachimKloubert.Blog.Diagnostics.ILoggerFacade">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Diagnostics\ILoggerFacade.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarcelJoachimKloubert.Blog.Diagnostics.ILogMessage">
+    <Position X="13.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAAAwAAAAAAAAAAAAAAAAAIEIAAAAAAIAAAAQA=</HashCode>
+      <FileName>Diagnostics\ILogMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MarcelJoachimKloubert.Blog.Diagnostics.LoggerFacadeCategories">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Diagnostics\LoggerFacadeCategories.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

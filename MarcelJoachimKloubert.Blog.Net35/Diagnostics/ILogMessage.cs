@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
     /// </summary>
     public interface ILogMessage : IEquatable<ILogMessage>
     {
-        #region Data Members (9)
+        #region Data Members (10)
 
         /// <summary>
         /// Gibt das aufrufende Assembly zurück.
@@ -52,6 +52,11 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// Gibt den zugrundeliegenden Principal zurück.
         /// </summary>
         IPrincipal Principal { get; }
+
+        /// <summary>
+        /// Gibt den Tag zurück.
+        /// </summary>
+        string Tag { get; }
 
         /// <summary>
         /// Gibt den Thread zurück, in dem die Nachricht geschrieben wurde.
