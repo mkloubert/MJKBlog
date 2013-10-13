@@ -35,5 +35,25 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         /// Schwerer Fehler (Atompilz)
         /// </summary>
         FatalErrors = 8,
+
+        /// <summary>
+        /// Debug
+        /// </summary>
+        Debug = 16,
+
+        /// <summary>
+        /// Sehr detailiert
+        /// </summary>
+        Verbose = 32,
+
+        /// <summary>
+        /// Tests
+        /// </summary>
+        Assert = 64,
+
+        /// <summary>
+        /// TODOs
+        /// </summary>
+        TODO = 128,
     }
 }
