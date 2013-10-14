@@ -135,7 +135,7 @@ namespace MarcelJoachimKloubert.Blog.ServiceLocation
         public object GetInstance(Type serviceType)
         {
             return this.GetInstance(serviceType,
-                                    key: null);
+                                    null);
         }
 
         /// <summary>

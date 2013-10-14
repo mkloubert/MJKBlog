@@ -53,10 +53,10 @@ namespace MarcelJoachimKloubert.Blog.Drawing
         public static Bitmap CreateQrCodeImage(IEnumerable<char> chars,
                                                Size size)
         {
-            var matrix = new QRCodeWriter().encode(contents: chars.AsString() ?? string.Empty,
-                                                   format: BarcodeFormat.QR_CODE,
-                                                   width: size.Width,
-                                                   height: size.Height);
+            var matrix = new QRCodeWriter().encode(chars.AsString() ?? string.Empty,
+                                                   BarcodeFormat.QR_CODE,
+                                                   size.Width,
+                                                   size.Height);
 
             return new BarcodeWriter().Write(matrix);
         }
