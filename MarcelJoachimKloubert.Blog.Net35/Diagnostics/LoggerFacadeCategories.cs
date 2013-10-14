@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         Information = 1,
 
         /// <summary>
-        /// Warnung (gelebes Ausrufezeichen)
+        /// Warnung (gelbes Ausrufezeichen)
         /// </summary>
         Warnings = 2,
 
