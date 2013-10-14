@@ -119,12 +119,18 @@
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
     <Compile Include="_Extensions\Drawing.cs" />
+    <Compile Include="_Extensions\IO.CreateDeep.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="_Extensions\IO.cs" />
     <Compile Include="_Extensions\Data.cs" />
     <Compile Include="_Extensions\IO.UnpackArchive.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
     <Compile Include="_Extensions\Expressions.cs" />
+    <Compile Include="_Extensions\IO.ToEnumerable.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="_Extensions\WPF.BeginInvokeSafe.cs">
       <DependentUpon>WPF.cs</DependentUpon>
     </Compile>
