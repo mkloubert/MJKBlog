@@ -16,13 +16,15 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public abstract class ValueRouterBase<TValue> : IValueRouter<TValue>
     {
-        #region Fields (5)
+        #region Fields (7)
 
         private object _dataContext;
+        private string _description;
         private readonly HashSet<IValueRouter<TValue>> _MEDIATORS = new HashSet<IValueRouter<TValue>>();
         private TValue _myValue;
         private string _name;
         private readonly HashSet<IValueRouter<TValue>> _OBSERVERS = new HashSet<IValueRouter<TValue>>();
+        private string _title;
 
         #endregion Fields
 
@@ -50,7 +52,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Constructors
 
-        #region Properties (4)
+        #region Properties (6)
 
         /// <summary>
         /// 
@@ -74,6 +76,25 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <summary>
         /// 
         /// </summary>
+        /// <see cref="IValueRouter{TValue}.Description" />
+        public string Description
+        {
+            get { return this._description; }
+
+            set
+            {
+                if (!EqualityComparer<string>.Default.Equals(this._description, value))
+                {
+                    this.OnPropertyChanging(() => this.Description);
+                    this._description = value;
+                    this.OnPropertyChanged(() => this.Description);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <see cref="IValueRouter{TValue}.MyValue" />
         public TValue MyValue
         {
@@ -86,6 +107,8 @@ namespace MarcelJoachimKloubert.Blog.Values
                     this.OnPropertyChanging(() => this.MyValue);
                     this._myValue = value;
                     this.OnPropertyChanged(() => this.MyValue);
+
+                    this.OnPropertyChanged(() => this.RoutedValue);
                 }
             }
         }
@@ -116,6 +139,25 @@ namespace MarcelJoachimKloubert.Blog.Values
         public TValue RoutedValue
         {
             get { return this.CalculateRoutedValue(); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.Title" />
+        public string Title
+        {
+            get { return this._title; }
+
+            set
+            {
+                if (!EqualityComparer<string>.Default.Equals(this._title, value))
+                {
+                    this.OnPropertyChanging(() => this.Title);
+                    this._title = value;
+                    this.OnPropertyChanged(() => this.Title);
+                }
+            }
         }
 
         #endregion Properties

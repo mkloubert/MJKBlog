@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -136,6 +137,16 @@ objA.test();
         {
             try
             {
+                dynamic d = new ExpandoObject();
+                d.Test = "Wurst";
+                d.Methode = new Action<object>(
+                    (x) =>
+                    {
+                        Console.WriteLine(x);
+                    });
+
+                d.Methode(d.Test);
+
                 // Test_Resources();
                 // Test_HttpServer();
                 Test_ValueRouter();

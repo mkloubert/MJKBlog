@@ -13,13 +13,18 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public interface IValueRouter<TValue> : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        #region Data Members (4)
+        #region Data Members (6)
 
         /// <summary>
         /// Gibt das Objekt zurück, das mit dieser Instanz verlinkt werden soll oder nicht,
         /// oder legt dieses fest.
         /// </summary>
         object DataContext { get; set; }
+
+        /// <summary>
+        /// Gibt die Langfassung des aktuellen Status zurück, oder legt diesen fest.
+        /// </summary>
+        string Description { get; set; }
 
         /// <summary>
         /// Gibt den Wert dieses Routers zurück oder legt diesen fest.
@@ -35,6 +40,11 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// Get den eskalierten Wert zurück.
         /// </summary>
         TValue RoutedValue { get; }
+
+        /// <summary>
+        /// Gibt den Titel des aktuellen Status zurück, oder legt diesen fest.
+        /// </summary>
+        string Title { get; set; }
 
         #endregion Data Members
 
