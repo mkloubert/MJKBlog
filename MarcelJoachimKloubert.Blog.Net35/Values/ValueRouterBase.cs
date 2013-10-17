@@ -19,8 +19,8 @@ namespace MarcelJoachimKloubert.Blog.Values
         #region Fields (8)
 
         private object _dataContext;
-        private string _description;
         private readonly HashSet<IValueRouter<TValue>> _MEDIATORS = new HashSet<IValueRouter<TValue>>();
+        private string _myDescription;
         private TValue _myValue;
         private string _name;
         private readonly HashSet<IValueRouter<TValue>> _OBSERVERS = new HashSet<IValueRouter<TValue>>();
@@ -56,7 +56,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Constructors
 
-        #region Properties (6)
+        #region Properties (7)
 
         /// <summary>
         /// 
@@ -80,18 +80,20 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="IValueRouter{TValue}.Description" />
-        public string Description
+        /// <see cref="IValueRouter{TValue}.MyDescription" />
+        public string MyDescription
         {
-            get { return this._description; }
+            get { return this._myDescription; }
 
             set
             {
-                if (!EqualityComparer<string>.Default.Equals(this._description, value))
+                if (!EqualityComparer<string>.Default.Equals(this._myDescription, value))
                 {
-                    this.OnPropertyChanging(() => this.Description);
-                    this._description = value;
-                    this.OnPropertyChanged(() => this.Description);
+                    this.OnPropertyChanging(() => this.MyDescription);
+                    this._myDescription = value;
+                    this.OnPropertyChanged(() => this.MyDescription);
+
+                    this.OnPropertyChanged(() => this.RoutedDescription);
                 }
             }
         }
@@ -134,6 +136,15 @@ namespace MarcelJoachimKloubert.Blog.Values
                     this.OnPropertyChanged(() => this.Name);
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.RoutedDescription" />
+        public string RoutedDescription
+        {
+            get { return this.CalculateRoutedDescription(); }
         }
 
         /// <summary>
@@ -184,9 +195,9 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Delegates and Events
 
-        #region Methods (16)
+        #region Methods (17)
 
-        // Public Methods (10) 
+        // Public Methods (11) 
 
         /// <summary>
         /// 
@@ -229,6 +240,12 @@ namespace MarcelJoachimKloubert.Blog.Values
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.CalculateRoutedDescription()" />
+        public abstract string CalculateRoutedDescription();
 
         /// <summary>
         /// 
@@ -536,6 +553,10 @@ namespace MarcelJoachimKloubert.Blog.Values
             if (e.PropertyName == this.GetMemberName(vr => vr.MyValue))
             {
                 this.OnPropertyChanged(() => this.RoutedValue);
+            }
+            else if (e.PropertyName == this.GetMemberName(vr => vr.MyDescription))
+            {
+                this.OnPropertyChanged(() => this.RoutedDescription);
             }
         }
 

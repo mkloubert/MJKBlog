@@ -71,9 +71,38 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Properties
 
-        #region Methods (3)
+        #region Methods (5)
 
-        // Public Methods (1) 
+        // Public Methods (2) 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ValueRouterBase{TValue}.CalculateRoutedDescription()" />
+        public override string CalculateRoutedDescription()
+        {
+            var stradegyFunc = this.GetStradegyFunc();
+
+            var result = this.MyDescription;
+
+            var currentValue = this.MyValue;
+            foreach (var mediatorData in this.GetMediators()
+                                             .Select(m => new
+                                             {
+                                                 Description = m.RoutedDescription,
+                                                 Value = m.RoutedValue,
+                                             }))
+            {
+                var computedValue = stradegyFunc(currentValue, mediatorData.Value);
+                if (!EqualityComparer<TValue>.Default.Equals(currentValue, computedValue))
+                {
+                    currentValue = computedValue;
+                    result = mediatorData.Description;
+                }
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// 
@@ -81,13 +110,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <see cref="ValueRouterBase{TValue}.CalculateRoutedValue()" />
         public override TValue CalculateRoutedValue()
         {
-            Func<TValue, TValue, TValue> stradegyFunc = Max;
-            switch (this.Stradegy)
-            {
-                case ComparableValueRouterStradegy.Minimum:
-                    stradegyFunc = Min;
-                    break;
-            }
+            var stradegyFunc = this.GetStradegyFunc();
 
             TValue result = this.MyValue;
             foreach (var mediatorValue in this.GetMediators()
@@ -99,7 +122,25 @@ namespace MarcelJoachimKloubert.Blog.Values
             return result;
 
         }
-        // Protected Methods (2) 
+        // Protected Methods (3) 
+
+        /// <summary>
+        /// Gibt die Funktion zurück, die einen Wert auf Basis von zwei Eingabeparametern
+        /// liefert und über die <see cref="GenericComparableValueRouter{TValue}.Stradegy" />
+        /// Eigenschaft definiert ist.
+        /// </summary>
+        /// <returns>Die Funktion.</returns>
+        protected virtual Func<TValue, TValue, TValue> GetStradegyFunc()
+        {
+            switch (this.Stradegy)
+            {
+                case ComparableValueRouterStradegy.Minimum:
+                    return Min;
+
+                default:
+                    return Max;
+            }
+        }
 
         /// <summary>
         /// Gibt den kleineren von zwei Werten zurück.

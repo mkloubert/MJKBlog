@@ -426,6 +426,7 @@ End Module",
             c1.MyValue = TrafficLightState.Green;
             b1.MyValue = TrafficLightState.None;
             c3.MyValue = TrafficLightState.Red;
+            c3.MyDescription = "wurst";
 
             taskLogger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
 

@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public interface IValueRouter<TValue> : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        #region Data Members (6)
+        #region Data Members (7)
 
         /// <summary>
         /// Gibt das Objekt zurück, das mit dieser Instanz verlinkt werden soll oder nicht,
@@ -24,7 +24,7 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <summary>
         /// Gibt die Langfassung des aktuellen Status zurück, oder legt diesen fest.
         /// </summary>
-        string Description { get; set; }
+        string MyDescription { get; set; }
 
         /// <summary>
         /// Gibt den Wert dieses Routers zurück oder legt diesen fest.
@@ -37,7 +37,12 @@ namespace MarcelJoachimKloubert.Blog.Values
         string Name { get; set; }
 
         /// <summary>
-        /// Get den eskalierten Wert zurück.
+        /// Gibt die eskalierte Beschreibung zurück.
+        /// </summary>
+        string RoutedDescription { get; }
+
+        /// <summary>
+        /// Gibt den eskalierten Wert zurück.
         /// </summary>
         TValue RoutedValue { get; }
 
@@ -48,7 +53,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Data Members
 
-        #region Operations (9)
+        #region Operations (10)
 
         /// <summary>
         /// Fügt einen Router hinzu, der seinen Wert an diese Instanz weiterleitet / meldet.
@@ -68,6 +73,12 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <paramref name="router" /> ist eine <see langword="null" /> Referenz.
         /// </exception>
         void AddObserver(IValueRouter<TValue> router);
+
+        /// <summary>
+        /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedDescription" />.
+        /// </summary>
+        /// <returns>Der berechnete Wert.</returns>
+        string CalculateRoutedDescription();
 
         /// <summary>
         /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedValue" />.
