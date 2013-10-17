@@ -56,7 +56,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Constructors
 
-        #region Properties (7)
+        #region Properties (9)
 
         /// <summary>
         /// 
@@ -94,6 +94,27 @@ namespace MarcelJoachimKloubert.Blog.Values
                     this.OnPropertyChanged(() => this.MyDescription);
 
                     this.OnPropertyChanged(() => this.RoutedDescription);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.MyTitle" />
+        public string MyTitle
+        {
+            get { return this._title; }
+
+            set
+            {
+                if (!EqualityComparer<string>.Default.Equals(this._title, value))
+                {
+                    this.OnPropertyChanging(() => this.MyTitle);
+                    this._title = value;
+                    this.OnPropertyChanged(() => this.MyTitle);
+
+                    this.OnPropertyChanged(() => this.RoutedTitle);
                 }
             }
         }
@@ -144,7 +165,47 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <see cref="IValueRouter{TValue}.RoutedDescription" />
         public string RoutedDescription
         {
-            get { return this.CalculateRoutedDescription(); }
+            get
+            {
+                var src = this.RoutedSource;
+                if (!object.ReferenceEquals(src, this))
+                {
+                    return src.RoutedDescription;
+                }
+                else
+                {
+                    return this.MyDescription;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.RoutedSource" />
+        public IValueRouter<TValue> RoutedSource
+        {
+            get { return this.CalculateRoutedSource(); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.RoutedTitle" />
+        public string RoutedTitle
+        {
+            get
+            {
+                var src = this.RoutedSource;
+                if (!object.ReferenceEquals(src, this))
+                {
+                    return src.RoutedTitle;
+                }
+                else
+                {
+                    return this.MyTitle;
+                }
+            }
         }
 
         /// <summary>
@@ -153,24 +214,16 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <see cref="IValueRouter{TValue}.RoutedValue" />
         public TValue RoutedValue
         {
-            get { return this.CalculateRoutedValue(); }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <see cref="IValueRouter{TValue}.Title" />
-        public string Title
-        {
-            get { return this._title; }
-
-            set
+            get
             {
-                if (!EqualityComparer<string>.Default.Equals(this._title, value))
+                var src = this.RoutedSource;
+                if (!object.ReferenceEquals(src, this))
                 {
-                    this.OnPropertyChanging(() => this.Title);
-                    this._title = value;
-                    this.OnPropertyChanged(() => this.Title);
+                    return src.RoutedValue;
+                }
+                else
+                {
+                    return this.MyValue;
                 }
             }
         }
@@ -197,7 +250,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #region Methods (17)
 
-        // Public Methods (11) 
+        // Public Methods (10) 
 
         /// <summary>
         /// 
@@ -244,14 +297,11 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <summary>
         /// 
         /// </summary>
-        /// <see cref="IValueRouter{TValue}.CalculateRoutedDescription()" />
-        public abstract string CalculateRoutedDescription();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <see cref="IValueRouter{TValue}.CalculateRoutedValue()" />
-        public abstract TValue CalculateRoutedValue();
+        /// <see cref="IValueRouter{TValue}.CalculateRoutedSource()" />
+        public IValueRouter<TValue> CalculateRoutedSource()
+        {
+            return this.OnCalculateRoutedSource() ?? this;
+        }
 
         /// <summary>
         /// 
@@ -353,7 +403,13 @@ namespace MarcelJoachimKloubert.Blog.Values
                                  this.GetType().Name,
                                  this.RoutedValue);
         }
-        // Protected Methods (4) 
+        // Protected Methods (5) 
+
+        /// <summary>
+        /// Die Logik für <see cref="ValueRouterBase{TValue}.CalculateRoutedSource()" />.
+        /// </summary>
+        /// <returns>Die Quelle für die gerouteten Daten.</returns>
+        protected abstract IValueRouter<TValue> OnCalculateRoutedSource();
 
         /// <summary>
         /// Führt das <see cref="ValueRouterBase{TValue}.PropertyChanged" />
@@ -557,6 +613,10 @@ namespace MarcelJoachimKloubert.Blog.Values
             else if (e.PropertyName == this.GetMemberName(vr => vr.MyDescription))
             {
                 this.OnPropertyChanged(() => this.RoutedDescription);
+            }
+            else if (e.PropertyName == this.GetMemberName(vr => vr.MyTitle))
+            {
+                this.OnPropertyChanged(() => this.RoutedTitle);
             }
         }
 

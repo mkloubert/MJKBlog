@@ -426,7 +426,10 @@ End Module",
             c1.MyValue = TrafficLightState.Green;
             b1.MyValue = TrafficLightState.None;
             c3.MyValue = TrafficLightState.Red;
-            c3.MyDescription = "wurst";
+            c3.MyDescription = "es gibt lecker wurst";
+            c3.MyTitle = "!!!WURST!!!";
+
+            Console.WriteLine(a1.RoutedDescription);
 
             taskLogger.Log(c3, LoggerFacadeCategories.Warnings | LoggerFacadeCategories.Errors);
 

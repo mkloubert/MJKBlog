@@ -71,58 +71,9 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods (4)
 
-        // Public Methods (2) 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <see cref="ValueRouterBase{TValue}.CalculateRoutedDescription()" />
-        public override string CalculateRoutedDescription()
-        {
-            var stradegyFunc = this.GetStradegyFunc();
-
-            var result = this.MyDescription;
-
-            var currentValue = this.MyValue;
-            foreach (var mediatorData in this.GetMediators()
-                                             .Select(m => new
-                                             {
-                                                 Description = m.RoutedDescription,
-                                                 Value = m.RoutedValue,
-                                             }))
-            {
-                var computedValue = stradegyFunc(currentValue, mediatorData.Value);
-                if (!EqualityComparer<TValue>.Default.Equals(currentValue, computedValue))
-                {
-                    currentValue = computedValue;
-                    result = mediatorData.Description;
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <see cref="ValueRouterBase{TValue}.CalculateRoutedValue()" />
-        public override TValue CalculateRoutedValue()
-        {
-            var stradegyFunc = this.GetStradegyFunc();
-
-            TValue result = this.MyValue;
-            foreach (var mediatorValue in this.GetMediators()
-                                              .Select(m => m.RoutedValue))
-            {
-                result = stradegyFunc(result, mediatorValue);
-            }
-
-            return result;
-
-        }
-        // Protected Methods (3) 
+        // Protected Methods (4) 
 
         /// <summary>
         /// Gibt die Funktion zurück, die einen Wert auf Basis von zwei Eingabeparametern
@@ -192,6 +143,35 @@ namespace MarcelJoachimKloubert.Blog.Values
             {
                 return left;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="ValueRouterBase{TValue}.OnCalculateRoutedSource()"/>
+        protected override IValueRouter<TValue> OnCalculateRoutedSource()
+        {
+            var stradegyFunc = this.GetStradegyFunc();
+
+            IValueRouter<TValue> result = this;
+
+            var currentValue = this.MyValue;
+            foreach (var mediatorData in this.GetMediators()
+                                             .Select(m => new
+                                             {
+                                                 RouterObject = m,
+                                                 Value = m.RoutedValue,
+                                             }))
+            {
+                var computedValue = stradegyFunc(currentValue, mediatorData.Value);
+                if (!EqualityComparer<TValue>.Default.Equals(currentValue, computedValue))
+                {
+                    currentValue = computedValue;
+                    result = mediatorData.RouterObject;
+                }
+            }
+
+            return result;
         }
 
         #endregion Methods

@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public interface IValueRouter<TValue> : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        #region Data Members (7)
+        #region Data Members (9)
 
         /// <summary>
         /// Gibt das Objekt zurück, das mit dieser Instanz verlinkt werden soll oder nicht,
@@ -25,6 +25,11 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// Gibt die Langfassung des aktuellen Status zurück, oder legt diesen fest.
         /// </summary>
         string MyDescription { get; set; }
+
+        /// <summary>
+        /// Gibt den Titel des aktuellen Status zurück, oder legt diesen fest.
+        /// </summary>
+        string MyTitle { get; set; }
 
         /// <summary>
         /// Gibt den Wert dieses Routers zurück oder legt diesen fest.
@@ -42,18 +47,23 @@ namespace MarcelJoachimKloubert.Blog.Values
         string RoutedDescription { get; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        IValueRouter<TValue> RoutedSource { get; }
+
+        /// <summary>
+        /// Gibt den eskalierten Titel zurück.
+        /// </summary>
+        string RoutedTitle { get; }
+
+        /// <summary>
         /// Gibt den eskalierten Wert zurück.
         /// </summary>
         TValue RoutedValue { get; }
 
-        /// <summary>
-        /// Gibt den Titel des aktuellen Status zurück, oder legt diesen fest.
-        /// </summary>
-        string Title { get; set; }
-
         #endregion Data Members
 
-        #region Operations (10)
+        #region Operations (9)
 
         /// <summary>
         /// Fügt einen Router hinzu, der seinen Wert an diese Instanz weiterleitet / meldet.
@@ -75,16 +85,10 @@ namespace MarcelJoachimKloubert.Blog.Values
         void AddObserver(IValueRouter<TValue> router);
 
         /// <summary>
-        /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedDescription" />.
+        /// 
         /// </summary>
-        /// <returns>Der berechnete Wert.</returns>
-        string CalculateRoutedDescription();
-
-        /// <summary>
-        /// Berechnet den Wert für <see cref="IValueRouter{TValue}.RoutedValue" />.
-        /// </summary>
-        /// <returns>Der berechnete Wert.</returns>
-        TValue CalculateRoutedValue();
+        /// <returns></returns>
+        IValueRouter<TValue> CalculateRoutedSource();
 
         /// <summary>
         /// Leert die Liste der Router, die ihren Wert an diese Instanz weiterleiten / melden.
