@@ -114,7 +114,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         /// <summary>
         /// Gibt die aktuelle Liste aller Router zurück, die von dieser Instanz ihren
-        /// Wert weitergeleitet / gemelden gekommen.
+        /// Wert weitergeleitet / gemeldet bekommen.
         /// </summary>
         /// <returns>Die Liste der empfangenden Router.</returns>
         IList<IValueRouter<TValue>> GetObservers();
