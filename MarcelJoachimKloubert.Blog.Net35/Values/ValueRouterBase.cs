@@ -598,30 +598,38 @@ namespace MarcelJoachimKloubert.Blog.Values
         private void Router_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var router = (IValueRouter<TValue>)sender;
+
             var raiseCommonProperties = false;
+            try
+            {
+                if (e.PropertyName == this.GetMemberName(vr => vr.MyValue))
+                {
+                    // Value
 
-            if (e.PropertyName == this.GetMemberName(vr => vr.MyValue))
-            {
-                // Value
-                this.OnPropertyChanged(() => this.RoutedValue);
-                raiseCommonProperties = true;
-            }
-            else if (e.PropertyName == this.GetMemberName(vr => vr.MyDescription))
-            {
-                // Description
-                this.OnPropertyChanged(() => this.RoutedDescription);
-                raiseCommonProperties = true;
-            }
-            else if (e.PropertyName == this.GetMemberName(vr => vr.MyTitle))
-            {
-                // Title
-                this.OnPropertyChanged(() => this.RoutedTitle);
-                raiseCommonProperties = true;
-            }
+                    raiseCommonProperties = true;
+                    this.OnPropertyChanged(() => this.RoutedValue);
+                }
+                else if (e.PropertyName == this.GetMemberName(vr => vr.MyDescription))
+                {
+                    // Description
 
-            if (raiseCommonProperties)
+                    raiseCommonProperties = true;
+                    this.OnPropertyChanged(() => this.RoutedDescription);
+                }
+                else if (e.PropertyName == this.GetMemberName(vr => vr.MyTitle))
+                {
+                    // Title
+
+                    raiseCommonProperties = true;
+                    this.OnPropertyChanged(() => this.RoutedTitle);
+                }
+            }
+            finally
             {
-                this.OnPropertyChanged(() => this.RoutedSource);
+                if (raiseCommonProperties)
+                {
+                    this.OnPropertyChanged(() => this.RoutedSource);
+                }
             }
         }
 
