@@ -48,7 +48,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Data Members
 
-        #region Operations (7)
+        #region Operations (9)
 
         /// <summary>
         /// Fügt einen Router hinzu, der seinen Wert an diese Instanz weiterleitet / meldet.
@@ -74,6 +74,17 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// </summary>
         /// <returns>Der berechnete Wert.</returns>
         TValue CalculateRoutedValue();
+
+        /// <summary>
+        /// Leert die Liste der Router, die ihren Wert an diese Instanz weiterleiten / melden.
+        /// </summary>
+        void ClearMediators();
+
+        /// <summary>
+        /// Leert die Liste der Router, die ihren Wert von dieser Instanz weitergeleitet /
+        /// gemeldet bekommen.
+        /// </summary>
+        void ClearObservers();
 
         /// <summary>
         /// Gibt die aktuelle Liste aller Router zurück, die dieser Instanz ihren

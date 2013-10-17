@@ -16,7 +16,7 @@ namespace MarcelJoachimKloubert.Blog.Values
     /// <typeparam name="TValue">Typ des zugrundeliegenden Wertes.</typeparam>
     public abstract class ValueRouterBase<TValue> : IValueRouter<TValue>
     {
-        #region Fields (7)
+        #region Fields (8)
 
         private object _dataContext;
         private string _description;
@@ -24,6 +24,10 @@ namespace MarcelJoachimKloubert.Blog.Values
         private TValue _myValue;
         private string _name;
         private readonly HashSet<IValueRouter<TValue>> _OBSERVERS = new HashSet<IValueRouter<TValue>>();
+        /// <summary>
+        /// Eindeutiges Objekt für Thread-sichere Operationen.
+        /// </summary>
+        protected readonly object _SYNC = new object();
         private string _title;
 
         #endregion Fields
@@ -180,9 +184,9 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Delegates and Events
 
-        #region Methods (14)
+        #region Methods (16)
 
-        // Public Methods (8) 
+        // Public Methods (10) 
 
         /// <summary>
         /// 
@@ -195,11 +199,14 @@ namespace MarcelJoachimKloubert.Blog.Values
                 throw new ArgumentNullException("router");
             }
 
-            if (this._MEDIATORS.Add(router))
+            lock (this._SYNC)
             {
-                router.PropertyChanged += this.Router_PropertyChanged;
+                if (this._MEDIATORS.Add(router))
+                {
+                    router.PropertyChanged += this.Router_PropertyChanged;
 
-                router.AddObserver(this);
+                    router.AddObserver(this);
+                }
             }
         }
 
@@ -214,9 +221,12 @@ namespace MarcelJoachimKloubert.Blog.Values
                 throw new ArgumentNullException("router");
             }
 
-            if (this._OBSERVERS.Add(router))
+            lock (this._SYNC)
             {
-                router.AddMediator(this);
+                if (this._OBSERVERS.Add(router))
+                {
+                    router.AddMediator(this);
+                }
             }
         }
 
@@ -229,10 +239,37 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <summary>
         /// 
         /// </summary>
+        /// <see cref="IValueRouter{TValue}.ClearMediators()" />
+        public void ClearMediators()
+        {
+            foreach (var mediator in this.GetMediators())
+            {
+                this.RemoveMediator(mediator);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IValueRouter{TValue}.ClearObservers()" />
+        public void ClearObservers()
+        {
+            foreach (var observer in this.GetObservers())
+            {
+                this.RemoveObserver(observer);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <see cref="IValueRouter{TValue}.GetMediators()" />
         public IList<IValueRouter<TValue>> GetMediators()
         {
-            return new List<IValueRouter<TValue>>(this._MEDIATORS);
+            lock (this._SYNC)
+            {
+                return new List<IValueRouter<TValue>>(this._MEDIATORS);
+            }
         }
 
         /// <summary>
@@ -241,7 +278,10 @@ namespace MarcelJoachimKloubert.Blog.Values
         /// <see cref="IValueRouter{TValue}.GetObservers()" />
         public IList<IValueRouter<TValue>> GetObservers()
         {
-            return new List<IValueRouter<TValue>>(this._OBSERVERS);
+            lock (this._SYNC)
+            {
+                return new List<IValueRouter<TValue>>(this._OBSERVERS);
+            }
         }
 
         /// <summary>
@@ -255,11 +295,14 @@ namespace MarcelJoachimKloubert.Blog.Values
                 throw new ArgumentNullException("router");
             }
 
-            if (this._MEDIATORS.Remove(router))
+            lock (this._SYNC)
             {
-                router.PropertyChanged -= this.Router_PropertyChanged;
+                if (this._MEDIATORS.Remove(router))
+                {
+                    router.PropertyChanged -= this.Router_PropertyChanged;
 
-                router.RemoveObserver(this);
+                    router.RemoveObserver(this);
+                }
             }
         }
 
@@ -274,9 +317,12 @@ namespace MarcelJoachimKloubert.Blog.Values
                 throw new ArgumentNullException("router");
             }
 
-            if (this._OBSERVERS.Remove(router))
+            lock (this._SYNC)
             {
-                router.RemoveMediator(this);
+                if (this._OBSERVERS.Remove(router))
+                {
+                    router.RemoveMediator(this);
+                }
             }
         }
 

@@ -137,6 +137,9 @@ objA.test();
         {
             try
             {
+                object a = 1000;
+                Console.WriteLine(object.ReferenceEquals(a, a));
+
                 dynamic d = new ExpandoObject();
                 d.Test = "Wurst";
                 d.Methode = new Action<object>(
