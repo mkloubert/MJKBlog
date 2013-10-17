@@ -167,15 +167,8 @@ namespace MarcelJoachimKloubert.Blog.Values
         {
             get
             {
-                var src = this.RoutedSource;
-                if (!object.ReferenceEquals(src, this))
-                {
-                    return src.RoutedDescription;
-                }
-                else
-                {
-                    return this.MyDescription;
-                }
+                return this.GetRoutedData(vr => vr.RoutedDescription,
+                                          vr => vr.MyDescription);
             }
         }
 
@@ -196,15 +189,8 @@ namespace MarcelJoachimKloubert.Blog.Values
         {
             get
             {
-                var src = this.RoutedSource;
-                if (!object.ReferenceEquals(src, this))
-                {
-                    return src.RoutedTitle;
-                }
-                else
-                {
-                    return this.MyTitle;
-                }
+                return this.GetRoutedData(vr => vr.RoutedTitle,
+                                          vr => vr.MyTitle);
             }
         }
 
@@ -216,15 +202,8 @@ namespace MarcelJoachimKloubert.Blog.Values
         {
             get
             {
-                var src = this.RoutedSource;
-                if (!object.ReferenceEquals(src, this))
-                {
-                    return src.RoutedValue;
-                }
-                else
-                {
-                    return this.MyValue;
-                }
+                return this.GetRoutedData(vr => vr.RoutedValue,
+                                          vr => vr.MyValue);
             }
         }
 
@@ -248,7 +227,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
         #endregion Delegates and Events
 
-        #region Methods (17)
+        #region Methods (18)
 
         // Public Methods (10) 
 
@@ -580,7 +559,7 @@ namespace MarcelJoachimKloubert.Blog.Values
 
             return false;
         }
-        // Private Methods (2) 
+        // Private Methods (3) 
 
         private static string AsString(IEnumerable<char> charSequence)
         {
@@ -602,21 +581,47 @@ namespace MarcelJoachimKloubert.Blog.Values
             return new string(charSequence.ToArray());
         }
 
+        private T GetRoutedData<T>(Func<IValueRouter<TValue>, T> otherInstanceDataProvider,
+                                   Func<IValueRouter<TValue>, T> thisInstanceDataProvider)
+        {
+            var src = this.RoutedSource;
+            if (!object.ReferenceEquals(src, this))
+            {
+                return otherInstanceDataProvider(src);
+            }
+            else
+            {
+                return thisInstanceDataProvider(this);
+            }
+        }
+
         private void Router_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var router = (IValueRouter<TValue>)sender;
+            var raiseCommonProperties = false;
 
             if (e.PropertyName == this.GetMemberName(vr => vr.MyValue))
             {
+                // Value
                 this.OnPropertyChanged(() => this.RoutedValue);
+                raiseCommonProperties = true;
             }
             else if (e.PropertyName == this.GetMemberName(vr => vr.MyDescription))
             {
+                // Description
                 this.OnPropertyChanged(() => this.RoutedDescription);
+                raiseCommonProperties = true;
             }
             else if (e.PropertyName == this.GetMemberName(vr => vr.MyTitle))
             {
+                // Title
                 this.OnPropertyChanged(() => this.RoutedTitle);
+                raiseCommonProperties = true;
+            }
+
+            if (raiseCommonProperties)
+            {
+                this.OnPropertyChanged(() => this.RoutedSource);
             }
         }
 
