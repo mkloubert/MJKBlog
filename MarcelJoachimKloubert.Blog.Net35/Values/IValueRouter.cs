@@ -85,9 +85,13 @@ namespace MarcelJoachimKloubert.Blog.Values
         void AddObserver(IValueRouter<TValue> router);
 
         /// <summary>
-        /// 
+        /// Gibt den <see cref="IValueRouter{TValue}" />, der die gerouteten
+        /// Daten liefert.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Der <see cref="IValueRouter{TValue}" />, der die gerouteten
+        /// Daten liefert.
+        /// </returns>
         IValueRouter<TValue> CalculateRoutedSource();
 
         /// <summary>
