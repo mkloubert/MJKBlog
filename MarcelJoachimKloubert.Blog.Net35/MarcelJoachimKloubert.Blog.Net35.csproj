@@ -113,6 +113,7 @@
     <Compile Include="Serialization\Xml\XmlObjectSerializer.IgnoreCaseEqualityComparer.cs">
       <DependentUpon>XmlObjectSerializer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Behaviors\WebBrowserBehavior.cs" />
     <Compile Include="_Extensions\Collections.cs" />
     <Compile Include="_Extensions\Compression.cs" />
     <Compile Include="_Extensions\Data.BuildObjects.cs">

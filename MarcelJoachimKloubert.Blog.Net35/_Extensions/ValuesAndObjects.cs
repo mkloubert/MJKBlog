@@ -14,9 +14,9 @@ using System.Xml;
 /// </summary>
 public static partial class __ValueAndObjectExtensionMethods
 {
-    #region Methods (6)
+    #region Methods (5)
 
-    // Public Methods (6) 
+    // Public Methods (5) 
 
     /// <summary>
     /// Gibt die Zeichenketten-Repräsentation eines Objektes zurück, wobei
@@ -93,21 +93,6 @@ public static partial class __ValueAndObjectExtensionMethods
         }
 
         return obj.ToString();
-    }
-
-    /// <summary>
-    /// Prüft, ob ein String eine <see langword="null" /> Referenz ist
-    /// oder nur aus Leerzeichen (WhiteSpaces) besteht.
-    /// </summary>
-    /// <param name="chars">Die zu prüfende Sequenz.</param>
-    /// <returns>
-    /// Ist eine <see langword="null" /> Referenz bzw. besteht nur
-    /// aus Leerzeichen (WhiteSpaces) oder nicht.
-    /// </returns>
-    public static bool IsNullOrWhiteSpace(this IEnumerable<char> chars)
-    {
-        return chars == null ||
-               chars.All(c => char.IsWhiteSpace(c));
     }
 
     /// <summary>

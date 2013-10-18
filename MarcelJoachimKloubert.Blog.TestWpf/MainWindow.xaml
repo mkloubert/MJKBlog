@@ -1,25 +1,41 @@
-﻿<!--
-    http://blog.marcel-kloubert.de 
--->
+﻿
+<!--  http://blog.marcel-kloubert.de  -->
 <Window x:Class="MarcelJoachimKloubert.Blog.TestWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behav="clr-namespace:MarcelJoachimKloubert.Blog.Windows.Behaviors;assembly=MarcelJoachimKloubert.Blog.Net35"
         xmlns:conv="clr-namespace:MarcelJoachimKloubert.Blog.TestWpf.Converters"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow"
+        Width="525"
+        Height="350"
         Loaded="Window_Loaded">
-    
+
     <Window.Resources>
         <conv:BooleanToVisibilityConverter x:Key="tmBooleanToVisibilityConverter" />
     </Window.Resources>
-    
-    <StackPanel>
-        <CheckBox IsChecked="{Binding Path=Test1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock x:Name="TextBlock_Test"
-                   Visibility="{Binding Path=Test1,
-                                        Mode=OneWay,
-                                        Converter={StaticResource tmBooleanToVisibilityConverter},
-                                        ConverterParameter='Collapsed',
-                                        UpdateSourceTrigger=PropertyChanged}">Das ist des Jägers Ehrenschild, Daß er beschützt und hegt sein Wild, Waidmännisch jagt, wie sich’s gehört, Den Schöpfer im Geschöpfe ehrt!</TextBlock>
-    </StackPanel>
+    <TabControl>
+        <TabItem Header="Boolean2Visibility">
+            <StackPanel>
+                <CheckBox IsChecked="{Binding Path=Test1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock x:Name="TextBlock_Test" Visibility="{Binding Path=Test1, Mode=OneWay, Converter={StaticResource tmBooleanToVisibilityConverter}, ConverterParameter='Collapsed', UpdateSourceTrigger=PropertyChanged}">Das ist des Jägers Ehrenschild, Daß er beschützt und hegt sein Wild, Waidmännisch jagt, wie sich’s gehört, Den Schöpfer im Geschöpfe ehrt!</TextBlock>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem Header="WebBrowserBehavior">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="32px" />
+                </Grid.RowDefinitions>
+
+                <WebBrowser Grid.Row="0"
+                            behav:WebBrowserBehavior.Html="{Binding Path=Test2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Grid.Row="1"
+                        Command="{Binding Path=Test3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Test</Button>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
