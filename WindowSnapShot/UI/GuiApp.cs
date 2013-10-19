@@ -114,7 +114,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
                 }
                 else
                 {
-                    this._REAL_HWND = proc.MainWindowHandle;    //just add something even if it's a bad window
+                    this._REAL_HWND = proc.MainWindowHandle;    // just add something even if it's a bad window
                 }
             }
             finally
@@ -138,7 +138,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
         {
             get
             {
-                // Allocate correct string length first
+                // allocate correct string length first
                 int length = Win32Api.GetWindowTextLength(this.HWnd);
 
                 var sb = new StringBuilder(length + 1);
@@ -146,7 +146,6 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
 
                 return sb.ToString();
             }
-
         }
 
         /// <summary>
@@ -170,6 +169,9 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
             get { return this._REAL_HWND; }
         }
 
+        /// <summary>
+        /// Gibt den Namen der Klasse des Fensters dieses Prozesses zurück.
+        /// </summary>
         public string WindowClass
         {
             get
@@ -306,7 +308,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
                 appRect.Bottom = rb.Y;
             }
 
-            // Intersect with the Desktop rectangle and get what's visible
+            // intersect with the Desktop rectangle and get what's visible
             IntPtr desktopHandle = Win32Api.GetDesktopWindow();
             RECT desktopRect;
             Win32Api.GetWindowRect(desktopHandle, out desktopRect);
@@ -349,7 +351,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
                     Win32Api.BitBlt(hdcTo, 0, 0, width, height, hdcFrom, x, y, Win32Api.SRCCOPY);
                     Win32Api.SelectObject(hdcTo, hLocalBitmap);
 
-                    //  create bitmap for window image...
+                    // create bitmap for window image...
                     clsRet = System.Drawing.Image.FromHbitmap(hBitmap);
                 }
 
@@ -357,7 +359,8 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
             }
             finally
             {
-                //  release ...
+                //  release...
+
                 if (hdcFrom != IntPtr.Zero)
                 {
                     Win32Api.ReleaseDC(appWndHandle, hdcFrom);
@@ -381,7 +384,13 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
         /// <see cref="object.ToString()" />
         public override string ToString()
         {
-            return this.Caption;
+            var result = this.Caption;
+            if (result.IsNullOrWhiteSpace())
+            {
+                result = this.WindowClass;
+            }
+
+            return result ?? string.Empty;
         }
         // Private Methods (2) 
 
