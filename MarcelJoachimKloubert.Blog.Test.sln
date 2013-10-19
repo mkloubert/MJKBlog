@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.TestWinForms", "MarcelJoachimKloubert.Blog.TestWinForms\MarcelJoachimKloubert.Blog.TestWinForms.csproj", "{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{846C1874-EE5D-4E0A-94D8-B097B075B56C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowSnapShot", "WindowSnapShot", "{9B58C1A7-DE7D-44A5-BB7A-4D382CE7BF15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.Blog.WindowSnapShot", "WindowSnapShot\MarcelJoachimKloubert.Blog.WindowSnapShot.csproj", "{9EE22B4A-DC23-4A1D-B575-6C946DABD235}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,8 +49,16 @@ Global
 		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA39E172-43A6-430C-80C1-6ED74EAC7F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE22B4A-DC23-4A1D-B575-6C946DABD235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE22B4A-DC23-4A1D-B575-6C946DABD235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE22B4A-DC23-4A1D-B575-6C946DABD235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE22B4A-DC23-4A1D-B575-6C946DABD235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B58C1A7-DE7D-44A5-BB7A-4D382CE7BF15} = {846C1874-EE5D-4E0A-94D8-B097B075B56C}
+		{9EE22B4A-DC23-4A1D-B575-6C946DABD235} = {9B58C1A7-DE7D-44A5-BB7A-4D382CE7BF15}
 	EndGlobalSection
 EndGlobal
