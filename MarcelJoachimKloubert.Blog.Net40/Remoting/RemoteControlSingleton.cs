@@ -65,6 +65,7 @@ namespace MarcelJoachimKloubert.Blog.Remoting
         /// <param name="resultBuilder">Der <see cref="StringBuilder" />, der für das Bauen der Rückgabe verwendet wird.</param>
         public delegate void SendMessageAction(int id, string args,
                                                ref StringBuilder resultBuilder);
+
         /// <summary>
         /// Beschreibt eine Methode / Funktion für die <see cref="RemoteControlSingleton.Start(string, string, byte[], out bool)" /> Methode.
         /// </summary>
@@ -77,6 +78,7 @@ namespace MarcelJoachimKloubert.Blog.Remoting
                                             string password,
                                             byte[] clientId,
                                             ref IEnumerable<char> errMsg);
+
         /// <summary>
         /// Beschreibt eine Methode / Funktion, die die Rückgabe für die
         /// <see cref="RemoteControlSingleton.Start(string, string, byte[], out bool)" /> Methode generiert.
