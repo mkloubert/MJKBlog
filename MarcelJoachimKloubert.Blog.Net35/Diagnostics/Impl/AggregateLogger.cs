@@ -30,9 +30,9 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Methods (5)
 
-        // Public Methods (3) 
+        // Public Methods (4) 
 
         /// <summary>
         /// Fügt Logik der internen Liste hinzu.
@@ -79,6 +79,18 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Gibt eine neue Liste aller Logger zurück, die Teil dieses Loggers sind.
+        /// </summary>
+        /// <returns>Die Liste aller Logger dieser Instanz.</returns>
+        public List<ILoggerFacade> GetLoggers()
+        {
+            lock (this._SYNC)
+            {
+                return new List<ILoggerFacade>(this._LOGGERS);
+            }
         }
 
         /// <summary>

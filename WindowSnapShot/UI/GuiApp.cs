@@ -218,13 +218,15 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
             {
                 foreach (var proc in processes.OfType<Process>())
                 {
-                    if (proc.MainWindowHandle != IntPtr.Zero)
+                    if (proc.MainWindowHandle == IntPtr.Zero)
                     {
-                        var entry = new GuiApp(proc);
-                        if (entry.IsValidGUIWnd())
-                        {
-                            result.Add(entry);
-                        }
+                        continue;
+                    }
+
+                    var entry = new GuiApp(proc);
+                    if (entry.IsValidGUIWnd())
+                    {
+                        result.Add(entry);
                     }
                 }
             }
@@ -272,7 +274,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
 
             if (Win32Api.IsIconic(appWndHandle))
             {
-                Win32Api.ShowWindow(appWndHandle, nCmdShow);    //show it
+                Win32Api.ShowWindow(appWndHandle, nCmdShow);    // show it
             }
 
             if (!Win32Api.SetForegroundWindow(appWndHandle))
@@ -287,7 +289,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
             }
 
             RECT appRect;
-            bool res = isClientWnd ? Win32Api.GetClientRect(appWndHandle, out appRect) : Win32Api.GetWindowRect(appWndHandle, out appRect);
+            var res = isClientWnd ? Win32Api.GetClientRect(appWndHandle, out appRect) : Win32Api.GetWindowRect(appWndHandle, out appRect);
             if (!res ||
                 appRect.Height == 0 ||
                 appRect.Width == 0)
@@ -309,7 +311,7 @@ namespace MarcelJoachimKloubert.Blog.WindowSnapShot.UI
             }
 
             // intersect with the Desktop rectangle and get what's visible
-            IntPtr desktopHandle = Win32Api.GetDesktopWindow();
+            var desktopHandle = Win32Api.GetDesktopWindow();
             RECT desktopRect;
             Win32Api.GetWindowRect(desktopHandle, out desktopRect);
 

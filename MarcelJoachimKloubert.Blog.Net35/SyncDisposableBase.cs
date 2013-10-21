@@ -91,7 +91,7 @@ namespace MarcelJoachimKloubert.Blog
         /// <param name="context">Der Kontext.</param>
         protected virtual void OnDispose(DisposeContext context)
         {
-
+            // dummy
         }
 
         /// <summary>

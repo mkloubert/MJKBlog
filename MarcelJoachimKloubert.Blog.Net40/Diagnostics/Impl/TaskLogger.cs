@@ -233,14 +233,8 @@ namespace MarcelJoachimKloubert.Blog.Diagnostics
         {
             try
             {
-                var msg = state as ILogMessage;
-                if (msg == null)
-                {
-                    return;
-                }
-
                 this.InnerLogger
-                    .Log(msg);
+                    .Log(state as ILogMessage);
             }
             catch
             {

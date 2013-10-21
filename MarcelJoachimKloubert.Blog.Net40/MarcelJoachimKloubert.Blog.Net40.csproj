@@ -38,6 +38,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,7 +47,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentModel\Modules\IModule.cs" />
+    <Compile Include="ComponentModel\Modules\IModuleInitializeContext.cs" />
+    <Compile Include="ComponentModel\Modules\Shell\IModuleShellInitializeContext.cs" />
+    <Compile Include="ComponentModel\Modules\Shell\ModuleShell.cs" />
+    <Compile Include="ComponentModel\Modules\SimpleModuleInitializeContext.cs" />
     <Compile Include="Diagnostics\Impl\TaskLogger.cs" />
+    <Compile Include="Remoting\RemoteControlCallback.cs" />
+    <Compile Include="Remoting\RemoteControlSingleton.cs" />
     <Compile Include="Threading\Tasks\TaskHelper.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Extensions\Collections.cs" />
