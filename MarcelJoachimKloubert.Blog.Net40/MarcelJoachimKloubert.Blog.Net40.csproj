@@ -53,6 +53,16 @@
     <Compile Include="ComponentModel\Modules\Shell\ModuleShell.cs" />
     <Compile Include="ComponentModel\Modules\SimpleModuleInitializeContext.cs" />
     <Compile Include="Diagnostics\Impl\TaskLogger.cs" />
+    <Compile Include="Execution\Collections\IItemExecutionContext.cs" />
+    <Compile Include="Execution\Collections\IItemListExecutionContext.cs" />
+    <Compile Include="Execution\Collections\ItemExecutionBuilder.SimpleItemExecutionContext.cs">
+      <DependentUpon>ItemExecutionBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\Collections\ItemExecutionBuilder.SimpleItemListExecutionContext.cs">
+      <DependentUpon>ItemExecutionBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\Collections\ItemExecutionBuilder.cs" />
+    <Compile Include="Execution\Collections\ItemExecutionException.cs" />
     <Compile Include="Remoting\RemoteControlCallback.cs" />
     <Compile Include="Remoting\RemoteControlSingleton.cs" />
     <Compile Include="Threading\Tasks\TaskHelper.cs" />

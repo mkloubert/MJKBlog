@@ -529,7 +529,7 @@ End Module",
                     }
                 });
             }
-            catch (Exception ex)
+            catch
             {
 
             }
