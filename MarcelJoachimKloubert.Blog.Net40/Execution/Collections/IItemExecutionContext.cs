@@ -36,9 +36,9 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
         T Item { get; }
 
         /// <summary>
-        /// Gibt die Anzahl aller Elemente zurück.
+        /// Gibt die Anzahl aller Elemente zurück, sofern ermittelbar.
         /// </summary>
-        long ItemCount { get; }
+        long? ItemCount { get; }
 
         /// <summary>
         /// Gibt die Fehler von der letzten Ausführung zurück oder <see langword="null" />, wenn kein Fehler aufgetreten ist.

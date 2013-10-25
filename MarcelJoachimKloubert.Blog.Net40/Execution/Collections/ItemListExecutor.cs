@@ -2,6 +2,7 @@
 
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,88 +13,45 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
     /// Ein Objekt zum Erezugen von Logiken, die eine Liste von Elementen abarbeiten.
     /// </summary>
     /// <typeparam name="T">Typ der zugrundeliegenden Elemente.</typeparam>
-    public sealed partial class ItemExecutionBuilder<T>
+    public sealed partial class ItemListExecutor<T>
     {
-        #region Fields (2)
-
-        private readonly List<T> _ITEMS = new List<T>();
-        private readonly object _SYNC;
-
-        #endregion Fields
-
-        #region Constructors (2)
+        #region Constructors (1)
 
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="ItemExecutionBuilder{T}" />.
+        /// Initialisiert eine neue Instanz der Klasse <see cref="ItemListExecutor{T}" />.
         /// </summary>
-        /// <param name="syncRoot">Das Objekt für Thread-sichere Operationen.</param>
+        /// <param name="items">Die zugrundeliegenden Elemente.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="syncRoot" /> ist <see langword="null" />.
+        /// <paramref name="items" /> ist <see langword="null" />.
         /// </exception>
-        public ItemExecutionBuilder(object syncRoot)
+        public ItemListExecutor(IEnumerable<T> items)
         {
-            if (syncRoot == null)
+            if (items == null)
             {
-                throw new ArgumentNullException("syncRoot");
+                throw new ArgumentNullException("items");
             }
 
-            this._SYNC = syncRoot;
-        }
-
-        /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse <see cref="ItemExecutionBuilder{T}" />.
-        /// </summary>
-        public ItemExecutionBuilder()
-            : this(new object())
-        {
-
+            this.Items = items;
         }
 
         #endregion Constructors
 
-        #region Methods (7)
-
-        // Public Methods (7) 
+        #region Properties (1)
 
         /// <summary>
-        /// Fügt ein neues Element der internen Liste hinzu.
+        /// Gibt die Liste der zugrundeliegenden Elemente zurück.
         /// </summary>
-        /// <param name="item">Das Element, das hinzugefügt werden soll.</param>
-        public void Add(T item)
+        public IEnumerable<T> Items
         {
-            lock (this._SYNC)
-            {
-                this._ITEMS
-                    .Add(item);
-            }
+            get;
+            private set;
         }
 
-        /// <summary>
-        /// Fügt ein Liste von Elementen der internen Liste hinzu.
-        /// </summary>
-        /// <param name="items">Die Elemente, die hinzugefügt werden sollen.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="items" /> ist <see langword="null" />.
-        /// </exception>
-        public void AddRange(IEnumerable<T> items)
-        {
-            lock (this._SYNC)
-            {
-                this._ITEMS.AddRange(items);
-            }
-        }
+        #endregion Properties
 
-        /// <summary>
-        /// Leert die Liste der internen Elemente.
-        /// </summary>
-        public void Clear()
-        {
-            lock (this._SYNC)
-            {
-                this._ITEMS
-                    .Clear();
-            }
-        }
+        #region Methods (3)
+
+        // Public Methods (2) 
 
         /// <summary>
         /// Erzeugt einen neuen Ausführungskontext auf Basis dieser Liste und einer Action,
@@ -149,23 +107,51 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                 throw new ArgumentNullException("action");
             }
 
-            var list = this.GetItems();
+            // versuchen die Länge der Liste zu ermitteln
+            long? count = null;
+            {
+                var array = this.Items as T[];
+                if (array != null)
+                {
+                    count = array.LongLength;
+                }
+                else
+                {
+                    var genericColl = this.Items as ICollection<T>;
+                    if (genericColl != null)
+                    {
+                        count = genericColl.Count;
+                    }
+                    else
+                    {
+                        var coll = this.Items as ICollection;
+                        if (coll != null)
+                        {
+                            count = coll.Count;
+                        }
+                    }
+                }
+            }
 
             var result = new SimpleItemListExecutionContext<S>()
                 {
                     Action = action,
-                    CanceledAt = null,
+                    CanceledCallback = null,
+                    CancellationContext = null,
                     CancellationSource = new CancellationTokenSource(),
+                    CompletedCallback = null,
                     CreationOptions = taskCreationOptions,
                     Errors = null,
-                    ItemCount = list.Count,
-                    Items = list,
+                    FaultedCallback = null,
+                    ItemCount = count,
+                    Items = this.Items,
                     IsFaulted = false,
                     IsRunning = false,
                     LastResult = null,
                     RunAsyn = runAsync,
                     State = actionState,
                     Scheduler = taskScheduler ?? TaskScheduler.Current,
+                    SucceededCallback = null,
                 };
 
             var task = new Task(action: (state) =>
@@ -182,11 +168,13 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                             AggregateException lastErr = null;
                             foreach (var item in listCtx.Items)
                             {
+                                var cancelToken = listCtx.CancellationSource.Token;
+
                                 ++i;
                                 var itemCtx = new SimpleIItemExecutionContext<S>()
                                     {
                                         Cancel = false,
-                                        CancelToken = listCtx.CancellationSource.Token,
+                                        CancelToken = cancelToken,
                                         Index = i,
                                         Item = item,
                                         ItemCount = listCtx.ItemCount,
@@ -197,15 +185,30 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
 
                                 try
                                 {
+                                    cancelToken.ThrowIfCancellationRequested();
+
                                     lastErr = null;
                                     listCtx.Action(itemCtx);
 
                                     listCtx.LastResult = itemCtx.Result;
                                     if (itemCtx.Cancel)
                                     {
-                                        listCtx.CanceledAt = i;
+                                        listCtx.CancellationContext = CreateCancellationContext<S>(i,
+                                                                                                   listCtx,
+                                                                                                   item,
+                                                                                                   itemCtx.State,
+                                                                                                   ItemCancellationSource.ItemContext);
+
                                         break;
                                     }
+                                }
+                                catch (OperationCanceledException)
+                                {
+                                    listCtx.CancellationContext = CreateCancellationContext<S>(i,
+                                                                                               listCtx,
+                                                                                               item,
+                                                                                               itemCtx.State,
+                                                                                               ItemCancellationSource.CancellationToken);
                                 }
                                 catch (Exception ex)
                                 {
@@ -234,27 +237,6 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                         {
                             listCtx.Errors = new AggregateException(exceptions);
                         }
-
-                        if (listCtx.IsFaulted)
-                        {
-                            // Ausführung erfolgreich
-
-                            var cb = listCtx.SucceededCallback;
-                            if (cb != null)
-                            {
-                                cb(listCtx);
-                            }
-                        }
-                        else
-                        {
-                            // Fehler bei Ausführung
-
-                            var cb = listCtx.FaultedCallback;
-                            if (cb != null)
-                            {
-                                cb(listCtx);
-                            }
-                        }
                     }
                     finally
                     {
@@ -265,6 +247,37 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                         if (cb != null)
                         {
                             cb(listCtx);
+                        }
+
+                        if (listCtx.IsFaulted)
+                        {
+                            // Callback für "Vorgang fehlerhaft"
+
+                            var fcb = listCtx.FaultedCallback;
+                            if (fcb != null)
+                            {
+                                fcb(listCtx);
+                            }
+                        }
+                        else if (listCtx.IsCanceled)
+                        {
+                            // Callback für "Vorgang abgebrochen"
+
+                            var ccb = listCtx.CanceledCallback;
+                            if (ccb != null)
+                            {
+                                ccb(listCtx);
+                            }
+                        }
+                        else
+                        {
+                            // Callback für "Vorgang erfolgreich"
+
+                            var scb = listCtx.SucceededCallback;
+                            if (scb != null)
+                            {
+                                scb(listCtx);
+                            }
                         }
                     }
                 }, state: result
@@ -279,31 +292,22 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
 
             return result;
         }
+        // Private Methods (1) 
 
-        /// <summary>
-        /// Gibt die aktuelle Liste der Elemente zurück.
-        /// </summary>
-        /// <returns>Die aktuelle Liste der Elemente.</returns>
-        public List<T> GetItems()
+        private static IItemListCancellationContext<T, S> CreateCancellationContext<S>(long canceledAt,
+                                                                                       IItemListExecutionContext<T> execCtx,
+                                                                                       T item,
+                                                                                       S state,
+                                                                                       ItemCancellationSource src)
         {
-            lock (this._SYNC)
-            {
-                return new List<T>(this._ITEMS);
-            }
-        }
-
-        /// <summary>
-        /// Entfernt ein vorhandenes Element aus der internen Liste.
-        /// </summary>
-        /// <param name="item">Das Element, das entfernt werden soll.</param>
-        /// <returns>Element wurde entfernt oder nicht, da es kein Teil der Liste war.</returns>
-        public bool Remove(T item)
-        {
-            lock (this._SYNC)
-            {
-                return this._ITEMS
-                           .Remove(item);
-            }
+            return new SimpleItemListCancellationContext<S>()
+                {
+                    CanceledAt = canceledAt,
+                    ExecutionContext = execCtx,
+                    Item = item,
+                    Source = src,
+                    State = state,
+                };
         }
 
         #endregion Methods

@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.Blog.Execution.Collections
 {
-    partial class ItemExecutionBuilder<T>
+    partial class ItemListExecutor<T>
     {
         #region Nested Classes (1)
 
         private sealed class SimpleItemListExecutionContext<S> : IItemListExecutionContext<T, S>
         {
-            #region Fields (8)
+            #region Fields (10)
 
+            private Action<IItemListExecutionContext<T, S>> _canceledCallback;
+            private Action<IItemListExecutionContext<T>> _canceledCallbackBase;
             private Action<IItemListExecutionContext<T, S>> _completedCallback;
             private Action<IItemListExecutionContext<T>> _completedCallbackBase;
             private Action<IItemListExecutionContext<T, S>> _faultedCallback;
@@ -27,12 +29,24 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
 
             #endregion Fields
 
-            #region Properties (18)
+            #region Properties (22)
 
-            public long? CanceledAt
+            public Action<IItemListExecutionContext<T, S>> CanceledCallback
+            {
+                get { return this._canceledCallback; }
+
+                set
+                {
+                    SetCallback(value,
+                                ref this._canceledCallback,
+                                ref this._canceledCallbackBase);
+                }
+            }
+
+            public IItemListCancellationContext<T, S> CancellationContext
             {
                 get;
-                set;
+                internal set;
             }
 
             public CancellationTokenSource CancellationSource
@@ -77,6 +91,18 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                 }
             }
 
+            Action<IItemListExecutionContext<T>> IItemListExecutionContext<T>.CanceledCallback
+            {
+                get { return this._completedCallbackBase; }
+
+                set { this.CompletedCallback = value; }
+            }
+
+            IItemListCancellationContext<T> IItemListExecutionContext<T>.CancellationContext
+            {
+                get { return this.CancellationContext; }
+            }
+
             Action<IItemListExecutionContext<T>> IItemListExecutionContext<T>.CompletedCallback
             {
                 get { return this._completedCallbackBase; }
@@ -98,6 +124,11 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                 set { this.SucceededCallback = value; }
             }
 
+            public bool IsCanceled
+            {
+                get { return this.CancellationContext != null; }
+            }
+
             public bool IsFaulted
             {
                 get;
@@ -110,7 +141,7 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                 internal set;
             }
 
-            public long ItemCount
+            public long? ItemCount
             {
                 get;
                 internal set;

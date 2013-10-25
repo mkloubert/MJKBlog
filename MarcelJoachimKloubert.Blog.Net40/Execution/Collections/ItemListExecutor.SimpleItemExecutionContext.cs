@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace MarcelJoachimKloubert.Blog.Execution.Collections
 {
-    partial class ItemExecutionBuilder<T>
+    partial class ItemListExecutor<T>
     {
         #region Nested Classes (1)
 
@@ -38,7 +38,7 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                 internal set;
             }
 
-            public long ItemCount
+            public long? ItemCount
             {
                 get;
                 internal set;

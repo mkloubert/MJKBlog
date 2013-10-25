@@ -16,12 +16,17 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
     /// <typeparam name="T">Type der Elemente.</typeparam>
     public interface IItemListExecutionContext<T>
     {
-        #region Data Members (14)
+        #region Data Members (16)
 
         /// <summary>
-        /// Gibt zurück an welcher Stelle die Operation abgebrochen wurde.
+        /// Gibt den optionalen Callback zurück, der ausgeführt werden soll, wenn der Vorgang erfolgreich beendet wurde.
         /// </summary>
-        long? CanceledAt { get; }
+        Action<IItemListExecutionContext<T>> CanceledCallback { get; set; }
+
+        /// <summary>
+        /// Gibt zurück, sofern definiert, den Kontext zu Abbruch des Vorgangs zurück.
+        /// </summary>
+        IItemListCancellationContext<T> CancellationContext { get; }
 
         /// <summary>
         /// Gibt das <see cref="CancellationTokenSource" /> Objekt zurück, das zum Abbrechen von
@@ -52,6 +57,11 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
         Action<IItemListExecutionContext<T>> FaultedCallback { get; set; }
 
         /// <summary>
+        /// Gibt zurück, ob die gesamte Operation abgeborchen wurde oder nicht.
+        /// </summary>
+        bool IsCanceled { get; }
+
+        /// <summary>
         /// Gibt zurück, ob die gesamte Operation fehlgeschlagen ist oder nicht.
         /// </summary>
         bool IsFaulted { get; }
@@ -62,9 +72,9 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
         bool IsRunning { get; }
 
         /// <summary>
-        /// Gibt die Anzahl der zugrundeliegenden Elemente zurück.
+        /// Gibt die Anzahl der zugrundeliegenden Elemente zurück, sofern ermittelbar.
         /// </summary>
-        long ItemCount { get; }
+        long? ItemCount { get; }
 
         /// <summary>
         /// Gibt die Liste der zugrundeliegenden Elemente zurück.
@@ -126,7 +136,19 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
     /// <typeparam name="S">Typ des State-Objektes.</typeparam>
     public interface IItemListExecutionContext<T, S> : IItemListExecutionContext<T>
     {
-        #region Data Members (4)
+        #region Data Members (6)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IItemListExecutionContext{T}.CanceledCallback" />
+        new Action<IItemListExecutionContext<T, S>> CanceledCallback { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <see cref="IItemListExecutionContext{T}.CancellationContext" />
+        new IItemListCancellationContext<T, S> CancellationContext { get; }
 
         /// <summary>
         /// 
