@@ -10,9 +10,9 @@ using System.Linq;
 /// </summary>
 public static partial class __CollectionExtensionMethods
 {
-    #region Methods (5)
+    #region Methods (9)
 
-    // Public Methods (5) 
+    // Public Methods (9) 
 
     /// <summary>
     /// Fügt eine Liste von Elementen einer
@@ -196,6 +196,95 @@ public static partial class __CollectionExtensionMethods
                 action(enumerator.Current,
                        actionState);
             }
+        }
+    }
+
+    /// <summary>
+    /// Gibt eine Sequenz in zufälliger Reihenfolge zurück.
+    /// </summary>
+    /// <typeparam name="T">Typ der Elemente von <paramref name="seq" />.</typeparam>
+    /// <param name="seq">Die Einstiegssequenz.</param>
+    /// <returns>The zufällige Sequenz.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="seq" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static IEnumerable<T> Randomize<T>(this IEnumerable<T> seq)
+    {
+        return Randomize<T>(seq, new Random());
+    }
+
+    /// <summary>
+    /// Gibt eine Sequenz in zufälliger Reihenfolge zurück.
+    /// </summary>
+    /// <typeparam name="T">Typ der Elemente von <paramref name="seq" />.</typeparam>
+    /// <param name="seq">Die Einstiegssequenz.</param>
+    /// <param name="r">Der Zufallszahlengenerator.</param>
+    /// <returns>The zufällige Sequenz.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="seq" /> und/oder <paramref name="r" /> sind <see langword="null" /> Referenzen.
+    /// </exception>
+    public static IEnumerable<T> Randomize<T>(this IEnumerable<T> seq, Random r)
+    {
+        if (seq == null)
+        {
+            throw new ArgumentNullException("seq");
+        }
+
+        if (r == null)
+        {
+            throw new ArgumentNullException("r");
+        }
+
+        var list = seq.ToList();
+        Shuffle<T>(list, r);
+
+        foreach (var item in list)
+        {
+            yield return item;
+        }
+    }
+
+    /// <summary>
+    /// Vertauscht die Elemente in einer Liste in zufälliger Reihenfolge.
+    /// </summary>
+    /// <typeparam name="T">Typ der Elemente von <paramref name="list" />.</typeparam>
+    /// <param name="list">Die Liste deren Elemente getauscht werden sollen.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="list" /> ist eine <see langword="null" /> Referenz.
+    /// </exception>
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        Shuffle<T>(list, new Random());
+    }
+
+    /// <summary>
+    /// Vertauscht die Elemente in einer Liste in zufälliger Reihenfolge.
+    /// </summary>
+    /// <typeparam name="T">Typ der Elemente von <paramref name="list" />.</typeparam>
+    /// <param name="list">Die Liste deren Elemente getauscht werden sollen.</param>
+    /// <param name="r">Der Zufallszahlengenerator.</param>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="list" /> und/oder <paramref name="r" /> sind <see langword="null" /> Referenzen.
+    /// </exception>
+    public static void Shuffle<T>(this IList<T> list, Random r)
+    {
+        if (list == null)
+        {
+            throw new ArgumentNullException("list");
+        }
+
+        if (r == null)
+        {
+            throw new ArgumentNullException("r");
+        }
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            var ni = r.Next(0, list.Count);
+            var temp = list[i];
+
+            list[i] = list[ni];
+            list[ni] = temp;
         }
     }
 

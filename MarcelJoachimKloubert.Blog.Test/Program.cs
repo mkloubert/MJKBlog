@@ -150,6 +150,14 @@ objA.test();
 
                 d.Methode(d.Test);
 
+                foreach (var z in Enumerable.Range(0, 10)
+                                            .Randomize())
+                {
+                    Console.WriteLine(z);
+                }
+
+                Console.ReadLine();
+
                 // Test_Resources();
                 // Test_HttpServer();
                 Test_ValueRouter();
