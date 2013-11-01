@@ -183,10 +183,19 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
                                         State = listCtx.State,
                                     };
 
+                                if (cancelToken.IsCancellationRequested)
+                                {
+                                    listCtx.CancellationContext = CreateCancellationContext<S>(i,
+                                                                                               listCtx,
+                                                                                               item,
+                                                                                               itemCtx.State,
+                                                                                               ItemCancellationSource.CancellationToken);
+
+                                    break;
+                                }
+
                                 try
                                 {
-                                    cancelToken.ThrowIfCancellationRequested();
-
                                     lastErr = null;
                                     listCtx.Action(itemCtx);
 
@@ -201,14 +210,6 @@ namespace MarcelJoachimKloubert.Blog.Execution.Collections
 
                                         break;
                                     }
-                                }
-                                catch (OperationCanceledException)
-                                {
-                                    listCtx.CancellationContext = CreateCancellationContext<S>(i,
-                                                                                               listCtx,
-                                                                                               item,
-                                                                                               itemCtx.State,
-                                                                                               ItemCancellationSource.CancellationToken);
                                 }
                                 catch (Exception ex)
                                 {
